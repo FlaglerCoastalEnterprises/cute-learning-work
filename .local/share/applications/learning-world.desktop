@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Learning World
+Exec=firefox /home/oem/Downloads/cute-learning-work/index.html
+Icon=utilities-terminal
+Terminal=false
+Categories=Education;Game;

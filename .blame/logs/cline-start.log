@@ -1,0 +1,5 @@
+{"timestamp":"2026-11-21T07:14:22.737Z","severity_text":"INFO","event_name":"blame.agent.start_requested","attributes":{"providerId":"gemini","modelId":"gemini-3.5-flash-lite","mode":"act","pluginPathCount":0,"promptLength":3399}}
+{"timestamp":"2026-11-21T07:14:23.440Z","severity_text":"INFO","event_name":"blame.agent.credential_resolved","attributes":{"providerId":"gemini"}}
+{"timestamp":"2026-11-21T07:14:23.444Z","severity_text":"INFO","event_name":"blame.agent.credential_refreshed","attributes":{"providerId":"gemini"}}
+{"timestamp":"2026-11-21T07:14:23.515Z","severity_text":"INFO","event_name":"blame.agent.cline_core_ready","attributes":{}}
+{"timestamp":"2026-11-21T07:14:24.325Z","severity_text":"INFO","event_name":"blame.agent.session_created","attributes":{"durationMs":1583,"sessionId":"1795245254771_4e2ea"}}
