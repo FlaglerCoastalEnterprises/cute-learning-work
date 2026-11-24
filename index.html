@@ -1892,6 +1892,28 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
   #viewTopic .topic-hero svg { height: 100%; min-height: 340px; }
 }
 
+
+/* ============ PHASE 3 FIX PASS: scene framing + story button ============
+   Root cause of sliced topic art: scenes are 400x240 (5:3) rendered with
+   preserveAspectRatio="slice" into containers whose aspect ratios were
+   nowhere near 5:3 (fixed 104-215px heights on full-width containers, and
+   a >=700px two-column hero with min-height:340px on a half-width column
+   cropped ~40% of the scene width). Fix: aspect-lock every container
+   that hosts a topic scene to 5:3 so the full scene is always visible. */
+.topic-art { height: auto; aspect-ratio: 5 / 3; }
+.topic-hero svg { height: auto; aspect-ratio: 5 / 3; }
+.art-strip { max-width: 430px; margin-left: auto; margin-right: auto; }
+.art-strip svg { height: auto; aspect-ratio: 5 / 3; }
+.story-end-art svg { height: auto; aspect-ratio: 5 / 3; }
+.celeb-art { height: auto; aspect-ratio: 5 / 3; max-width: 400px; margin-left: auto; margin-right: auto; }
+.movie-scene { aspect-ratio: 5 / 3; }
+.movie-art { animation: none; }
+.btn-story { white-space: nowrap; grid-column: 1 / -1; width: 100%; }
+.btn-story > span { white-space: nowrap; }
+@media (min-width: 700px) {
+  #viewTopic .topic-hero { height: auto; align-self: start; }
+  #viewTopic .topic-hero svg { height: auto; min-height: 0; aspect-ratio: 5 / 3; }
+}
 </style><body>
   <div class="splash" id="splashScreen" aria-hidden="true">
     <img class="splash-mascot" id="splashMascot" alt="">
@@ -4113,6 +4135,62 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         R(-24, -14, 48, 28, 9, '#C7D2E8') + C(0, 0, 7, '#FF8A3C') +
         '</g>';
     }
+    function gSatellite(x, y, s) {
+      return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
+        R(-52, -11, 27, 22, 4, '#38E1FF') + R(25, -11, 27, 22, 4, '#38E1FF') +
+        PL('M-44 -11 V11 M-35 -11 V11 M35 -11 V11 M44 -11 V11', '#1B7EDB', 2) +
+        R(-13, -15, 26, 30, 6, '#C7D2E8') + C(0, -4, 5.5, '#FF8A3C') +
+        PL('M0 15 L0 24', INK, 3) + '<circle cx="0" cy="27" r="3.5" fill="#FF5D5D" stroke="none"/></g>';
+    }
+    function gComet(x, y, s, f) {
+      f = f || '#FFFFFF';
+      return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
+        PL('M-6 -4 L-38 -16 M-7 1 L-44 0 M-6 6 L-36 15', f, 3.5, 'opacity="0.75"') +
+        C(0, 0, 8, f) + '<circle cx="-2" cy="-2" r="3" fill="#BFE9FF" stroke="none"/></g>';
+    }
+    function gGiraffe(x, y, s) {
+      return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
+        R(-24, -52, 9, 52, 4, '#FFC93C') + R(14, -52, 9, 52, 4, '#FFC93C') +
+        E(0, -62, 30, 17, '#FFC93C') +
+        PL('M22 -66 Q36 -92 30 -112', '#FFC93C', 11) +
+        E(33, -114, 10, 8, '#FFC93C') +
+        PL('M28 -124 L27 -132 M37 -123 L39 -131', INK, 2.5) +
+        '<circle cx="26" cy="-133" r="3" fill="#8A5A2B" stroke="none"/><circle cx="40" cy="-132" r="3" fill="#8A5A2B" stroke="none"/>' +
+        '<circle cx="36" cy="-116" r="2.2" fill="' + INK + '" stroke="none"/>' +
+        '<circle cx="-8" cy="-66" r="5.5" fill="#D99400" stroke="none"/><circle cx="10" cy="-56" r="4.5" fill="#D99400" stroke="none"/><circle cx="-20" cy="-80" r="4" fill="#D99400" stroke="none"/><circle cx="16" cy="-72" r="3.6" fill="#D99400" stroke="none"/>' +
+        PL('M-29 -70 Q-38 -54 -34 -40', '#D99400', 3.5) + '</g>';
+    }
+    function gElephant(x, y, s) {
+      return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
+        R(-26, -46, 11, 46, 5, '#8E93C4') + R(12, -46, 11, 46, 5, '#8E93C4') +
+        E(-2, -56, 34, 24, '#A5AAD4') +
+        C(30, -62, 15, '#A5AAD4') +
+        PA('M38 -54 Q46 -34 40 -18', 'none', 'stroke="#A5AAD4" stroke-width="9" stroke-linecap="round"') +
+        E(24, -60, 9, 12, '#8E93C4') +
+        '<circle cx="33" cy="-66" r="2.4" fill="' + INK + '" stroke="none"/>' +
+        PL('M-35 -64 Q-44 -52 -42 -40', '#8E93C4', 4) + '</g>';
+    }
+    function gZebra(x, y, s) {
+      return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
+        R(-22, -40, 8, 40, 4, '#FFFFFF') + R(12, -40, 8, 40, 4, '#FFFFFF') +
+        E(-2, -48, 28, 15, '#FFFFFF') +
+        PL('M-12 -52 L-16 -44 M-2 -54 L-4 -45 M8 -53 L8 -44', INK, 3) +
+        E(26, -56, 11, 8, '#FFFFFF') +
+        PL('M30 -66 L34 -74 M22 -64 L22 -73', INK, 3) +
+        '<rect x="31" y="-60" width="9" height="8" rx="3.5" fill="#555B9E" stroke="none"/>' +
+        '<circle cx="27" cy="-58" r="2" fill="' + INK + '" stroke="none"/>' +
+        PL('M18 -62 Q22 -72 28 -74', INK, 3.5) +
+        PL('M-29 -54 Q-37 -44 -34 -32', INK, 3) + '</g>';
+    }
+    function gLion(x, y, s) {
+      return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
+        R(-18, -34, 8, 34, 4, '#FFAA1D') + R(10, -34, 8, 34, 4, '#FFAA1D') +
+        E(-2, -40, 24, 13, '#FFAA1D') +
+        C(24, -44, 17, '#D97E06') + C(24, -44, 12.5, '#FFC93C') +
+        '<circle cx="20" cy="-46" r="1.9" fill="' + INK + '" stroke="none"/><circle cx="29" cy="-46" r="1.9" fill="' + INK + '" stroke="none"/>' +
+        '<polygon points="24,-41 21.5,-37.5 26.5,-37.5" fill="#FF5D5D" stroke="none"/>' +
+        PL('M-25 -46 Q-33 -36 -29 -26', '#D97E06', 3.5) + '<circle cx="-29" cy="-24" r="3.5" fill="#8A5A2B" stroke="none"/></g>';
+    }
     const MAP_PATH_D = 'M200 548 C232 486 266 452 264 396 C262 342 148 352 140 282 C133 228 192 196 232 164';
     function mapPath(w) {
       return PL(MAP_PATH_D, w.path, 30, 'opacity="0.95"') + PL(MAP_PATH_D, w.accent, 5, 'stroke-dasharray="0.1 17" opacity="0.8"');
@@ -4139,7 +4217,9 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           mapPath(w) +
           WORLD_LANDMARKS[w.landmark](232, 170, 1.0) +
           gLollipop(66, 306, 0.95, '#FF5D8F') + gLollipop(336, 330, 0.8, '#8B76E8') + gLollipop(92, 472, 0.72, '#3FA9F5') +
-          gCandyHouse(322, 478, 0.9) + gCandyHouse(64, 196, 0.66) +
+          gLollipop(356, 234, 0.62, '#2FCB9B') + gLollipop(40, 404, 0.6, '#FFC93C') +
+          gCandyHouse(322, 478, 0.9) + gCandyHouse(64, 196, 0.66) + gCandyHouse(330, 590, 0.6) +
+          gCandyIcon(104, 336, 0.75, '#FF8A3C') + gGumdrop(352, 420, 0.8, '#FFC93C') + gGumdrop(44, 520, 0.75, '#8B76E8') +
           gGumdrop(150, 548, 1, '#FF8A3C') + gGumdrop(306, 552, 0.85, '#2FCB9B') + gGumdrop(96, 388, 0.8, '#FF5D8F') +
           gFlower(180, 470, '#FF5D8F', '#FFC93C', 0.8) + gFlower(352, 556, '#8B76E8', '#FFFFFF', 0.75) + gFlower(52, 560, '#FF8A3C', '#FFFFFF', 0.7) +
           gGrass(238, 470, '#3E9B2F', 1.1) + gGrass(120, 300, '#3E9B2F', 1) + gGrass(318, 250, '#3E9B2F', 0.9);
@@ -4147,15 +4227,19 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       math: function (w) {
         return '<rect width="400" height="600" fill="' + w.sky + '"/>' +
           '<rect x="0" y="430" width="400" height="170" fill="#232A6B"/>' +
-          starField(16, 3, 540) +
-          '<ellipse cx="200" cy="706" rx="310" ry="126" fill="#3FA9F5" ' + SW + '/>' +
-          PA('M60 622 Q120 596 176 618 Q130 640 60 622 Z', '#2E9E4F', 'stroke="none"') +
-          PA('M238 606 Q300 590 344 610 Q296 628 238 606 Z', '#2E9E4F', 'stroke="none"') +
+          starField(22, 3, 540) +
+          '<ellipse cx="200" cy="652" rx="320" ry="130" fill="#3FA9F5" ' + SW + '/>' +
+          PA('M40 586 Q96 560 152 582 Q104 606 40 586 Z', '#2E9E4F', 'stroke="none"') +
+          PA('M236 566 Q302 548 356 572 Q298 594 236 566 Z', '#2E9E4F', 'stroke="none"') +
+          PA('M150 612 Q196 598 236 614 Q192 630 150 612 Z', '#2FCB9B', 'stroke="none"') +
           mapPath(w) +
           WORLD_LANDMARKS[w.landmark](232, 170, 1.0) +
-          gStationModule(74, 208, 0.95) + gStationModule(322, 356, 0.8) +
-          gPlanet(88, 448, 19, '#FF8A3C') + gMoon(330, 92, 15) +
-          gRocket(96, 540, 0.62) + SP(318, 486, 9, '#38E1FF') + SP(52, 330, 8, '#FFC93C');
+          gStationModule(70, 300, 0.9) + gStationModule(338, 500, 0.72) +
+          gSatellite(338, 120, 0.9) + gSatellite(64, 420, 0.7) +
+          gComet(110, 190, 0.85) + gComet(356, 180, 0.7, '#38E1FF') +
+          gPlanet(56, 120, 16, '#FF8A3C', '#FFC93C') + gPlanet(352, 268, 14, '#2FCB9B') +
+          PL('M340 262 Q352 268 364 262', '#FFFFFF', 3) + gMoon(40, 250, 12) +
+          gRocket(96, 540, 0.62) + SP(36, 470, 8, '#38E1FF') + SP(52, 330, 8, '#FFC93C');
       },
       science: function (w) {
         return '<rect width="400" height="600" fill="' + w.sky + '"/>' +
@@ -4165,11 +4249,14 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           PA('M0 470 Q200 446 400 470 V600 H0 Z', w.deep, 'stroke="none" opacity="0.55"') +
           mapPath(w) +
           WORLD_LANDMARKS[w.landmark](232, 172, 1.05) +
-          PA('M0 0 H400 V58 Q326 92 246 60 Q160 32 74 66 Q24 82 0 54 Z', '#1F7A38', 'stroke="none"') +
-          PA('M0 0 H400 V30 Q300 52 210 28 Q110 8 0 34 Z', '#2E9E4F', 'stroke="none"') +
-          PL('M60 62 Q54 96 62 118', '#1F7A38', 4) + PL('M338 56 Q344 88 336 108', '#1F7A38', 4) +
-          PA('M52 108 q10 -16 22 -14 q-4 14 -22 14 Z', '#3ECF5F') + PA('M330 100 q12 -12 24 -8 q-8 12 -24 8 Z', '#3ECF5F') +
-          gPalm(58, 330, 1.05) + gPalm(348, 452, 0.9) +
+          PA('M0 0 H400 V34 Q330 58 258 36 Q170 14 84 40 Q30 54 0 30 Z', '#1F7A38', 'stroke="none"') +
+          PA('M0 0 H400 V16 Q300 34 205 15 Q105 0 0 18 Z', '#2E9E4F', 'stroke="none"') +
+          '<circle cx="24" cy="22" r="16" fill="#2E9E4F" stroke="none"/><circle cx="78" cy="13" r="13" fill="#1F7A38" stroke="none"/><circle cx="140" cy="23" r="15" fill="#2E9E4F" stroke="none"/><circle cx="205" cy="11" r="12" fill="#1F7A38" stroke="none"/><circle cx="268" cy="21" r="14" fill="#2E9E4F" stroke="none"/><circle cx="330" cy="13" r="13" fill="#1F7A38" stroke="none"/><circle cx="378" cy="23" r="15" fill="#2E9E4F" stroke="none"/>' +
+          PL('M64 42 Q58 68 66 86', '#1F7A38', 3.5) + PL('M336 40 Q342 64 334 82', '#1F7A38', 3.5) +
+          PA('M58 84 q10 -14 20 -12 q-4 12 -20 12 Z', '#3ECF5F') + PA('M328 80 q11 -11 22 -7 q-7 11 -22 7 Z', '#3ECF5F') +
+          gTreeRound(46, 330, 0.85, '#2E9E4F') + gTreeRound(358, 300, 0.7, '#3ECF5F') +
+          gPalm(58, 452, 0.95, '#7ED957') + gPalm(350, 470, 0.85, '#7ED957') +
+          E(96, 578, 42, 15, '#1F7A38', 'stroke="none" opacity="0.6"') + E(322, 582, 38, 13, '#1F7A38', 'stroke="none" opacity="0.6"') +
           gMushroom(98, 486, 1) + gMushroom(316, 528, 0.8) +
           gFlower(168, 540, '#FF5D5D', '#FFC93C', 0.85) + gFlower(356, 300, '#FFAA1D', '#FFFFFF', 0.75) +
           gGrass(120, 420, '#1F7A38', 1.2) + gGrass(286, 452, '#1F7A38', 1.1) + gGrass(210, 560, '#1F7A38', 1.2) +
@@ -4183,27 +4270,34 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           PA('M0 330 Q200 308 400 330 V600 H0 Z', w.ground, 'stroke="none"') +
           mapPath(w) +
           WORLD_LANDMARKS[w.landmark](232, 172, 1.0) +
-          gAcacia(76, 316, 1.05) + gAcacia(336, 442, 0.85) +
+          gAcacia(76, 316, 1.05) + gAcacia(336, 442, 0.85) + gAcacia(36, 150, 0.6) +
+          gGiraffe(338, 318, 0.7) + gElephant(84, 430, 0.8) + gZebra(316, 540, 0.75) + gLion(38, 540, 0.75) +
           E(98, 528, 54, 16, '#3FA9F5') + E(98, 524, 38, 9, '#8FE3FF', 'stroke="none"') +
           E(306, 552, 17, 10, '#9AA5B1') + E(334, 560, 12, 8, '#9AA5B1') +
           gGrass(150, 470, '#3FA83C', 1.2) + gGrass(268, 500, '#3FA83C', 1.1) + gGrass(52, 420, '#3FA83C', 1) + gGrass(356, 540, '#3FA83C', 1.15) + gGrass(196, 330, '#3FA83C', 0.95) +
-          gFlower(178, 556, '#FF5D5D', '#FFFFFF', 0.75) + gFlower(52, 500, '#FFAA1D', '#FFFFFF', 0.7) +
+          gFlower(178, 556, '#FF5D5D', '#FFFFFF', 0.75) + gFlower(150, 462, '#FFAA1D', '#FFFFFF', 0.7) +
           gButterfly(318, 268, 0.62, '#FF8FAB', '#8B76E8');
       },
       space: function (w) {
         let stones = '';
-        [[200, 548, 16], [238, 492, 14], [262, 440, 15], [264, 396, 16], [220, 362, 13], [168, 338, 14], [146, 300, 13], [140, 282, 15], [150, 240, 13], [186, 200, 14]].forEach(p => {
+        [[200, 548, 16], [222, 520, 11], [238, 492, 14], [252, 466, 11], [262, 440, 15], [264, 418, 11], [264, 396, 16], [242, 379, 10], [220, 362, 13], [194, 350, 10], [168, 338, 14], [156, 319, 10], [146, 300, 13], [140, 282, 15], [143, 261, 10], [150, 240, 13], [168, 220, 10], [186, 200, 14]].forEach(p => {
           stones += C(p[0], p[1], p[2], '#8E93C4') + '<circle cx="' + (p[0] - 4) + '" cy="' + (p[1] - 3) + '" r="3.5" fill="#6E73AC" stroke="none"/>';
         });
         return '<rect width="400" height="600" fill="' + w.sky + '"/>' +
           '<ellipse cx="70" cy="120" rx="90" ry="46" fill="#6C4BD8" opacity="0.4"/>' +
           '<ellipse cx="340" cy="380" rx="100" ry="52" fill="#FF5D8F" opacity="0.22"/>' +
           '<ellipse cx="120" cy="470" rx="80" ry="40" fill="#3FA9F5" opacity="0.25"/>' +
-          starField(18, 7, 560) + stones +
+          starField(18, 7, 560) +
+          PL(MAP_PATH_D, '#555B9E', 38, 'opacity="0.85"') + PL(MAP_PATH_D, w.path, 27, 'opacity="0.55"') + stones +
           WORLD_LANDMARKS[w.landmark](232, 176, 1.05) +
-          gPlanet(82, 168, 23, '#FF8A3C', '#FFC93C') + gPlanet(330, 452, 17, '#2FCB9B') +
-          gMoon(326, 246, 14) + gRocket(84, 356, 0.66) +
-          E(318, 548, 15, 9, '#9AA5B1') + E(56, 520, 11, 7, '#9AA5B1') + E(120, 96, 10, 6, '#9AA5B1');
+          gPlanet(82, 168, 23, '#FF8A3C', '#FFC93C') +
+          PL('M64 158 Q82 167 100 158', '#D63C2A', 4.5) + PL('M62 177 Q82 186 102 177', '#FFE9A8', 4.5) +
+          gPlanet(352, 520, 16, '#2FCB9B') +
+          PL('M338 513 Q352 519 366 513', '#FFFFFF', 3.5) + '<circle cx="346" cy="527" r="3.4" fill="#0E8A5F" stroke="none"/><circle cx="359" cy="530" r="2.6" fill="#0E8A5F" stroke="none"/>' +
+          gPlanet(52, 452, 14, '#8B76E8') +
+          PL('M40 446 Q52 452 64 446', '#FF8FAB', 3.5) + '<circle cx="47" cy="458" r="3" fill="#6D4BD8" stroke="none"/>' +
+          gMoon(326, 246, 14) + gComet(308, 116, 0.9, '#38E1FF') + gRocket(356, 330, 0.6) +
+          E(300, 560, 13, 8, '#9AA5B1') + E(56, 520, 11, 7, '#9AA5B1') + E(120, 96, 10, 6, '#9AA5B1');
       }
     };
     function worldSceneSVG(subjectId) {
@@ -4255,7 +4349,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
 
     /* ---------------- Topic scenes (400x240, one per topic) ---------------- */
     function bgWords(w) {
-      return '<rect width="400" height="240" fill="' + w.sky + '"/>' + gSun(354, 40, 17) + gCloud(66, 44, 0.66) +
+      return '<rect width="400" height="240" fill="' + w.sky + '"/>' + gSun(344, 42, 17) + gCloud(66, 44, 0.66) +
         PA('M0 168 Q120 140 230 162 T400 156 V240 H0 Z', '#7ED957', 'stroke="none"') +
         '<rect x="0" y="188" width="400" height="52" fill="' + w.ground + '"/>' +
         PA('M0 188 Q200 172 400 188 V240 H0 Z', w.ground, 'stroke="none"');
@@ -4294,11 +4388,15 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     const TOPIC_ART = {
       'letter-sounds': function (w) {
         return bgWords(w) +
-          R(62, 84, 66, 66, 14, '#FF5D8F') + TX(95, 129, 38, '#FFFFFF', 'A') +
-          R(167, 72, 66, 66, 14, '#FFC93C') + TX(200, 117, 38, INK, 'B') +
-          R(272, 84, 66, 66, 14, '#3FA9F5') + TX(305, 129, 38, '#FFFFFF', 'C') +
-          PL('M346 96 a15 15 0 0 1 0 22 M354 88 a24 24 0 0 1 0 38', '#FF5D8F', 4) +
-          SP(46, 84, 9, '#FFC93C') + SP(356, 168, 8, '#FFFFFF') + gFlower(52, 196, '#FF5D8F', '#FFC93C', 0.75) + gFlower(348, 200, '#8B76E8', '#FFFFFF', 0.7);
+          R(50, 80, 62, 62, 14, '#FF5D8F') + TX(81, 123, 36, '#FFFFFF', 'A') +
+          R(162, 68, 62, 62, 14, '#FFC93C') + TX(193, 111, 36, INK, 'B') +
+          R(274, 80, 62, 62, 14, '#3FA9F5') + TX(305, 123, 36, '#FFFFFF', 'C') +
+          PL('M344 94 a13 13 0 0 1 0 19 M351 87 a21 21 0 0 1 0 33', '#FF5D8F', 4) +
+          gGumdrop(70, 196, 0.85, '#FF8A3C') + gGumdrop(330, 200, 0.8, '#2FCB9B') +
+          gCandyIcon(140, 180, 0.7, '#8B76E8') + gCandyIcon(262, 184, 0.65, '#FF5D8F') +
+          gLollipop(200, 198, 0.62, '#3FA9F5') +
+          gFlower(52, 168, '#FF5D8F', '#FFC93C', 0.7) + gFlower(352, 164, '#8B76E8', '#FFFFFF', 0.65) +
+          gGrass(110, 216, '#3E9B2F', 0.9) + gGrass(292, 218, '#3E9B2F', 0.9) + SP(46, 60, 8, '#FFC93C');
       },
       'sight-words': function (w) {
         return bgWords(w) +
@@ -4308,7 +4406,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           PL('M200 126 V194', INK, 3) + PL('M142 128 Q168 122 188 132 M142 148 Q168 142 188 152 M212 132 Q232 122 258 128 M212 152 Q232 142 258 148', '#B9C4D6', 2.5) +
           R(44, 118, 58, 40, 9, '#FFFFFF') + TX(73, 145, 17, INK, 'the') +
           R(298, 118, 58, 40, 9, '#FFFFFF') + TX(327, 145, 17, INK, 'see') +
-          SP(52, 62, 8, '#FFC93C') + SP(352, 84, 8, '#FFFFFF');
+          SP(52, 62, 8, '#FFC93C') + SP(352, 84, 8, '#FFFFFF') +
+          gGumdrop(118, 216, 0.7, '#FF8A3C') + gFlower(302, 210, '#FF5D8F', '#FFC93C', 0.7) + gGrass(238, 218, '#3E9B2F', 0.85);
       },
       'rhyming-words': function (w) {
         return bgWords(w) +
@@ -4323,7 +4422,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           gNote(258, 92, 1.15, '#8B76E8') + gNote(318, 138, 0.9, '#FF5D8F') + gNote(292, 62, 0.75, '#3FA9F5') +
           '<g transform="translate(64,58)"><ellipse cx="0" cy="0" rx="9" ry="11" fill="#555B9E" ' + SW2 + '/>' +
           PA('M-8 -2 Q-26 -12 -28 2 Q-16 6 -8 4 Z', '#555B9E') + PA('M8 -2 Q26 -12 28 2 Q16 6 8 4 Z', '#555B9E') + '</g>' +
-          gFlower(330, 198, '#FF5D8F', '#FFC93C', 0.75);
+          gFlower(330, 198, '#FF5D8F', '#FFC93C', 0.75) + gGrass(238, 216, '#3E9B2F', 0.9) + gGrass(52, 214, '#3E9B2F', 0.8);
       },
       'word-families': function (w) {
         return bgWords(w) +
@@ -4331,9 +4430,9 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           R(146, 96, 108, 82, 8, '#FFF3D6') + PG('134,96 200,50 266,96', '#FF5D8F') +
           '<rect x="134" y="92" width="132" height="8" rx="4" fill="#FFFFFF" ' + SW2 + '/>' +
           PA('M186 178 v-34 a14 14 0 0 1 28 0 v34 Z', '#8A5A2B') + C(164, 122, 7, '#8FE3FF') + C(236, 122, 7, '#8FE3FF') +
-          R(58, 188, 62, 34, 9, '#FF5D8F') + TX(89, 211, 16, '#FFFFFF', 'cat') +
-          R(169, 188, 62, 34, 9, '#FFC93C') + TX(200, 211, 16, INK, 'hat') +
-          R(280, 188, 62, 34, 9, '#3FA9F5') + TX(311, 211, 16, '#FFFFFF', 'bat') +
+          R(58, 186, 62, 34, 9, '#FF5D8F') + TX(89, 209, 16, '#FFFFFF', 'cat') +
+          R(169, 186, 62, 34, 9, '#FFC93C') + TX(200, 209, 16, INK, 'hat') +
+          R(280, 186, 62, 34, 9, '#3FA9F5') + TX(311, 209, 16, '#FFFFFF', 'bat') +
           gFlower(52, 168, '#FF8A3C', '#FFFFFF', 0.7) + gFlower(352, 168, '#FF5D8F', '#FFC93C', 0.7);
       },
       'counting': function (w) {
@@ -4350,7 +4449,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           TX(158, 128, 46, '#FFFFFF', '+') +
           ST(212, 92, 15, '#FF5D5D') + ST(248, 138, 15, '#FF5D5D') +
           TX(292, 126, 38, '#FFFFFF', '=') +
-          C(348, 112, 21, '#FFFFFF') + TX(348, 121, 26, INK, '?') +
+          C(344, 112, 21, '#FFFFFF') + TX(344, 121, 26, INK, '?') +
           SP(120, 196, 8, '#38E1FF') + SP(268, 196, 8, '#FFFFFF');
       },
       'shapes': function (w) {
@@ -4365,7 +4464,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         return bgMath(w) +
           PL('M28 88 Q200 114 372 88', '#FFFFFF', 3) +
           C(58, 94, 15, '#FF5D5D') + R(96, 84, 28, 28, 7, '#3FA9F5') + C(152, 100, 15, '#FF5D5D') + R(192, 90, 28, 28, 7, '#3FA9F5') +
-          PG('262,84 278,110 246,110', '#FFC93C') + C(312, 100, 15, '#FF5D5D') + C(354, 94, 16, '#FFFFFF') + TX(354, 101, 18, INK, '?') +
+          PG('262,84 278,110 246,110', '#FFC93C') + C(312, 100, 15, '#FF5D5D') + C(350, 94, 16, '#FFFFFF') + TX(350, 101, 18, INK, '?') +
           C(92, 176, 21, '#FF5D5D') + R(140, 155, 42, 42, 9, '#3FA9F5') + C(224, 176, 21, '#FF5D5D') + C(286, 176, 21, '#FFFFFF') + TX(286, 184, 22, INK, '?') +
           SP(348, 168, 8, '#38E1FF');
       },
@@ -4401,7 +4500,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           '<path d="M36 210 a56 56 0 0 1 112 0" fill="none" stroke="#FF5D5D" stroke-width="7"/>' +
           '<path d="M48 210 a44 44 0 0 1 88 0" fill="none" stroke="#FFC93C" stroke-width="7"/>' +
           '<path d="M60 210 a32 32 0 0 1 64 0" fill="none" stroke="#2FCB9B" stroke-width="7"/>' +
-          R(356, 84, 17, 86, 8, '#FFFFFF') + '<rect x="361" y="112" width="7" height="52" rx="3.5" fill="#FF5D5D"/>' + C(364, 182, 14, '#FF5D5D');
+          R(348, 84, 17, 86, 8, '#FFFFFF') + '<rect x="353" y="112" width="7" height="52" rx="3.5" fill="#FF5D5D"/>' + C(356, 182, 14, '#FF5D5D');
       },
       'sink-or-float': function (w) {
         return bgScience(w) +
@@ -4415,7 +4514,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       },
       'honeybees': function (w) {
         return bgAnimals(w) +
-          PL('M-6 42 Q110 20 216 46', '#8A5A2B', 11) +
+          PL('M2 44 Q110 22 216 46', '#8A5A2B', 11) +
           PA('M196 40 q4 -18 22 -20 q0 16 -22 20 Z', '#3ECF5F') +
           R(76, 62, 58, 21, 10, '#FFC93C') + R(69, 81, 72, 21, 10, '#FFB52E') + R(76, 100, 58, 21, 10, '#FFC93C') +
           C(105, 110, 7.5, '#8A5A2B') +
@@ -4450,7 +4549,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       'dinosaurs': function (w) {
         return bgAnimals(w) +
           gPalm(50, 148, 0.95) +
-          PG('284,206 330,118 376,206', '#9AA5B1') + PA('M312 146 L330 118 L348 146 L338 138 L330 148 L322 138 Z', '#FF6B57') +
+          PG('276,206 322,118 368,206', '#9AA5B1') + PA('M304 146 L322 118 L340 146 L330 138 L322 148 L314 138 Z', '#FF6B57') +
           PL('M196 138 Q222 104 234 84', '#58C24A', 23) +
           E(164, 152, 60, 37, '#58C24A') +
           PG('108,140 54,160 110,170', '#58C24A') +
@@ -4460,7 +4559,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           '<circle cx="140" cy="140" r="6" fill="#3FA83C" stroke="none"/><circle cx="176" cy="132" r="4.5" fill="#3FA83C" stroke="none"/>' +
           R(138, 178, 15, 27, 6, '#3FA83C') + R(184, 178, 15, 27, 6, '#3FA83C') +
           E(318, 196, 16, 20, '#FFF3D6') + PL('M306 192 l6 -5 6 6 6 -6 6 5', '#D99400', 2.5) +
-          '<circle cx="356" cy="96" r="8" fill="#FFFFFF" stroke="none" opacity="0.75"/><circle cx="368" cy="86" r="6" fill="#FFFFFF" stroke="none" opacity="0.75"/>' +
+          '<circle cx="350" cy="96" r="8" fill="#FFFFFF" stroke="none" opacity="0.75"/><circle cx="361" cy="86" r="6" fill="#FFFFFF" stroke="none" opacity="0.75"/>' +
           gGrass(96, 216, '#3FA83C', 1.1) + gGrass(238, 220, '#3FA83C', 1);
       },
       'the-moon': function (w) {
