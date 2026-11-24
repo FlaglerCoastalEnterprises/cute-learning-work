@@ -1388,16 +1388,21 @@ header {
 }
 
 @media (min-width: 700px) {
-  /* Topic detail becomes two-column: art left, actions right. */
+  /* Topic detail becomes two-column: art left, actions right. The grid
+     stretches to the full view height: the 1fr row absorbs any extra
+     space, so tall/wide viewports get no dead cream void under the
+     content, and the art column fills its full height (the hero image
+     already uses object-fit: cover). On phones the detail keeps its
+     natural single-column stacking. */
   #viewTopic {
     display: grid;
     grid-template-columns: 1.05fr 1fr;
+    grid-template-rows: auto 1fr;
     grid-template-areas: 'back back' 'hero info';
     gap: var(--sp-4);
-    align-content: start;
   }
   #viewTopic #topicBack { grid-area: back; justify-self: start; margin-bottom: 0; }
-  #viewTopic .topic-hero { grid-area: hero; }
+  #viewTopic .topic-hero { grid-area: hero; height: 100%; }
   #viewTopic .topic-info-card { grid-area: info; margin-top: 0; }
   #viewTopic .topic-hero-img { height: 100%; min-height: 340px; }
 }
@@ -1471,6 +1476,53 @@ header {
 
 @media (min-width: 1200px) {
   :root { --app-max: 1060px; }
+}
+
+/* ---------------- Phones & tablets (<900px): true full-bleed app ----------------
+   No framed panel at these widths: the shell docks edge-to-edge. Body
+   padding goes to zero; the header and level selector sit flush at the
+   top (the header carries the safe-area-top inset in its own padding);
+   the app column spans the full width so the map art reaches the screen
+   edges; and the bottom nav becomes a full-width docked bar — square
+   corners, no gap above it, a border-top instead of a floating shadow,
+   and the safe-area-bottom inset inside its own padding so the buttons
+   sit above the home indicator. The nav stays an in-flow layout row, so
+   the scroll area still ends above it: nothing can hide behind it.
+   At >=900px the framed panel + blurred backdrop design is unchanged. */
+@media (max-width: 899px) {
+  body { padding: 0; }
+  header {
+    max-width: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    box-shadow: none;
+    border-bottom: 2px solid rgba(255, 233, 201, 0.9);
+    padding: calc(var(--sp-2) + env(safe-area-inset-top)) calc(var(--sp-3) + env(safe-area-inset-right)) var(--sp-2) calc(var(--sp-2) + env(safe-area-inset-left));
+  }
+  .level-selector {
+    max-width: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    box-shadow: none;
+    border-bottom: 2px solid rgba(255, 233, 201, 0.9);
+    padding-left: calc(6px + env(safe-area-inset-left));
+    padding-right: calc(6px + env(safe-area-inset-right));
+  }
+  main#views { max-width: none; }
+  .view {
+    padding-left: max(var(--sp-3), env(safe-area-inset-left));
+    padding-right: max(var(--sp-3), env(safe-area-inset-right));
+  }
+  #viewHome { padding-left: 0; padding-right: 0; }
+  #bottomNav {
+    max-width: none;
+    margin-top: 0;
+    border-radius: 0;
+    border: none;
+    border-top: 2px solid rgba(255, 233, 201, 0.9);
+    box-shadow: none;
+    padding: var(--sp-2) calc(var(--sp-2) + env(safe-area-inset-right)) calc(var(--sp-2) + env(safe-area-inset-bottom)) calc(var(--sp-2) + env(safe-area-inset-left));
+  }
 }
 
   </style><body>
