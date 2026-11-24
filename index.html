@@ -4145,8 +4145,32 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     function gComet(x, y, s, f) {
       f = f || '#FFFFFF';
       return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
-        PL('M-6 -4 L-38 -16 M-7 1 L-44 0 M-6 6 L-36 15', f, 3.5, 'opacity="0.75"') +
+        '<circle cx="0" cy="0" r="15" fill="' + f + '" opacity="0.22" stroke="none"/>' +
+        PL('M-6 -4 L-38 -16 M-7 1 L-44 0 M-6 6 L-36 15', f, 4, 'opacity="0.8"') +
         C(0, 0, 8, f) + '<circle cx="-2" cy="-2" r="3" fill="#BFE9FF" stroke="none"/></g>';
+    }
+    /* Layered nebula cloud: overlapping flat ovals in deep tones + sparkles
+       and dust dots on top, so it reads as a nebula, never a blank blob. */
+    function gNebula(cx, cy, s, c1, c2, c3) {
+      const el = (dx, dy, rx, ry, f, o) => '<ellipse cx="' + (cx + dx * s).toFixed(1) + '" cy="' + (cy + dy * s).toFixed(1) + '" rx="' + (rx * s).toFixed(1) + '" ry="' + (ry * s).toFixed(1) + '" fill="' + f + '" opacity="' + o + '" stroke="none"/>';
+      return '<g class="nebula">' +
+        el(0, 0, 95, 48, c1, 0.30) + el(-28, 7, 62, 32, c2, 0.38) + el(30, -9, 55, 28, c3, 0.34) + el(2, -3, 34, 17, c2, 0.30) +
+        SP(cx - 42 * s, cy - 12 * s, 6 * s, '#FFFFFF') + SP(cx + 16 * s, cy - 18 * s, 7.5 * s, '#FFC93C') + SP(cx + 46 * s, cy + 10 * s, 5 * s, '#FFFFFF') + SP(cx - 6 * s, cy + 16 * s, 4.5 * s, '#FFFFFF') +
+        '<circle cx="' + (cx - 20 * s) + '" cy="' + (cy + 4 * s) + '" r="' + (2.4 * s).toFixed(1) + '" fill="#FFFFFF" opacity="0.85" stroke="none"/>' +
+        '<circle cx="' + (cx + 34 * s) + '" cy="' + (cy - 2 * s) + '" r="' + (1.8 * s).toFixed(1) + '" fill="#FFFFFF" opacity="0.7" stroke="none"/>' +
+        '<circle cx="' + (cx + 4 * s) + '" cy="' + (cy - 24 * s) + '" r="' + (2 * s).toFixed(1) + '" fill="#BFE9FF" opacity="0.8" stroke="none"/></g>';
+    }
+    /* Small cluster of space-dust dots for filling quiet sky areas. */
+    function gDust(cx, cy, seed) {
+      const cols = ['#FFFFFF', '#FFC93C', '#38E1FF', '#FFFFFF'];
+      let out = '<g class="dust">';
+      for (let i = 0; i < 7; i++) {
+        const dx = ((seed * 31 + i * 47) % 53) - 26;
+        const dy = ((seed * 17 + i * 29) % 33) - 16;
+        const r = 1.5 + ((seed + i * 2) % 3) * 0.8;
+        out += '<circle cx="' + (cx + dx) + '" cy="' + (cy + dy) + '" r="' + r.toFixed(1) + '" fill="' + cols[i % 4] + '" opacity="' + (0.45 + (i % 3) * 0.2).toFixed(2) + '" stroke="none"/>';
+      }
+      return out + '</g>';
     }
     function gGiraffe(x, y, s) {
       return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
@@ -4227,7 +4251,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       math: function (w) {
         return '<rect width="400" height="600" fill="' + w.sky + '"/>' +
           '<rect x="0" y="430" width="400" height="170" fill="#232A6B"/>' +
-          starField(22, 3, 540) +
+          starField(26, 3, 540) +
           '<ellipse cx="200" cy="652" rx="320" ry="130" fill="#3FA9F5" ' + SW + '/>' +
           PA('M40 586 Q96 560 152 582 Q104 606 40 586 Z', '#2E9E4F', 'stroke="none"') +
           PA('M236 566 Q302 548 356 572 Q298 594 236 566 Z', '#2E9E4F', 'stroke="none"') +
@@ -4236,9 +4260,12 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           WORLD_LANDMARKS[w.landmark](232, 170, 1.0) +
           gStationModule(70, 300, 0.9) + gStationModule(338, 500, 0.72) +
           gSatellite(338, 120, 0.9) + gSatellite(64, 420, 0.7) +
-          gComet(110, 190, 0.85) + gComet(356, 180, 0.7, '#38E1FF') +
+          gComet(118, 198, 1.3) + gComet(346, 208, 1.15, '#38E1FF') +
           gPlanet(56, 120, 16, '#FF8A3C', '#FFC93C') + gPlanet(352, 268, 14, '#2FCB9B') +
           PL('M340 262 Q352 268 364 262', '#FFFFFF', 3) + gMoon(40, 250, 12) +
+          gPlanet(110, 350, 13, '#8B76E8') +
+          PL('M99 344 Q110 350 121 344', '#6D4BD8', 3.5) + '<circle cx="105" cy="356" r="2.8" fill="#6D4BD8" stroke="none"/><circle cx="116" cy="341" r="2.2" fill="#6D4BD8" stroke="none"/>' +
+          gDust(52, 470, 5) + gDust(150, 478, 9) +
           gRocket(96, 540, 0.62) + SP(36, 470, 8, '#38E1FF') + SP(52, 330, 8, '#FFC93C');
       },
       science: function (w) {
@@ -4284,9 +4311,9 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           stones += C(p[0], p[1], p[2], '#8E93C4') + '<circle cx="' + (p[0] - 4) + '" cy="' + (p[1] - 3) + '" r="3.5" fill="#6E73AC" stroke="none"/>';
         });
         return '<rect width="400" height="600" fill="' + w.sky + '"/>' +
-          '<ellipse cx="70" cy="120" rx="90" ry="46" fill="#6C4BD8" opacity="0.4"/>' +
-          '<ellipse cx="340" cy="380" rx="100" ry="52" fill="#FF5D8F" opacity="0.22"/>' +
-          '<ellipse cx="120" cy="470" rx="80" ry="40" fill="#3FA9F5" opacity="0.25"/>' +
+          gNebula(78, 118, 1.0, '#4A2FA0', '#6C4BD8', '#3FA9F5') +
+          gNebula(336, 378, 1.05, '#7A2E8F', '#B03A8C', '#FF5D8F') +
+          gNebula(118, 468, 0.9, '#2B3A8F', '#3FA9F5', '#6C4BD8') +
           starField(18, 7, 560) +
           PL(MAP_PATH_D, '#555B9E', 38, 'opacity="0.85"') + PL(MAP_PATH_D, w.path, 27, 'opacity="0.55"') + stones +
           WORLD_LANDMARKS[w.landmark](232, 176, 1.05) +
