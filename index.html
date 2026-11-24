@@ -1959,7 +1959,19 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     .grownup-btn { display: block; margin: 4px auto 10px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.95rem; color: #718096; background: none; border: 2.5px dashed #B9C6DE; border-radius: 999px; padding: 8px 16px; cursor: pointer; }
     .place-card { text-align: center; max-width: 430px; }
     .place-pip { display: flex; justify-content: center; margin-bottom: 6px; }
-    .place-mascot { width: 110px; height: auto; }
+    /* QA fix: mascotSVG's second argument is ignored, so size the rendered
+       .mascot-img directly — the old .place-mascot rule never matched and
+       Pip rendered at natural image size, pushing the buttons off-screen. */
+    .place-pip .mascot-img { width: 110px; height: 110px; }
+    /* QA fix: card is a flex column capped to the viewport; only the stage
+       scrolls internally, and the page behind is locked while open. */
+    .modal-card.place-card { display: flex; flex-direction: column; max-height: 92dvh; overflow: hidden; }
+    #placeStage { overflow-y: auto; min-height: 0; }
+    @media (max-height: 560px) {
+      .place-pip .mascot-img { width: 68px; height: 68px; }
+      .place-title { font-size: 1.35rem; }
+      .place-sub { margin-bottom: 10px; }
+    }
     .place-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.7rem; color: var(--ink); margin: 6px 0; }
     .place-sub { font-size: 1.05rem; font-weight: 600; color: #4A5568; margin-bottom: 16px; line-height: 1.45; }
     .place-progress { font-weight: 700; color: #718096; margin-bottom: 8px; }
@@ -3124,6 +3136,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       else if (engineMathOps) q = genMathWithOps(engineMathOps, qLevel);
       else q = (mathData[qLevel] || mathData[1])();
       if (engineMathIcon) q.icon = engineMathIcon;
+      if (!q.icon) q.icon = '⭐'; // QA fix: never render "undefined" in the counting visual (topics without their own icon)
       state.currentQuestion = q;
       if (session && session.reviewKey) { state.currentReviewKey = session.reviewKey; session.reviewKey = null; }
 
@@ -3812,6 +3825,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       if (!next) next = trophyList[Math.floor(Math.random() * trophyList.length)];
       state.trophies[next.id] = (state.trophies[next.id] || 0) + 1;
       saveState();
+      updateHud(); // QA fix: header trophy counter must refresh at award time, not on the next view change
       renderShelf(null);
 
       const modal = document.getElementById('trophyModal');
@@ -4221,13 +4235,15 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       <path d="M 70 120 C 140 80 290 90 330 140" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
       <path d="M 30 430 q 18 -14 36 0 q 18 14 36 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
       <path d="M 300 470 q 18 -14 36 0 q 18 14 36 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 318 566 q 18 -14 36 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
       <path d="M 90 240 q 18 -14 36 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
       <g stroke="${INK}" stroke-width="3" fill="#2FCB9B">
-        <path d="M 110 200 l 14 -26 l 14 26 Z"/><path d="M 250 160 l 14 -26 l 14 26 Z"/><path d="M 290 300 l 14 -26 l 14 26 Z"/>
+        <path d="M 110 200 l 14 -26 l 14 26 Z"/><path d="M 290 300 l 14 -26 l 14 26 Z"/><path d="M 58 368 l 14 -26 l 14 26 Z"/><path d="M 108 522 l 14 -26 l 14 26 Z"/>
       </g>
       <path d="M 120 480 C 170 420 150 350 205 300 C 250 260 235 200 265 150" fill="none" stroke="${w.path}" stroke-width="16" stroke-linecap="round" stroke-dasharray="2 14"/>
+      <g><rect x="239" y="80" width="41" height="76" rx="6" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 239 103 L 280 103 L 280 119 L 239 119 Z" fill="#FF5D5D"/><rect x="231" y="52" width="57" height="29" rx="7" fill="${w.accent}" stroke="${INK}" stroke-width="3.5"/><path d="M 223 52 L 259 25 L 295 52 Z" fill="${INK}"/><circle cx="259" cy="66" r="8" fill="#FFC93C" stroke="${INK}" stroke-width="3"/></g>
       <g><rect x="150" y="392" width="42" height="34" rx="4" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 144 394 L 171 372 L 198 394 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="3.5"/><rect x="164" y="406" width="14" height="20" fill="${w.accent}" stroke="${INK}" stroke-width="3"/></g>
-      <g><rect x="238" y="212" width="36" height="30" rx="4" fill="#FFF3D6" stroke="${INK}" stroke-width="3.5"/><path d="M 232 214 L 256 196 L 280 214 Z" fill="#8B5E34" stroke="${INK}" stroke-width="3.5"/></g>
+      <g><rect x="312" y="238" width="36" height="30" rx="4" fill="#FFF3D6" stroke="${INK}" stroke-width="3.5"/><path d="M 306 240 L 330 220 L 354 240 Z" fill="#8B5E34" stroke="${INK}" stroke-width="3.5"/></g>
       <circle cx="330" cy="70" r="24" fill="#FFC93C" stroke="${INK}" stroke-width="3.5"/>
       <g stroke="${INK}" stroke-width="3" stroke-linecap="round"><line x1="330" y1="32" x2="330" y2="22"/><line x1="362" y1="48" x2="370" y2="42"/><line x1="298" y1="48" x2="290" y2="42"/></g>
       <g transform="translate(52 52)"><circle r="24" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 0 -16 L 5 0 L 0 16 L -5 0 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="2"/><text y="-30" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="${INK}">N</text></g>
@@ -4610,7 +4626,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
 
     /* ---------------- Topic scenes (400x240, one per topic) ---------------- */
     function bgWords(w) {
-      return '<rect width="400" height="240" fill="' + w.sky + '"/>' + gSun(344, 42, 17) + gCloud(66, 44, 0.66) +
+      return '<rect width="400" height="240" fill="' + w.sky + '"/>' + gSun(344, 42, 17) + gCloud(272, 32, 0.6) +
         PA('M0 168 Q120 140 230 162 T400 156 V240 H0 Z', '#7ED957', 'stroke="none"') +
         '<rect x="0" y="188" width="400" height="52" fill="' + w.ground + '"/>' +
         PA('M0 188 Q200 172 400 188 V240 H0 Z', w.ground, 'stroke="none"');
@@ -6380,7 +6396,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       if (!q || !tid) return null;
       const topic = getTopic(tid);
       if (q.type === 'add' || q.type === 'sub' || q.type === 'mul' || q.type === 'div' || q.type === 'missing') {
-        return { kind: 'math', topicId: tid, mq: { type: q.type, a: q.a, b: q.b, ans: q.ans, total: q.total } };
+        return { kind: 'math', topicId: tid, mq: { type: q.type, a: q.a, b: q.b, ans: q.ans, total: q.total, icon: q.icon } };
       }
       if (q.word && q.emoji) return { kind: 'word', topicId: tid, item: { word: q.word, emoji: q.emoji, clue: q.clue || '' } };
       if (q.options && q.q) {
@@ -6483,12 +6499,12 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           case 'choice': {
             const ok = spec.task.options.find(o => o.ok);
             if (!ok) return null;
-            return { q: spec.task.q, options: spec.task.options.map(o => o.t), correct: ok.t };
+            return { q: spec.task.q, options: spec.task.options.map(o => o.t), correct: ok.t, display: spec.task.display };
           }
           case 'count': {
             const t = buildCountTask(spec);
             const ok = t.options.find(o => o.ok);
-            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '' };
+            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '', display: t.display };
           }
           case 'math': {
             const mq = spec.mq;
@@ -6509,18 +6525,18 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           case 'time': {
             const t = genTimeTaskFixed(spec.h, spec.m, 4);
             const ok = t.options.find(o => o.ok);
-            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '' };
+            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '', display: t.display };
           }
           case 'money': {
             const t = genMoneyTaskFixed(spec);
             const ok = t.options.find(o => o.ok);
-            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '' };
+            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '', display: t.display };
           }
           case 'fillblank': {
             const t = spec.task;
             const ok = t.options.find(o => o.ok);
             if (!ok) return null;
-            return { q: t.prompt, options: t.options.map(o => o.t), correct: ok.t };
+            return { q: t.prompt, options: t.options.map(o => o.t), correct: ok.t, display: t.display };
           }
         }
       } catch (e) {}
@@ -6531,7 +6547,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       dueReviewItems(topic, 99).forEach(it => {
         if (out.length >= (max || 2)) return;
         const f = quizFormFor(it.spec);
-        if (f) out.push({ q: f.q, options: f.options, correct: f.correct, reviewKey: it.key });
+        if (f) out.push({ q: f.q, options: f.options, correct: f.correct, reviewKey: it.key, display: f.display });
       });
       return out;
     }
@@ -7348,6 +7364,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       const stage = document.getElementById('placeStage');
       if (!modal || !stage) return;
       modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
       stage.innerHTML =
         '<div class="place-pip">' + mascotSVG('happy', 'place-mascot') + '</div>' +
         '<div class="place-title">Let\'s play a few games!</div>' +
@@ -7361,6 +7378,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     function closePlacement() {
       const modal = document.getElementById('placementModal');
       if (modal) modal.classList.remove('open');
+      document.body.style.overflow = '';
       placementRun = null;
       if ('speechSynthesis' in window) { try { window.speechSynthesis.cancel(); } catch (e) {} }
     }
@@ -7541,6 +7559,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         topicArtStrip() +
         '<div class="quiz-progress">Question ' + (session.idx + 1) + ' of ' + session.questions.length + '</div>' +
         '<div class="task-prompt">' + q.q + '</div>' + hearItBtnHTML() +
+        (q.display ? '<div class="task-display">' + q.display + '</div>' : '') +
         '<div class="choice-grid" id="choiceGrid"></div>';
       setMascotMessage(q.q, 'thinking');
       setNarration(q.q, q.options.slice());

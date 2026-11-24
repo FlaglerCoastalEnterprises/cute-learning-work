@@ -5,7 +5,7 @@
    after the first visit. All paths are relative to this file so the
    GitHub Pages subpath (/cute-learning-work/) resolves correctly. */
 
-const CACHE_NAME = 'lw-v6';
+const CACHE_NAME = 'lw-v7';
 const APP_SHELL = [
   './',
   './index.html',
