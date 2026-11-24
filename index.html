@@ -351,8 +351,13 @@ main#views { width: 100%; max-width: 720px; }
   pointer-events: none;
 }
 
-/* Keep the top (4th) node clear of the painted castle at the path's end */
-#mapNodes .map-node-wrap:nth-child(4) { margin-top: 24px; }
+/* Keep the top (4th) node clear of the painted castle at the path's end.
+   The castle spans ~20-28.5% of the art height around x=58%, and the node
+   wrap (button+stars+label ~118px, centered on its 27% anchor) needs its
+   top edge below the castle base: 76px puts it at ~29-30% of the map
+   height on phone and desktop widths, with the button sitting on the
+   painted path just below the castle. */
+#mapNodes .map-node-wrap:nth-child(4) { margin-top: 76px; }
 
 .map-mascot {
   width: 56px;
