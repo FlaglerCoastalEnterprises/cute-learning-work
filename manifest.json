@@ -3,8 +3,8 @@
   "short_name": "LearningWorld",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#fffaed",
-  "theme_color": "#ff6b9d",
+  "background_color": "#FFF6E9",
+  "theme_color": "#FF7B6B",
   "icons": [
     {
       "src": "icon-192.png",
