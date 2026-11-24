@@ -1332,6 +1332,38 @@ header {
 .movie-btns { display: flex; gap: 10px; margin-top: 13px; }
 .movie-btns .btn-3d { flex: 1; min-height: 56px; }
 
+/* Story player + topic Start-the-Story button */
+.btn-story {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 68px;
+  border: none;
+  border-radius: 22px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(180deg, #FF9686, var(--coral));
+  box-shadow: 0 6px 0 #D95F43, 0 12px 22px rgba(255, 107, 107, 0.35);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.btn-story:active { transform: scale(0.97); box-shadow: 0 2px 0 #D95F43; }
+.btn-story .btn-story-ico { font-size: 1.5rem; }
+.btn-story.locked { filter: grayscale(0.6); opacity: 0.55; box-shadow: 0 6px 0 #9B8F83, 0 12px 22px rgba(0, 0, 0, 0.15); }
+.story-stage { margin-top: var(--sp-2); }
+.story-next-pulse { animation: storyPulse 1.15s ease-in-out infinite; }
+@keyframes storyPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.055); } }
+.story-end { text-align: center; padding-top: var(--sp-2); }
+.story-end-art img { width: 100%; height: 120px; object-fit: cover; border-radius: 18px; display: block; }
+.story-end-title { font-size: 1.7rem; font-weight: 900; margin: 10px 0 4px; color: var(--ink); }
+.story-end-text { font-weight: 700; color: var(--ink-soft); margin-bottom: 6px; }
+.story-end-stars { font-size: 1.9rem; color: #F2A007; letter-spacing: 6px; margin-bottom: 4px; }
+.story-end-btn { width: 100%; min-height: 58px; margin-top: 10px; font-size: 1.15rem; }
+
 /* Celebration */
 .celeb-mascot { display: flex; flex-direction: column; align-items: center; margin-bottom: 6px; }
 .celeb-art { width: 100%; height: 128px; object-fit: cover; border-radius: var(--r-md); box-shadow: 0 8px 18px rgba(196, 132, 62, 0.25); }
@@ -1437,7 +1469,7 @@ header {
     max-width: 900px;
     display: grid;
     grid-template-columns: 1.25fr 1fr;
-    grid-template-areas: 'scene segs' 'scene caption' 'scene btns';
+    grid-template-areas: 'scene segs' 'scene caption' 'scene stage' 'scene btns';
     column-gap: var(--sp-4);
     align-content: center;
   }
@@ -1445,6 +1477,8 @@ header {
   .movie-segs { grid-area: segs; margin-top: 2px; }
   .movie-caption { grid-area: caption; }
   .movie-btns { grid-area: btns; }
+  .story-stage { grid-area: stage; }
+  .story-end { grid-area: stage; }
 }
 
 /* Short landscape screens (phones on their side): compact chrome. */
@@ -1603,9 +1637,7 @@ header {
         <div class="topic-stars" id="topicStars"></div>
         <p class="topic-tag" id="topicTag"></p>
         <div class="topic-actions">
-          <button class="action-btn ico-watch" id="btnWatch"><span class="action-ico">▶</span><span>Watch</span><small id="watchState">Watch the movie</small></button>
-          <button class="action-btn ico-play" id="btnPlay"><span class="action-ico">🎮</span><span>Play</span><small id="playState">Play the game</small></button>
-          <button class="action-btn ico-quiz" id="btnQuiz"><span class="action-ico">?</span><span>Quiz</span><small id="quizState">Take the quiz</small></button>
+          <button class="btn-story" id="btnStory"><span class="btn-story-ico">▶</span><span>Start the Story</span></button>
         </div>
         <div class="topic-locknote" id="topicLock"></div>
       </div>
@@ -1700,11 +1732,20 @@ header {
   <div class="modal-overlay" id="movieModal">
     <div class="modal-card movie-card">
       <div class="movie-scene" id="movieScene"></div>
-      <div class="movie-segs" id="movieSegs"></div>
-      <div class="movie-caption" id="movieCaption"></div>
-      <div class="movie-btns">
-        <button class="btn-3d btn-secondary" id="movieSkip">Skip ⏩</button>
-        <button class="btn-3d" id="movieNext">Next ▶</button>
+      <div class="movie-segs" id="storySegs"></div>
+      <div class="movie-caption" id="storyCaption"></div>
+      <div class="story-stage" id="storyStage" style="display:none;"></div>
+      <div class="story-end" id="storyEnd" style="display:none;">
+        <div class="story-end-art" id="storyEndArt"></div>
+        <div class="story-end-title">The End! 🎉</div>
+        <div class="story-end-text" id="storyEndText"></div>
+        <div class="story-end-stars" id="storyEndStars"></div>
+        <button class="btn-3d btn-accent story-end-btn" id="storyNextBtn" style="display:none;"></button>
+        <button class="btn-3d story-end-btn" id="storyMapBtn">🗺️ Map</button>
+      </div>
+      <div class="movie-btns" id="storyBtns">
+        <button class="btn-3d btn-secondary" id="storyClose">✕ Close</button>
+        <button class="btn-3d story-next-pulse" id="storyNext">Next ▶</button>
       </div>
     </div>
   </div>
@@ -1824,7 +1865,7 @@ header {
         .trim();
     }
 
-    function speakText(text) {
+    function speakText(text, onEnd) {
       if (isMuted || !text || !('speechSynthesis' in window)) return;
       try {
         if (!narratorVoice) refreshNarratorVoice();
@@ -1834,6 +1875,12 @@ header {
         utter.rate = 0.95;
         utter.pitch = 1.1;
         if (narratorVoice) utter.voice = narratorVoice;
+        if (onEnd) {
+          let fired = false;
+          const fire = () => { if (!fired) { fired = true; onEnd(); } };
+          utter.onend = fire;
+          utter.onerror = fire;
+        }
         lastSpeakAt = Date.now();
         window.speechSynthesis.speak(utter);
       } catch (e) {}
@@ -2067,7 +2114,7 @@ header {
 
     function loadNextQuestion() {
       clearInterval(state.timerInterval);
-      const stage = document.getElementById('gameStage');
+      const stage = (session && session.stageEl) || document.getElementById('gameStage');
       stage.innerHTML = '';
 
       if (session && session.kind === 'play') {
@@ -2315,7 +2362,7 @@ header {
         session.correct++;
         updateStatsDisplay();
         if (session.correct >= session.needed) {
-          setTimeout(finishTopicPlay, 900);
+          setTimeout(session.onComplete || finishTopicPlay, 900);
         } else {
           setTimeout(loadNextQuestion, 1200);
         }
@@ -3437,7 +3484,7 @@ header {
     var engineMathIcon = null;   // topic icon override for the math engine
     var playReturn = { view: 'topics' };
     var currentView = 'home';
-    var movie = null;
+    var story = null;
 
     var progress = loadJSON('lw_progress', { topics: {} });
     if (!progress || typeof progress !== 'object' || !progress.topics) progress = { topics: {} };
@@ -3672,29 +3719,24 @@ header {
       document.getElementById('topicSub').innerText = subj.icon + ' ' + subj.name + ' • Learning World';
       document.getElementById('topicStars').innerText = p.done ? starString(p.stars || 0) : '☆☆☆';
       document.getElementById('topicTag').innerText = topic.tagline;
-      document.getElementById('watchState').innerText = p.watch ? '✅ Watched!' : 'Watch the movie';
-      document.getElementById('playState').innerText = !unlocked ? '🔒 Locked' : (p.play ? '✅ Played!' : 'Play the game');
-      document.getElementById('quizState').innerText = !unlocked ? '🔒 Locked'
-        : (p.quizDone ? '✅ Best: ' + p.quizBest + '/' + p.quizTotal : 'Take the quiz');
-      document.getElementById('btnWatch').className = 'action-btn ico-watch' + (p.watch ? ' done' : '');
-      document.getElementById('btnPlay').className = 'action-btn ico-play' + (!unlocked ? ' locked' : (p.play ? ' done' : ''));
-      document.getElementById('btnQuiz').className = 'action-btn ico-quiz' + (!unlocked ? ' locked' : (p.quizDone ? ' done' : ''));
+      document.getElementById('btnStory').className = 'btn-story' + (!unlocked ? ' locked' : '');
       const list = topicsOf(topic.subject);
       const idx = list.findIndex(t => t.id === topicId);
       document.getElementById('topicLock').innerText = !unlocked && idx > 0
-        ? '🔒 Finish "' + list[idx - 1].title + '" first to unlock Play and Quiz. You can still Watch the movie!'
-        : (p.done ? '🎉 You mastered this topic! Play again any time!' : 'Finish Watch + Play + Quiz to master this topic and earn stars! ⭐');
-      document.getElementById('btnWatch').onclick = () => { sounds.pop(); startMovie(topic); };
-      document.getElementById('btnPlay').onclick = () => {
+        ? '🔒 Finish the story of "' + list[idx - 1].title + '" first to unlock this story!'
+        : (p.done
+          ? '🎉 You mastered this topic! Hear the story again any time!'
+          : (idx >= 0 && idx < list.length - 1
+            ? 'Finish the story to unlock "' + list[idx + 1].title + '"! ⭐'
+            : 'Finish the story to master this topic and earn stars! ⭐'));
+      document.getElementById('btnStory').onclick = () => {
         if (!unlocked) { lockedBuzz(); return; }
-        sounds.pop(); startTopicPlay(topic);
-      };
-      document.getElementById('btnQuiz').onclick = () => {
-        if (!unlocked) { lockedBuzz(); return; }
-        sounds.pop(); startTopicQuiz(topic);
+        sounds.pop(); startStory(topic);
       };
       showView('topic');
-      speakText(topic.title + '! ' + topic.tagline + ' Tap Watch to learn, Play to practice, or Quiz to earn your star!');
+      speakText(!unlocked
+        ? topic.title + '! This story is locked! Finish the story before it first!'
+        : topic.title + '! ' + topic.tagline + ' Tap Start the Story and I will read it to you!');
     }
 
     function lockedBuzz() {
@@ -3704,48 +3746,203 @@ header {
       speakText('That is locked! Finish the topic before it first!');
     }
 
-    /* ---------------- Movie (WATCH) ---------------- */
-    function startMovie(topic) {
-      movie = { topic: topic, idx: 0, timer: null };
+    /* ---------------- STORY player (the whole topic experience) ----------------
+       One continuous, auto-advancing story per topic:
+       intro -> narrated facts -> interleaved play tasks -> the quiz as the
+       story's "big questions" -> mastery celebration -> end card.
+       Progress flags land exactly where the old Watch/Play/Quiz flow put
+       them: watch when the last fact finishes (markStoryWatched, +2 stars
+       first time, as the old movie flow did), play when the tasks complete
+       (storyTaskDone, +5 first time, as topic play did), and the quiz
+       score in finishQuiz's story branch (same accounting as before). */
+    function storyTaskCount(topic) {
+      if (topic.play.type === 'candy') return 2;
+      return neededFor(topic);
+    }
+
+    var STORY_SYMBOL_NAMES = { '🐝': 'bee', '🌼': 'flower', '🍯': 'honey pot', '🐞': 'ladybug', '🌻': 'sunflower', '🦋': 'butterfly', '🌸': 'blossom', '🍃': 'leaf', '🐛': 'caterpillar', '🌷': 'tulip', '🚀': 'rocket', '⭐': 'star', '🌙': 'moon', '🛰️': 'satellite', '🧑‍🚀': 'astronaut' };
+    function storySymbolName(sym) { return STORY_SYMBOL_NAMES[sym] || 'one'; }
+
+    // Candy-type topics have no tap-tasks of their own (Candy Quest stays in
+    // Free Play), so their story games are synthesized choice tasks about
+    // finding and counting the topic's target symbol.
+    function synthCandyStoryTasks(topic) {
+      const symbols = topic.play.symbols.slice();
+      const target = topic.play.target;
+      const name = storySymbolName(target);
+      const others = shuffleArr(symbols.filter(s => s !== target));
+      let jumble = '';
+      shuffleArr([target, target].concat(others, others.slice(0, 2))).forEach(s => {
+        jumble += '<span class="count-item">' + s + '</span>';
+      });
+      const findTask = {
+        q: 'Tap the ' + target + '!',
+        speak: 'Tap the ' + name + '!',
+        hearOptions: [],
+        display: '<div class="count-box">' + jumble + '</div>',
+        options: shuffleArr([{ t: target, ok: true }].concat(others.slice(0, 2).map(s => ({ t: s }))))
+      };
+      const n = 3 + Math.floor(Math.random() * 3);
+      const row = [];
+      for (let i = 0; i < n; i++) row.push(target);
+      others.forEach(s => { row.push(s); row.push(s); });
+      let disp = '';
+      shuffleArr(row).forEach(s => { disp += '<span class="count-item">' + s + '</span>'; });
+      const vals = new Set([n]);
+      while (vals.size < 3) { const d = n + (Math.floor(Math.random() * 5) - 2); if (d > 0) vals.add(d); }
+      const countTask = {
+        q: 'How many ' + target + ' do you see?',
+        speak: 'How many ' + name + 's do you see?',
+        display: '<div class="count-box">' + disp + '</div>',
+        options: shuffleArr(Array.from(vals).map(v => ({ t: String(v), ok: v === n })))
+      };
+      return [findTask, countTask];
+    }
+
+    function pickStoryTasks(topic) {
+      const need = storyTaskCount(topic);
+      if (topic.play.type === 'candy') return synthCandyStoryTasks(topic);
+      if (topic.play.type === 'choice' && topic.play.tasks && topic.play.tasks.length) {
+        const pool = shuffleArr(topic.play.tasks);
+        const picked = [];
+        for (let i = 0; i < need; i++) picked.push(pool[i % pool.length]);
+        return picked;
+      }
+      return null; // word / math / count topics generate a fresh task per segment
+    }
+
+    function buildStorySegments(topic) {
+      const segs = [{ type: 'intro' }];
+      let tasksLeft = storyTaskCount(topic);
+      const facts = topic.facts || [];
+      facts.forEach((f, i) => {
+        segs.push({ type: 'fact', factIdx: i });
+        if ((i === 1 || i === 2 || i === facts.length - 1) && tasksLeft > 0) {
+          segs.push({ type: 'task' });
+          tasksLeft--;
+        }
+      });
+      while (tasksLeft > 0) { segs.push({ type: 'task' }); tasksLeft--; }
+      return segs;
+    }
+
+    function startStory(topic) {
+      if (!topic) return;
+      cleanupStory();
+      state.currentTopic = topic.id;
+      const questions = buildQuiz(topic);
+      const segs = buildStorySegments(topic);
+      const quizSegStart = segs.length;
+      questions.forEach((q, qi) => segs.push({ type: 'quiz', qi: qi }));
+      story = {
+        topic: topic, segs: segs, idx: 0,
+        autoTimer: null, narrToken: 0,
+        tasksNeeded: storyTaskCount(topic), tasksDone: 0,
+        storyTasks: pickStoryTasks(topic),
+        questions: questions, quizSegStart: quizSegStart,
+        quizCorrect: 0, quizTotal: questions.length, ended: false
+      };
       document.getElementById('movieScene').innerHTML =
         '<img class="movie-art" src="' + topic.art + '" alt="">' +
         '<div class="movie-sparkles"><span>✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span></div>' +
         '<div class="movie-title-chip">' + topic.icon + ' ' + topic.title + '</div>' +
         '<img class="movie-mascot" src="data:image/webp;base64,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" alt="">';
       document.getElementById('movieModal').classList.add('open');
-      renderMovieFact();
+      renderStorySegment();
     }
 
-    function renderMovieFact() {
-      if (!movie) return;
-      const facts = movie.topic.facts;
-      const capEl = document.getElementById('movieCaption');
-      capEl.innerText = facts[movie.idx];
-      capEl.classList.remove('pop'); void capEl.offsetWidth; capEl.classList.add('pop');
-      document.getElementById('movieSegs').innerHTML = facts.map((f, i) =>
-        '<div class="movie-seg' + (i <= movie.idx ? ' on' : '') + '"></div>').join('');
-      document.getElementById('movieNext').innerText = movie.idx >= facts.length - 1 ? 'Finish ✅' : 'Next ▶';
-      speakText(facts[movie.idx]);
-      clearTimeout(movie.timer);
-      movie.timer = setTimeout(() => { if (movie) movieStep(); }, 9000);
+    function renderStorySegs() {
+      if (!story) return;
+      document.getElementById('storySegs').innerHTML = story.segs.map((s, i) =>
+        '<div class="movie-seg' + (i <= story.idx ? ' on' : '') + '"></div>').join('');
     }
 
-    function movieStep() {
-      if (!movie) return;
-      if (movie.idx >= movie.topic.facts.length - 1) { finishMovie(); return; }
-      movie.idx++;
+    function storySpeechActive() {
+      return !isMuted && ('speechSynthesis' in window);
+    }
+
+    function storyEstDuration(text) {
+      return Math.min(12000, 1800 + speakClean(text).length * 85);
+    }
+
+    // Narrate a caption segment and arm its auto-advance: when the narration
+    // ends (+ a 600ms beat), on a generous fallback timer if onend never
+    // fires, or after ~4.5s when speech is muted/unavailable. The token
+    // guards against stale utterance callbacks advancing the wrong segment.
+    function storyNarrate(text) {
+      if (!story) return;
+      clearTimeout(story.autoTimer);
+      const token = ++story.narrToken;
+      if (storySpeechActive()) {
+        speakText(text, function () {
+          if (!story || story.narrToken !== token) return;
+          clearTimeout(story.autoTimer);
+          story.autoTimer = setTimeout(() => storyAdvance(), 600);
+        });
+        story.autoTimer = setTimeout(() => storyAdvance(), storyEstDuration(text));
+      } else {
+        story.autoTimer = setTimeout(() => storyAdvance(), 4500);
+      }
+    }
+
+    function renderStorySegment() {
+      if (!story) return;
+      const seg = story.segs[story.idx];
+      if (!seg) { storyComplete(); return; }
+      renderStorySegs();
+      const capEl = document.getElementById('storyCaption');
+      const stageEl = document.getElementById('storyStage');
+      const endEl = document.getElementById('storyEnd');
+      const nextBtn = document.getElementById('storyNext');
+      const btnsRow = document.getElementById('storyBtns');
+      endEl.style.display = 'none';
+      btnsRow.style.display = '';
+      clearTimeout(story.autoTimer);
+      story.narrToken++;
+
+      if (seg.type === 'intro' || seg.type === 'fact') {
+        stageEl.style.display = 'none';
+        stageEl.innerHTML = '';
+        capEl.style.display = '';
+        nextBtn.style.display = '';
+        const text = seg.type === 'intro'
+          ? story.topic.icon + ' ' + story.topic.title + ' — ' + story.topic.tagline
+          : story.topic.facts[seg.factIdx];
+        capEl.innerText = text;
+        capEl.classList.remove('pop'); void capEl.offsetWidth; capEl.classList.add('pop');
+        storyNarrate(seg.type === 'intro'
+          ? story.topic.title + '! ' + story.topic.tagline + ' Here we go!'
+          : story.topic.facts[seg.factIdx]);
+      } else if (seg.type === 'task') {
+        capEl.style.display = 'none';
+        nextBtn.style.display = 'none';
+        stageEl.style.display = '';
+        startStoryTaskSegment();
+      } else if (seg.type === 'quiz') {
+        capEl.style.display = 'none';
+        nextBtn.style.display = 'none';
+        stageEl.style.display = '';
+        startStoryQuizSegment(seg);
+      }
+    }
+
+    function storyAdvance() {
+      if (!story || story.ended) return;
+      const seg = story.segs[story.idx];
+      if (!seg || (seg.type !== 'intro' && seg.type !== 'fact')) return;
+      clearTimeout(story.autoTimer);
+      story.narrToken++;
+      if (seg.type === 'fact' && seg.factIdx === story.topic.facts.length - 1) {
+        markStoryWatched();
+      }
+      story.idx++;
       sounds.pop();
-      renderMovieFact();
+      renderStorySegment();
     }
 
-    function finishMovie() {
-      if (!movie) return;
-      clearTimeout(movie.timer);
-      const topic = movie.topic;
-      movie = null;
-      document.getElementById('movieModal').classList.remove('open');
-      if ('speechSynthesis' in window) { try { window.speechSynthesis.cancel(); } catch (e) {} }
-      const p = getProg(topic.id);
+    function markStoryWatched() {
+      if (!story) return;
+      const p = getProg(story.topic.id);
       if (!p.watch) {
         p.watch = true;
         state.stars += 2;
@@ -3753,8 +3950,134 @@ header {
         updateStatsDisplay();
       }
       saveProgress();
-      openTopic(topic.id);
+    }
+
+    function startStoryTaskSegment() {
+      const topic = story.topic;
+      const effType = topic.play.type === 'candy' ? 'choice' : topic.play.type;
+      session = {
+        kind: 'play', storyMode: true, topicId: topic.id, playType: effType,
+        correct: 0, needed: 1, mistakes: 0, lastTask: -1,
+        storyTasks: story.storyTasks, storyTaskIdx: story.tasksDone,
+        stageEl: document.getElementById('storyStage'),
+        onComplete: function () { storyTaskDone(); }
+      };
+      engineWordItems = topic.play.type === 'word' ? topic.play.words : null;
+      engineMathIcon = topic.play.type === 'math' ? (topic.play.icon || null) : null;
+      state.mode = effType === 'choice' ? 'word' : effType;
+      loadNextQuestion();
+    }
+
+    function storyTaskDone() {
+      session = null;
+      engineWordItems = null;
+      engineMathIcon = null;
+      if (!story) return;
+      story.tasksDone++;
+      if (story.tasksDone >= story.tasksNeeded) {
+        const p = getProg(story.topic.id);
+        const first = !p.play;
+        p.play = true;
+        if (first) state.stars += 5;
+        saveState();
+        saveProgress();
+        updateStatsDisplay();
+        sounds.chest();
+      }
+      story.idx++;
+      renderStorySegment();
+    }
+
+    function startStoryQuizSegment(seg) {
+      if (seg.qi !== 0 || session) return; // later questions are driven by renderQuizQuestion
+      session = {
+        kind: 'quiz', storyMode: true, topicId: story.topic.id,
+        idx: 0, correct: 0, questions: story.questions,
+        stageEl: document.getElementById('storyStage')
+      };
+      const capEl = document.getElementById('storyCaption');
+      capEl.style.display = '';
+      capEl.innerText = 'Now let\'s see what you remember! ⭐';
+      capEl.classList.remove('pop'); void capEl.offsetWidth; capEl.classList.add('pop');
+      document.getElementById('storyStage').innerHTML = '';
+      speakText('Now let\'s see what you remember!');
+      const token = ++story.narrToken;
+      clearTimeout(story.autoTimer);
+      story.autoTimer = setTimeout(() => {
+        if (!story || story.narrToken !== token || !session || session.kind !== 'quiz') return;
+        capEl.style.display = 'none';
+        renderQuizQuestion();
+      }, 1600);
+    }
+
+    function storyComplete() {
+      if (!story || story.ended) return;
+      story.ended = true;
+      clearTimeout(story.autoTimer);
+      story.narrToken++;
+      const topic = story.topic;
+      const wasDone = getProg(topic.id).done;
+      if (!wasDone) window._afterTrophyHook = function () { showStoryEnd(); };
       maybeCompleteTopic(topic);
+      if (wasDone || !getProg(topic.id).done) {
+        window._afterTrophyHook = null;
+        showStoryEnd();
+      }
+      // If this story newly mastered the topic, the celebration + trophy
+      // flow is on screen now; the end card follows via _afterTrophyHook.
+    }
+
+    function showStoryEnd() {
+      if (!story) return;
+      window._afterTrophyHook = null;
+      document.getElementById('storySegs').innerHTML = story.segs.map(() => '<div class="movie-seg on"></div>').join('');
+      const topic = story.topic;
+      const p = getProg(topic.id);
+      document.getElementById('storyCaption').style.display = 'none';
+      document.getElementById('storyStage').style.display = 'none';
+      document.getElementById('storyBtns').style.display = 'none';
+      const endEl = document.getElementById('storyEnd');
+      endEl.style.display = '';
+      document.getElementById('storyEndArt').innerHTML = '<img src="' + topic.art + '" alt="">';
+      document.getElementById('storyEndText').innerText = p.done
+        ? 'You mastered ' + topic.title + '!'
+        : 'Great job! You finished the ' + topic.title + ' story!';
+      document.getElementById('storyEndStars').innerText = p.done ? starString(p.stars || 1) : '';
+      const next = TOPICS[TOPICS.findIndex(t => t.id === topic.id) + 1];
+      const nextBtn = document.getElementById('storyNextBtn');
+      if (next && isUnlocked(next)) {
+        nextBtn.style.display = '';
+        nextBtn.innerText = '▶ Next Story: ' + next.title;
+        nextBtn.onclick = () => { sounds.pop(); startStory(next); };
+      } else {
+        nextBtn.style.display = 'none';
+        nextBtn.onclick = null;
+      }
+      document.getElementById('storyMapBtn').onclick = () => {
+        sounds.pop();
+        cleanupStory();
+        document.getElementById('movieModal').classList.remove('open');
+        showView('home');
+      };
+      speakText('The end! Great job!');
+    }
+
+    function cleanupStory() {
+      if (story) { clearTimeout(story.autoTimer); story.narrToken++; }
+      story = null;
+      if (session && session.storyMode) session = null;
+      engineWordItems = null;
+      engineMathIcon = null;
+      clearInterval(state.timerInterval);
+      if ('speechSynthesis' in window) { try { window.speechSynthesis.cancel(); } catch (e) {} }
+    }
+
+    function closeStory() {
+      const topic = story ? story.topic : null;
+      cleanupStory();
+      window._afterTrophyHook = null;
+      document.getElementById('movieModal').classList.remove('open');
+      if (topic) openTopic(topic.id);
     }
 
     /* ---------------- PLAY sessions ---------------- */
@@ -3815,6 +4138,7 @@ header {
     }
 
     function topicArtStrip() {
+      if (session && session.storyMode) return '';
       if (session && session.topicId) {
         const t = getTopic(session.topicId);
         if (t && t.art) return '<div class="art-strip"><img src="' + t.art + '" alt=""></div>';
@@ -3845,7 +4169,10 @@ header {
       const topic = getTopic(session.topicId);
       if (!topic) return;
       let task;
-      if (topic.play.gen === 'count') {
+      if (session && session.storyTasks && session.storyTasks.length) {
+        task = session.storyTasks[session.storyTaskIdx % session.storyTasks.length];
+        session.storyTaskIdx++;
+      } else if (topic.play.gen === 'count') {
         task = genCountTask(topic);
       } else {
         const arr = topic.play.tasks || [];
@@ -3855,15 +4182,16 @@ header {
         task = arr[idx];
       }
       state.currentQuestion = task;
+      const promptText = task.speak || task.q;
       stage.innerHTML =
         topicArtStrip() +
         '<div class="task-prompt">' + task.q + '</div>' + hearItBtnHTML() +
         (task.display ? '<div class="task-display">' + task.display + '</div>' : '') +
         '<div class="choice-grid" id="choiceGrid"></div>';
-      setMascotMessage(task.q, 'idle');
+      setMascotMessage(promptText, 'idle');
       const grid = document.getElementById('choiceGrid');
       const opts = shuffleArr(task.options);
-      setNarration(task.q, opts.map(o => o.t));
+      setNarration(promptText, task.hearOptions !== undefined ? task.hearOptions : opts.map(o => o.t));
       opts.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
@@ -3909,7 +4237,7 @@ header {
     }
 
     function renderQuizQuestion() {
-      const stage = document.getElementById('gameStage');
+      const stage = (session && session.stageEl) || document.getElementById('gameStage');
       const topic = getTopic(session.topicId);
       const q = session.questions[session.idx];
       state.currentQuestion = q;
@@ -3920,6 +4248,7 @@ header {
         '<div class="choice-grid" id="choiceGrid"></div>';
       setMascotMessage(q.q, 'idle');
       setNarration(q.q, q.options.slice());
+      if (session.storyMode && story) { story.idx = story.quizSegStart + session.idx; renderStorySegs(); }
       updateStatsDisplay();
       const grid = document.getElementById('choiceGrid');
       q.options.forEach(optText => {
@@ -3960,6 +4289,7 @@ header {
       const topic = getTopic(session.topicId);
       const total = session.questions.length;
       const correct = session.correct;
+      const wasStory = !!session.storyMode;
       const p = getProg(topic.id);
       p.quizDone = true;
       p.quizTotal = total;
@@ -3968,6 +4298,14 @@ header {
       saveProgress();
       saveState();
       session = null;
+      if (wasStory) {
+        if (story) { story.quizCorrect = correct; story.quizTotal = total; }
+        sounds.chest();
+        triggerConfetti();
+        speakText('You got ' + correct + ' of ' + total + '!');
+        setTimeout(() => { if (story && !story.ended) storyComplete(); }, 1600);
+        return;
+      }
       const stage = document.getElementById('gameStage');
       const starsPreview = correct >= total ? 3 : (total > 0 && correct / total >= 0.7 ? 2 : 1);
       stage.innerHTML =
@@ -4019,7 +4357,8 @@ header {
       document.getElementById('celebBtn').onclick = () => {
         document.getElementById('celebrateModal').classList.remove('open');
         sounds.pop();
-        window._afterTrophy = function () { showView('home'); };
+        window._afterTrophy = window._afterTrophyHook || function () { showView('home'); };
+        window._afterTrophyHook = null;
         awardTrophy();
       };
     }
@@ -4132,8 +4471,10 @@ header {
         openTopic(pick.id);
       };
 
-      document.getElementById('movieNext').onclick = () => movieStep();
-      document.getElementById('movieSkip').onclick = () => { sounds.pop(); finishMovie(); };
+      document.getElementById('storyNext').onclick = () => storyAdvance();
+      document.getElementById('storyClose').onclick = () => { sounds.pop(); closeStory(); };
+      document.getElementById('storyCaption').onclick = () => storyAdvance();
+      document.getElementById('movieScene').onclick = () => storyAdvance();
 
       if (!getSubject(state.subject)) state.subject = 'words';
       renderMascot('idle');
