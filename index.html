@@ -1914,6 +1914,56 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
   #viewTopic .topic-hero { height: auto; align-self: start; }
   #viewTopic .topic-hero svg { height: auto; min-height: 0; aspect-ratio: 5 / 3; }
 }
+
+    /* ---------- Phase 4: new game engines ---------- */
+    .clock-wrap { display: flex; justify-content: center; margin: 6px 0 4px; }
+    .clock-wrap.small .clock-svg { width: 130px; height: 130px; }
+    .clock-svg { width: 190px; height: 190px; max-width: 62vw; }
+    .coin-row { display: flex; justify-content: center; align-items: flex-end; gap: 10px; flex-wrap: wrap; margin: 8px 0; }
+    .coin-svg { width: 76px; height: 76px; }
+    .fill-display { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 10px 0 4px; flex-wrap: wrap; }
+    .fill-emoji { font-size: 3.2rem; }
+    .fill-word { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.4rem; letter-spacing: 0.14em; color: var(--ink); }
+    .fill-opt { font-size: 1.8rem !important; }
+    .seq-row { display: flex; justify-content: center; gap: 10px; font-size: 2.2rem; margin: 8px 0; flex-wrap: wrap; }
+    .seq-q { color: var(--coral); font-weight: 700; }
+    .drag-slots { display: flex; justify-content: center; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
+    .drag-slot { width: 74px; height: 74px; border: 3.5px dashed #8FA3C7; border-radius: 18px; background: #F2F6FF; display: flex; align-items: center; justify-content: center; position: relative; }
+    .drag-slot .slot-hint { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center; font-size: 0.8rem; font-weight: 700; color: #718096; }
+    .drag-slot.filled { border-style: solid; border-color: var(--ink); background: #E8FBEF; }
+    .drag-tray { display: flex; justify-content: center; gap: 12px; margin: 26px 0 8px; flex-wrap: wrap; min-height: 74px; }
+    .drag-chip, .sort-item { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.9rem; min-width: 64px; height: 64px; padding: 0 12px; border-radius: 16px; border: 3.5px solid var(--ink); background: #FFFFFF; color: var(--ink); box-shadow: 0 4px 0 var(--ink); cursor: pointer; touch-action: none; }
+    .drag-chip.sel, .sort-item.sel { background: #FFF3D6; transform: scale(1.07); }
+    .drag-chip.placed, .sort-item.placed { box-shadow: none; background: #D9F7E8; cursor: default; }
+    .sort-buckets { display: flex; justify-content: center; gap: 14px; margin: 12px 0 4px; flex-wrap: wrap; }
+    .sort-bucket { flex: 1 1 150px; max-width: 230px; min-height: 128px; border: 3.5px solid var(--ink); border-radius: 20px; background: #F2F6FF; padding: 8px; }
+    .bucket-label { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.15rem; text-align: center; margin-bottom: 6px; }
+    .bucket-items { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+    .bucket-items .sort-item { min-width: 48px; height: 48px; font-size: 1.4rem; }
+    .mem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 430px; margin: 12px auto 4px; }
+    .mem-card { position: relative; height: 78px; border-radius: 16px; border: 3.5px solid var(--ink); background: var(--sky); box-shadow: 0 4px 0 var(--ink); cursor: pointer; font-family: 'Fredoka', sans-serif; }
+    .mem-card .mem-back { font-size: 1.7rem; }
+    .mem-card .mem-face { display: none; font-size: 1.25rem; font-weight: 700; color: var(--ink); padding: 2px; word-break: break-word; }
+    .mem-card.flipped, .mem-card.matched { background: #FFFFFF; }
+    .mem-card.flipped .mem-back, .mem-card.matched .mem-back { display: none; }
+    .mem-card.flipped .mem-face, .mem-card.matched .mem-face { display: block; }
+    .mem-card.matched { background: #D9F7E8; }
+    .trace-wrap { width: min(240px, 66vw); margin: 10px auto 4px; background: #FFFFFF; border: 3.5px solid var(--ink); border-radius: 20px; box-shadow: 0 5px 0 var(--ink); touch-action: none; }
+    .trace-svg { width: 100%; height: auto; display: block; }
+    .trace-word { text-align: center; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.25rem; margin-top: 6px; }
+    @keyframes hintBounce { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-12px); } 60% { transform: translateY(0); } }
+    .hint-bounce { animation: hintBounce 0.55s ease 3; }
+    @keyframes hintWiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-5deg) scale(1.06); } 75% { transform: rotate(5deg) scale(1.06); } }
+    .hint-wiggle { animation: hintWiggle 0.4s ease 4; }
+    /* ---------- Phase 4: placement adventure ---------- */
+    .grownup-btn { display: block; margin: 4px auto 10px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.95rem; color: #718096; background: none; border: 2.5px dashed #B9C6DE; border-radius: 999px; padding: 8px 16px; cursor: pointer; }
+    .place-card { text-align: center; max-width: 430px; }
+    .place-pip { display: flex; justify-content: center; margin-bottom: 6px; }
+    .place-mascot { width: 110px; height: auto; }
+    .place-title { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.7rem; color: var(--ink); margin: 6px 0; }
+    .place-sub { font-size: 1.05rem; font-weight: 600; color: #4A5568; margin-bottom: 16px; line-height: 1.45; }
+    .place-progress { font-weight: 700; color: #718096; margin-bottom: 8px; }
+    .text-link-btn { display: block; margin: 12px auto 0; background: none; border: none; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 1rem; color: #718096; text-decoration: underline; cursor: pointer; }
 </style><body>
   <div class="splash" id="splashScreen" aria-hidden="true">
     <img class="splash-mascot" id="splashMascot" alt="">
@@ -1963,6 +2013,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     <section id="viewTopics" class="view" style="display:none;">
       <div class="topics-tools">
         <input id="topicSearch" type="text" placeholder="Search topics..." autocomplete="off">
+        <button id="placementBtn" class="grownup-btn" type="button">🧭 Grown-ups: Starting-Level Adventure</button>
         <button class="btn-3d btn-accent" id="surpriseBtn"><svg class="ui-ico" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,3 13.8,10.2 21,12 13.8,13.8 12,21 10.2,13.8 3,12 10.2,10.2" fill="#FFC93C" stroke="#26324B" stroke-width="1.6" stroke-linejoin="round"/></svg> Surprise me!</button>
       </div>
       <div class="subject-tiles" id="subjectTiles"></div>
@@ -2096,6 +2147,13 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         <button class="btn-3d btn-secondary" id="storyClose">✕ Close</button>
         <button class="btn-3d story-next-pulse" id="storyNext">Next ▶</button>
       </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="placementModal">
+    <div class="modal-card place-card">
+      <button class="modal-close" id="placeClose" type="button" aria-label="Close">✕</button>
+      <div id="placeStage"></div>
     </div>
   </div>
 
@@ -2631,6 +2689,11 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       qHintGiven = false;
       questionOpen = true;
       hintSeq++;
+      state.currentReviewSpec = null;
+      state.currentReviewKey = null;
+      state.newEngine = null;
+      state.outcomeRecorded = false;
+      state.reviewMissRecorded = false;
     }
     function registerQuestionMistake() {
       if (!questionOpen || qHintGiven) return;
@@ -2650,6 +2713,17 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       return 'three in a row';
     }
     function giveHint() {
+      const ne = state.newEngine;
+      if (ne) {
+        let msg = ne.hintText || 'Look carefully — you can do it!';
+        if (ne.type === 'trace' && ne.showGuide) { ne.showGuide(); msg = 'Watch the dots light up, then follow them with your finger!'; }
+        else if (ne.type === 'memory' && ne.peek) { ne.peek(); msg = 'Peek! Remember where the matches are!'; }
+        else if (ne.type === 'sort' && ne.hintBucket) { ne.hintBucket.classList.add('hint-bounce'); setTimeout(() => { if (ne.hintBucket) ne.hintBucket.classList.remove('hint-bounce'); }, 1900); }
+        else if (ne.type === 'drag' && ne.hintSlot) { ne.hintSlot.classList.add('hint-wiggle'); setTimeout(() => { if (ne.hintSlot) ne.hintSlot.classList.remove('hint-wiggle'); }, 1900); }
+        setMascotMessage(pickLine(HINT_LINES) + ' ' + msg, 'thinking');
+        speakText(msg);
+        return;
+      }
       const lead = pickLine(HINT_LINES);
       /* Word builder: reveal the first letter in place. */
       const wb = state.wordBuilder;
@@ -2907,13 +2981,18 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     function loadNextQuestion() {
       restingPose = 'thinking';
       resetQuestionTracking();
+      if (session && session.kind === 'play' && session.topicId && !session.effLevel) {
+        const tpNow = getTopic(session.topicId);
+        if (tpNow) session.effLevel = effLevelFor(tpNow);
+      }
       state.wordBuilder = null;
       clearInterval(state.timerInterval);
       const stage = (session && session.stageEl) || document.getElementById('gameStage');
       stage.innerHTML = '';
 
       if (session && session.kind === 'play') {
-        if (session.playType === 'choice') loadChoiceQuestion(stage);
+        if (session.playType === 'new') loadNewEngineQuestion(stage);
+        else if (session.playType === 'choice') loadChoiceQuestion(stage);
         else if (session.playType === 'word') loadWordQuestion(stage);
         else if (session.playType === 'math') loadMathQuestion(stage);
         else loadCandyRound(stage, session.candyOpts);
@@ -2928,12 +3007,13 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     }
 
     function loadWordQuestion(stage) {
-      const list = (engineWordItems && engineWordItems.length) ? engineWordItems : (wordData[state.level] || wordData[1]);
+      const list = (engineWordItems && engineWordItems.length) ? engineWordItems : (wordData[effNow()] || wordData[1]);
       const item = list[Math.floor(Math.random() * list.length)];
       state.currentQuestion = item;
+      if (session && session.reviewKey) { state.currentReviewKey = session.reviewKey; session.reviewKey = null; }
       const scramble = item.scramble || item.word.split('').sort(() => Math.random() - 0.5).join(' ');
 
-      if (state.level === 4) {
+      if (effNow() === 4) {
         state.timeLeft = 30;
         stage.innerHTML = `${topicArtStrip()}
           <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
@@ -2944,7 +3024,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           <div class="tiles-pool" id="tilesPool"></div>
         `;
         startTimer();
-      } else if (state.level === 3) {
+      } else if (effNow() === 3) {
         stage.innerHTML = `${topicArtStrip()}
           <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 8px;">${item.word.replace(/./g, '_ ')}</div>
           <div class="word-definition">Clue: ${item.clue || 'Spell the mystery word!'}</div>
@@ -2961,8 +3041,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
 
       setMascotMessage("Spell the word! Tap the letters in order!", 'thinking');
       let wordPrompt;
-      if (state.level === 4) wordPrompt = 'Unscramble the mystery word! Tap the letters in order!';
-      else if (state.level === 3) wordPrompt = item.clue || 'Spell the mystery word!';
+      if (effNow() === 4) wordPrompt = 'Unscramble the mystery word! Tap the letters in order!';
+      else if (effNow() === 3) wordPrompt = item.clue || 'Spell the mystery word!';
       else wordPrompt = 'Spell the word: ' + item.word + '! Tap the letters in order!';
       setNarration(wordPrompt, []);
       speakText(wordPrompt);
@@ -3029,6 +3109,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     }
 
     function mathPromptFor(q) {
+      if (q.type === 'missing') return 'What number plus ' + q.b + ' makes ' + q.total + '?';
       if (state.level === 4) return 'What number plus ' + q.b + ' makes ' + q.total + '?';
       if (q.type === 'add') return 'What is ' + q.a + ' plus ' + q.b + '?';
       if (q.type === 'sub') return 'What is ' + q.a + ' minus ' + q.b + '?';
@@ -3037,12 +3118,16 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     }
 
     function loadMathQuestion(stage) {
-      const generator = mathData[state.level] || mathData[1];
-      const q = generator();
+      const qLevel = effNow();
+      let q;
+      if (engineMathForced) { q = engineMathForced; engineMathForced = null; }
+      else if (engineMathOps) q = genMathWithOps(engineMathOps, qLevel);
+      else q = (mathData[qLevel] || mathData[1])();
       if (engineMathIcon) q.icon = engineMathIcon;
       state.currentQuestion = q;
+      if (session && session.reviewKey) { state.currentReviewKey = session.reviewKey; session.reviewKey = null; }
 
-      if (state.level === 1) {
+      if (qLevel === 1) {
         let visualHTML = '';
         if (q.type === 'add') {
           for (let i = 0; i < q.a; i++) visualHTML += '<span class="math-item">' + q.icon + '</span>';
@@ -3056,26 +3141,26 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
 
         stage.innerHTML = `${topicArtStrip()}
           <div class="math-visual-container" id="mathVisual">${visualHTML}</div>
-          <div class="math-expression">${q.type === 'add' ? q.a + ' + ' + q.b + ' = ?' : q.a + ' - ' + q.b + ' = ?'}</div>
+          <div class="math-expression">${mathExprFor(q)}</div>
           ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
-      } else if (state.level === 2) {
+      } else if (qLevel === 2) {
         stage.innerHTML = `${topicArtStrip()}
           <button class="btn-3d btn-accent" id="numberLineBtn" style="margin-bottom: 12px;">Show Number Line Hint</button>
           <div id="numberLineContainer"></div>
-          <div class="math-expression">${q.a} ${q.type === 'add' ? '+' : '-'} ${q.b} = ?</div>
+          <div class="math-expression">${mathExprFor(q)}</div>
           ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
         document.getElementById('numberLineBtn').onclick = () => showNumberLineHint(q);
-      } else if (state.level === 3) {
-        const symbol = q.type === 'mul' ? '×' : '÷';
+      } else if (qLevel === 3) {
+        const symbol = q.type === 'mul' ? '×' : q.type === 'div' ? '÷' : q.type === 'sub' ? '−' : '+';
         stage.innerHTML = `${topicArtStrip()}
           <div class="math-expression">${q.a} ${symbol} ${q.b} = ?</div>
           ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
       } else {
         stage.innerHTML = `${topicArtStrip()}
-          <div class="math-expression">? + ${q.b} = ${q.total}</div>
+          <div class="math-expression">${mathExprFor(q)}</div>
           ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
       }
@@ -3124,7 +3209,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         btn.innerText = val;
         btn.onclick = () => {
           if (val === correctAns) {
-            if (q.type === 'sub' && state.level === 1) {
+            if (q.type === 'sub' && effNow() === 1) {
               for (let i = q.ans; i < q.a; i++) {
                 const el = document.getElementById('math-item-' + i);
                 if (el) el.classList.add('subtracting');
@@ -3142,6 +3227,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     }
 
     function handleCorrectAnswer() {
+      noteQuestionCorrect();
       questionOpen = false;
       hintSeq++;
       sounds.success();
@@ -3176,6 +3262,10 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     }
 
     function handleWrongAnswer(element) {
+      if (!state.reviewMissRecorded) {
+        state.reviewMissRecorded = true;
+        noteQuestionMissed();
+      }
       sounds.error();
       state.streak = 0;
       updateStatsDisplay();
@@ -4031,7 +4121,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       map: ico('<path d="M9 4 L3.5 6 V20 L9 18 L15 20 L20.5 18 V4 L15 6 L9 4 Z"/><path d="M9 4 V18 M15 6 V20"/>'),
       close: ico('<path d="M5.5 5.5 L18.5 18.5 M18.5 5.5 L5.5 18.5"/>')
     };
-    const SUBJECT_ICONS = { words: 'book', math: 'plus', science: 'flask', animals: 'paw', space: 'rocket' };
+    const SUBJECT_ICONS = { words: 'book', math: 'plus', science: 'flask', animals: 'paw', space: 'rocket', social: 'map' };
     function subjectIconSVG(id) { return ICONS[SUBJECT_ICONS[id] || 'star'] || ICONS.star; }
 
     /* ---------------- WORLDS: one themed world per subject ----------------
@@ -4043,7 +4133,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       math:    { name: 'Space Station', sky: '#2B3A8F', ground: '#8FA3C7', deep: '#5B6FA6', accent: '#FF8A3C', path: '#D8E2F5', landmark: 'rocketBase' },
       science: { name: 'Jungle',        sky: '#8FE3FF', ground: '#2E9E4F', deep: '#1F7A38', accent: '#FF5D5D', path: '#FFE1A8', landmark: 'templeTree' },
       animals: { name: 'Safari Meadow', sky: '#8FE3FF', ground: '#58C24A', deep: '#3FA83C', accent: '#FFAA1D', path: '#FFD98A', landmark: 'safariLodge' },
-      space:   { name: 'Deep Space',    sky: '#191B4D', ground: '#8E93C4', deep: '#555B9E', accent: '#FFC93C', path: '#C9CDF2', landmark: 'moonBase' }
+      space:   { name: 'Deep Space',    sky: '#191B4D', ground: '#8E93C4', deep: '#555B9E', accent: '#FFC93C', path: '#C9CDF2', landmark: 'moonBase' },
+      social:  { name: 'Island Map',    sky: '#BDEDF2', ground: '#F6D186', deep: '#1B9AAA', accent: '#D6336C', path: '#FFF3D6', landmark: 'lighthouse' }
     };
 
 
@@ -4100,7 +4191,148 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         PL('M-64 -16 L-72 -38', INK, 3) + '<circle cx="-73" cy="-41" r="4" fill="#FF5D5D" stroke="none"/>' +
         '</g>';
     }
-    const WORLD_LANDMARKS = { candyCastle: lmCandyCastle, rocketBase: lmRocketBase, templeTree: lmTempleTree, safariLodge: lmSafariLodge, moonBase: lmMoonBase };
+
+    /* Island Map landmark: a striped lighthouse on its own little island. */
+    function lmLighthouse(w) {
+      return `<g>
+        <path d="M 140 600 L 165 470 L 235 470 L 260 600 Z" fill="${w.ground}" stroke="${INK}" stroke-width="3.5"/>
+        <rect x="178" y="330" width="44" height="150" rx="6" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/>
+        <path d="M 178 372 L 222 372 L 222 402 L 178 402 Z" fill="#FF5D5D"/>
+        <path d="M 178 424 L 222 424 L 222 452 L 178 452 Z" fill="#FF5D5D"/>
+        <rect x="168" y="296" width="64" height="38" rx="8" fill="${w.accent}" stroke="${INK}" stroke-width="3.5"/>
+        <path d="M 158 296 L 200 262 L 242 296 Z" fill="${INK}"/>
+        <circle cx="200" cy="315" r="10" fill="#FFC93C" stroke="${INK}" stroke-width="3"/>
+        <path d="M 236 300 L 300 282 L 300 330 Z" fill="#FFC93C" opacity="0.4"/>
+        <path d="M 164 300 L 100 282 L 100 330 Z" fill="#FFC93C" opacity="0.3"/>
+        <path d="M 60 520 q 16 -12 32 0 q 16 12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+        <path d="M 280 545 q 16 -12 32 0 q 16 12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+        <circle cx="86" cy="150" r="24" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/>
+        <circle cx="112" cy="138" r="18" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/>
+        <circle cx="316" cy="120" r="20" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/>
+        <circle cx="338" cy="110" r="15" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/>
+        ${lmSign(w, 200, 560, 'ISLAND MAP')}
+      </g>`;
+    }
+
+    /* Island Map world scene (400x600 portrait map backdrop). */
+    function sceneSocial(w) {
+      return `<rect width="400" height="600" fill="${w.deep}"/>
+      <path d="M 40 90 C 120 40 300 55 355 120 C 395 170 380 260 340 320 C 300 380 330 470 280 530 C 230 590 110 585 60 520 C 15 460 30 380 55 300 C 75 235 -15 150 40 90 Z" fill="${w.ground}" stroke="${INK}" stroke-width="3.5"/>
+      <path d="M 70 120 C 140 80 290 90 330 140" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+      <path d="M 30 430 q 18 -14 36 0 q 18 14 36 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 300 470 q 18 -14 36 0 q 18 14 36 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 90 240 q 18 -14 36 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+      <g stroke="${INK}" stroke-width="3" fill="#2FCB9B">
+        <path d="M 110 200 l 14 -26 l 14 26 Z"/><path d="M 250 160 l 14 -26 l 14 26 Z"/><path d="M 290 300 l 14 -26 l 14 26 Z"/>
+      </g>
+      <path d="M 120 480 C 170 420 150 350 205 300 C 250 260 235 200 265 150" fill="none" stroke="${w.path}" stroke-width="16" stroke-linecap="round" stroke-dasharray="2 14"/>
+      <g><rect x="150" y="392" width="42" height="34" rx="4" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 144 394 L 171 372 L 198 394 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="3.5"/><rect x="164" y="406" width="14" height="20" fill="${w.accent}" stroke="${INK}" stroke-width="3"/></g>
+      <g><rect x="238" y="212" width="36" height="30" rx="4" fill="#FFF3D6" stroke="${INK}" stroke-width="3.5"/><path d="M 232 214 L 256 196 L 280 214 Z" fill="#8B5E34" stroke="${INK}" stroke-width="3.5"/></g>
+      <circle cx="330" cy="70" r="24" fill="#FFC93C" stroke="${INK}" stroke-width="3.5"/>
+      <g stroke="${INK}" stroke-width="3" stroke-linecap="round"><line x1="330" y1="32" x2="330" y2="22"/><line x1="362" y1="48" x2="370" y2="42"/><line x1="298" y1="48" x2="290" y2="42"/></g>
+      <g transform="translate(52 52)"><circle r="24" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 0 -16 L 5 0 L 0 16 L -5 0 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="2"/><text y="-30" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="${INK}">N</text></g>
+      <g><path d="M 320 380 l 10 -22 l 10 22 Z" fill="#FFFFFF" stroke="${INK}" stroke-width="3"/><rect x="336" y="352" width="16" height="34" fill="#FF5D5D" stroke="${INK}" stroke-width="3"/></g>`;
+    }
+
+    function thumbSocial(w) {
+      return `<rect width="400" height="240" fill="${w.deep}"/>
+      <path d="M 60 40 C 140 10 300 20 350 60 C 385 90 370 170 320 205 C 260 240 110 235 65 190 C 25 150 20 70 60 40 Z" fill="${w.ground}" stroke="${INK}" stroke-width="3.5"/>
+      <path d="M 30 200 q 16 -12 32 0 q 16 12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 320 210 q 16 -12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+      <g><rect x="182" y="96" width="36" height="66" rx="5" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 182 118 L 218 118 L 218 134 L 182 134 Z" fill="#FF5D5D"/><rect x="174" y="72" width="52" height="26" rx="6" fill="${w.accent}" stroke="${INK}" stroke-width="3.5"/><path d="M 166 72 L 200 48 L 234 72 Z" fill="${INK}"/><circle cx="200" cy="85" r="7" fill="#FFC93C" stroke="${INK}" stroke-width="2.5"/></g>
+      <circle cx="70" cy="52" r="17" fill="#FFC93C" stroke="${INK}" stroke-width="3.5"/>
+      <g stroke="${INK}" stroke-width="3" fill="#2FCB9B"><path d="M 96 150 l 12 -22 l 12 22 Z"/><path d="M 282 140 l 12 -22 l 12 22 Z"/></g>
+      <path d="M 110 180 C 160 150 220 165 280 130" fill="none" stroke="${w.path}" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 12"/>`;
+    }
+
+    function bgSocial(top, bot) {
+      return `<rect width="400" height="240" fill="${bot}"/>
+      <path d="M 0 150 C 90 118 210 128 400 138 L 400 240 L 0 240 Z" fill="${top}"/>
+      <path d="M 0 150 C 90 118 210 128 400 138" fill="none" stroke="${INK}" stroke-width="3.5"/>`;
+    }
+
+    function artTellingTime(w) {
+      return `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" class="topic-art-svg" aria-hidden="true">${bgMath(w)}
+      ${SP(60, 40, 3, '#FFFFFF')}${SP(330, 30, 2.6, '#FFC93C')}${SP(120, 26, 2.2, '#FFFFFF')}${SP(300, 90, 2, '#FFFFFF')}
+      <circle cx="200" cy="122" r="86" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/>
+      <circle cx="200" cy="122" r="72" fill="#FFF7E0"/>
+      <text x="200" y="72" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="22" fill="${INK}">12</text>
+      <text x="262" y="130" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="22" fill="${INK}">3</text>
+      <text x="200" y="186" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="22" fill="${INK}">6</text>
+      <text x="138" y="130" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="22" fill="${INK}">9</text>
+      <line x1="200" y1="122" x2="200" y2="76" stroke="${INK}" stroke-width="9" stroke-linecap="round"/>
+      <line x1="200" y1="122" x2="246" y2="122" stroke="#FF5D5D" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="200" cy="122" r="9" fill="#FFC93C" stroke="${INK}" stroke-width="3"/>
+      <g><circle cx="52" cy="180" r="26" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><line x1="52" y1="180" x2="52" y2="162" stroke="${INK}" stroke-width="5" stroke-linecap="round"/><line x1="52" y1="180" x2="64" y2="180" stroke="#FF5D5D" stroke-width="4" stroke-linecap="round"/></g>
+      <g><circle cx="348" cy="182" r="22" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><line x1="348" y1="182" x2="360" y2="170" stroke="${INK}" stroke-width="5" stroke-linecap="round"/><line x1="348" y1="182" x2="348" y2="196" stroke="#FF5D5D" stroke-width="4" stroke-linecap="round"/></g>
+      </svg>`;
+    }
+
+    function artMoney(w) {
+      return `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" class="topic-art-svg" aria-hidden="true">${bgWords(w)}
+      ${gCloud(70, 42, 0.9)}${gCloud(320, 34, 0.75)}
+      <g><circle cx="92" cy="128" r="46" fill="#E8A06A" stroke="${INK}" stroke-width="3.5"/><circle cx="92" cy="128" r="34" fill="none" stroke="${INK}" stroke-width="2" stroke-dasharray="3 4" opacity="0.5"/><text x="92" y="142" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="30" fill="${INK}">1¢</text></g>
+      <g><circle cx="196" cy="106" r="52" fill="#C9D1DB" stroke="${INK}" stroke-width="3.5"/><circle cx="196" cy="106" r="39" fill="none" stroke="${INK}" stroke-width="2" stroke-dasharray="3 4" opacity="0.5"/><text x="196" y="121" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="32" fill="${INK}">5¢</text></g>
+      <g><circle cx="282" cy="150" r="38" fill="#C9D1DB" stroke="${INK}" stroke-width="3.5"/><circle cx="282" cy="150" r="28" fill="none" stroke="${INK}" stroke-width="2" stroke-dasharray="3 4" opacity="0.5"/><text x="282" y="162" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="26" fill="${INK}">10¢</text></g>
+      <g><circle cx="338" cy="84" r="34" fill="#C9D1DB" stroke="${INK}" stroke-width="3.5"/><text x="338" y="94" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="22" fill="${INK}">25¢</text></g>
+      <g><path d="M 128 196 l 10 -18 l 10 18 Z" fill="#2FCB9B" stroke="${INK}" stroke-width="3"/><path d="M 240 204 l 10 -18 l 10 18 Z" fill="#2FCB9B" stroke="${INK}" stroke-width="3"/></g>
+      </svg>`;
+    }
+
+    function artCommunityHelpers(w) {
+      return `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" class="topic-art-svg" aria-hidden="true">${bgSocial(w.ground, w.deep)}
+      <g><rect x="52" y="86" width="86" height="76" rx="6" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 44 88 L 95 52 L 146 88 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="3.5"/><rect x="84" y="120" width="22" height="42" fill="#D6336C" stroke="${INK}" stroke-width="3"/><rect x="106" y="98" width="20" height="20" fill="#BDEBFF" stroke="${INK}" stroke-width="3"/></g>
+      <g><rect x="262" y="86" width="86" height="76" rx="6" fill="#FFF3D6" stroke="${INK}" stroke-width="3.5"/><path d="M 254 88 L 305 52 L 356 88 Z" fill="#8B5E34" stroke="${INK}" stroke-width="3.5"/><path d="M 296 66 h 18 v 14 h 14 v 18 h -14 v 14 h -18 v -14 h -14 v -18 h 14 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="2.5"/></g>
+      <g><circle cx="200" cy="120" r="17" fill="#FFD9A0" stroke="${INK}" stroke-width="3.5"/><path d="M 182 106 a 18 12 0 0 1 36 0 Z" fill="#FFC93C" stroke="${INK}" stroke-width="3.5"/><rect x="186" y="136" width="28" height="30" rx="8" fill="#3FA9F5" stroke="${INK}" stroke-width="3.5"/></g>
+      <g><circle cx="162" cy="128" r="14" fill="#FFD9A0" stroke="${INK}" stroke-width="3.5"/><path d="M 147 118 a 15 10 0 0 1 30 0 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="3.5"/><rect x="152" y="141" width="22" height="25" rx="7" fill="#FF8C42" stroke="${INK}" stroke-width="3.5"/></g>
+      <g><circle cx="240" cy="128" r="14" fill="#C68863" stroke="${INK}" stroke-width="3.5"/><path d="M 225 118 a 15 10 0 0 1 30 0 Z" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><rect x="230" y="141" width="22" height="25" rx="7" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/></g>
+      </svg>`;
+    }
+
+    function artMapsDirections(w) {
+      return `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" class="topic-art-svg" aria-hidden="true">${bgSocial(w.ground, w.deep)}
+      <path d="M 60 190 C 130 150 120 90 200 84 C 270 78 280 130 340 96" fill="none" stroke="#FFF3D6" stroke-width="18" stroke-linecap="round" stroke-dasharray="3 16"/>
+      <g transform="translate(66 52)"><circle r="26" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><path d="M 0 -17 L 6 0 L 0 17 L -6 0 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="2"/><text y="-33" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="17" fill="${INK}">N</text></g>
+      <g><path d="M 316 150 l 14 -30 l 14 30 Z" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/><rect x="326" y="112" width="18" height="42" fill="#FF5D5D" stroke="${INK}" stroke-width="3"/></g>
+      <g><circle cx="120" cy="176" r="13" fill="#FF5D5D" stroke="${INK}" stroke-width="3.5"/><path d="M 120 189 l -8 22 h 16 Z" fill="#FF5D5D" stroke="${INK}" stroke-width="3.5"/></g>
+      <g stroke="${INK}" stroke-width="3" fill="#2FCB9B"><path d="M 196 168 l 13 -24 l 13 24 Z"/><path d="M 236 176 l 11 -20 l 11 20 Z"/></g>
+      <text x="200" y="52" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="24" fill="${INK}">X marks the spot!</text>
+      <text x="330" y="196" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="26" fill="#FF5D5D">✕</text>
+      </svg>`;
+    }
+
+    function artLandWater(w) {
+      return `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" class="topic-art-svg" aria-hidden="true">${bgSocial(w.ground, w.deep)}
+      <path d="M 200 30 C 260 90 250 160 200 214 C 150 160 140 90 200 30 Z" fill="#F6D186" stroke="${INK}" stroke-width="3.5"/>
+      <g stroke="${INK}" stroke-width="3" fill="#2FCB9B"><path d="M 168 120 l 13 -24 l 13 24 Z"/><path d="M 214 132 l 11 -20 l 11 20 Z"/></g>
+      <path d="M 30 66 q 16 -12 32 0 q 16 12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+      <path d="M 300 60 q 16 -12 32 0 q 16 12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+      <path d="M 44 180 q 16 -12 32 0 q 16 12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+      <path d="M 300 190 q 16 -12 32 0 q 16 12 32 0" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+      <g><path d="M 66 118 q 14 -16 28 0 q -14 8 -28 0 Z" fill="#FFFFFF" stroke="${INK}" stroke-width="3"/><circle cx="88" cy="112" r="2.6" fill="${INK}"/></g>
+      <g><path d="M 306 128 q 14 -16 28 0 q -14 8 -28 0 Z" fill="#FFC93C" stroke="${INK}" stroke-width="3"/><circle cx="328" cy="122" r="2.6" fill="${INK}"/></g>
+      <circle cx="338" cy="30" r="16" fill="#FFC93C" stroke="${INK}" stroke-width="3.5"/>
+      </svg>`;
+    }
+
+    function artAmericanSymbols(w) {
+      return `<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" class="topic-art-svg" aria-hidden="true">${bgSocial(w.ground, w.deep)}
+      <g><rect x="46" y="52" width="118" height="80" rx="6" fill="#FFFFFF" stroke="${INK}" stroke-width="3.5"/>
+      <g fill="#FF5D5D"><rect x="46" y="64" width="118" height="10"/><rect x="46" y="84" width="118" height="10"/><rect x="46" y="104" width="118" height="10"/><rect x="46" y="122" width="118" height="10"/></g>
+      <rect x="46" y="52" width="52" height="42" fill="#26698C" stroke="${INK}" stroke-width="3"/>
+      <g fill="#FFFFFF"><circle cx="58" cy="62" r="2.4"/><circle cx="72" cy="62" r="2.4"/><circle cx="86" cy="62" r="2.4"/><circle cx="58" cy="74" r="2.4"/><circle cx="72" cy="74" r="2.4"/><circle cx="86" cy="74" r="2.4"/><circle cx="65" cy="84" r="2.4"/><circle cx="79" cy="84" r="2.4"/></g>
+      <line x1="46" y1="52" x2="46" y2="196" stroke="${INK}" stroke-width="5" stroke-linecap="round"/></g>
+      <g><path d="M 268 58 q 34 -14 52 10 q 20 26 2 44 q -16 16 -40 8 q -22 -8 -24 -30 q -2 -24 10 -32 Z" fill="#FFC93C" stroke="${INK}" stroke-width="3.5"/>
+      <path d="M 292 118 l 0 18" stroke="${INK}" stroke-width="4" stroke-linecap="round"/>
+      <path d="M 252 150 h 84" stroke="${INK}" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="282" cy="86" r="3" fill="${INK}"/><circle cx="306" cy="80" r="3" fill="${INK}"/></g>
+      <g><path d="M 120 196 q 30 -18 60 0 q -30 10 -60 0 Z" fill="#2FCB9B" stroke="${INK}" stroke-width="3"/><path d="M 236 200 q 26 -14 52 0 q -26 9 -52 0 Z" fill="#2FCB9B" stroke="${INK}" stroke-width="3"/></g>
+      <text x="105" y="160" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="17" fill="${INK}">The Flag</text>
+      <text x="292" y="176" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="17" fill="${INK}">Liberty Bell</text>
+      </svg>`;
+    }
+
+    const WORLD_LANDMARKS = { candyCastle: lmCandyCastle, rocketBase: lmRocketBase, templeTree: lmTempleTree, safariLodge: lmSafariLodge, moonBase: lmMoonBase, lighthouse: lmLighthouse };
 
     function gAcacia(x, y, s) {
       return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' +
@@ -4326,7 +4558,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           gMoon(326, 246, 14) + gComet(308, 116, 0.9, '#38E1FF') + gRocket(356, 330, 0.6) +
           E(300, 560, 13, 8, '#9AA5B1') + E(56, 520, 11, 7, '#9AA5B1') + E(120, 96, 10, 6, '#9AA5B1');
       }
-    };
+    ,
+      social: sceneSocial};
     function worldSceneSVG(subjectId) {
       const w = WORLDS[subjectId] || WORLDS.words;
       return svgWrap('0 0 400 600', (WORLD_SCENES[subjectId] || WORLD_SCENES.words)(w), 'world-scene-svg');
@@ -4367,7 +4600,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           WORLD_LANDMARKS[w.landmark](196, 216, 0.9) +
           gPlanet(64, 84, 17, '#FF8A3C', '#FFC93C') + gRocket(330, 96, 0.6) + gMoon(336, 178, 12);
       }
-    };
+    ,
+      social: thumbSocial};
     function worldThumbSVG(subjectId) {
       const w = WORLDS[subjectId] || WORLDS.words;
       return svgWrap('0 0 400 240', (WORLD_THUMBS[subjectId] || WORLD_THUMBS.words)(w), 'world-thumb-svg');
@@ -4628,7 +4862,13 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           gRocket(82, 148, 0.8) +
           C(332, 50, 17, '#3FA9F5') + PA('M322 44 Q330 38 336 44 Q328 50 322 44 Z', '#2E9E4F', 'stroke="none"');
       }
-    };
+    ,
+      'telling-time': artTellingTime,
+      'money': artMoney,
+      'community-helpers': artCommunityHelpers,
+      'maps-directions': artMapsDirections,
+      'land-water': artLandWater,
+      'american-symbols': artAmericanSymbols};
     function topicSceneSVG(topic) {
       const w = WORLDS[topic.subject] || WORLDS.words;
       const art = TOPIC_ART[topic.id] || TOPIC_ART['letter-sounds'];
@@ -4653,7 +4893,9 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       { id: 'animals', name: 'Animals', icon: '🦁', color: '#FFAA1D', dark: '#D99400', path: '#FFAA1D',
         bg: 'linear-gradient(180deg,#fef9e7 0%,#f0fff4 70%,#eafaf1 100%)', deco: ['🦁', '🌴', '🐾', '🦋', '🌺', '🐒'] },
       { id: 'space', name: 'Space', icon: '🚀', color: '#8B76E8', dark: '#6D4BD8', path: '#8B76E8',
-        bg: 'linear-gradient(180deg,#322659 0%,#44337a 60%,#553c9a 100%)', deco: ['⭐', '🌙', '🪐', '🚀', '☄️', '✨'] }
+        bg: 'linear-gradient(180deg,#322659 0%,#44337a 60%,#553c9a 100%)', deco: ['⭐', '🌙', '🪐', '🚀', '☄️', '✨'] },
+      { id: 'social', name: 'Social Studies', icon: '🗺️', color: '#D6336C', dark: '#A61E4D', path: '#D6336C',
+        bg: 'linear-gradient(180deg,#d8f6f9 0%,#fdf6e3 70%,#fdeeda 100%)', deco: ['🗺️', '🧭', '🏝️', '🚒', '🦅', '🔔'] }
     ];
 
     const TOPICS = [
@@ -4667,7 +4909,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'When we put letter sounds together, they make words!',
           'The letter S makes a hissing sound, like a snake: sss!'
         ],
-        play: { type: 'choice', tasks: [
+        play: { mix: ['fillblank'], type: 'choice', tasks: [
           { q: 'Tap the picture that starts with B!', options: [ { t: '🐝 Bee', ok: true }, { t: '🐱 Cat' }, { t: '☀️ Sun' }, { t: '🐶 Dog' } ] },
           { q: 'Tap the picture that starts with C!', options: [ { t: '🐟 Fish' }, { t: '🐱 Cat', ok: true }, { t: '🐝 Bee' }, { t: '🥚 Egg' } ] },
           { q: 'Tap the picture that starts with S!', options: [ { t: '🌙 Moon' }, { t: '🍎 Apple' }, { t: '☀️ Sun', ok: true }, { t: '🐷 Pig' } ] },
@@ -4680,7 +4922,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'What sound does the letter B make?', a: ['mmm', 'sss', 'buh', 'ttt'], c: 2 },
           { q: 'Which of these is a vowel?', a: ['B', 'T', 'A', 'S'], c: 2 },
           { q: 'Which word starts with the letter S?', a: ['Moon', 'Sun', 'Cat', 'Pig'], c: 1 }
-        ]
+        ,
+          { q: 'Which letter makes the "mmm" sound?', a: ['M', 'S', 'B', 'T'], c: 0 }]
       },
       { id: 'sight-words', subject: 'words', title: 'Sight Words', icon: '👀',
         tagline: 'Words you can read in a flash!',
@@ -4691,7 +4934,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'Knowing sight words makes reading fast and fun.',
           'You can spot sight words everywhere — in books, signs and stories!'
         ],
-        play: { type: 'word', words: [
+        play: { type: 'word', gen: 'dolch', mix: ['fillblank', 'memory'], words: [
           { word: 'SEE', emoji: '👀', clue: 'You do this with your eyes.' },
           { word: 'CAN', emoji: '💪', clue: 'You are able to do it!' },
           { word: 'LIKE', emoji: '❤️', clue: 'When you enjoy something, you ___ it.' },
@@ -4706,7 +4949,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Which word is a sight word?', a: ['Elephant', 'the', 'Dinosaur', 'Rainbow'], c: 1 },
           { q: 'Knowing sight words helps you...', a: ['Run faster', 'Read faster', 'Jump higher', 'Sing louder'], c: 1 },
           { q: 'Where can you spot sight words?', a: ['Only in space', 'In books and signs', 'Only under the sea', 'Only in dreams'], c: 1 }
-        ]
+        ,
+          { q: 'Which word is a sight word?', a: ['the', 'elephant', 'giraffe', 'bicycle'], c: 0 }]
       },
       { id: 'rhyming-words', subject: 'words', title: 'Rhyming Words', icon: '🎵',
         tagline: 'Cat, hat, bat — words that sound the same!',
@@ -4729,7 +4973,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Rhyming words end with...', a: ['Different sounds', 'The same sound', 'Numbers', 'Colors'], c: 1 },
           { q: 'Which pair of words rhymes?', a: ['Cat and dog', 'Cake and snake', 'Sun and moon', 'Pig and bee'], c: 1 },
           { q: 'Where do we hear lots of rhymes?', a: ['In songs and poems', 'In the fridge', 'In a rocket', 'Under rocks'], c: 0 }
-        ]
+        ,
+          { q: 'Which word rhymes with "pig"?', a: ['wig', 'piglet', 'dog', 'sun'], c: 0 }]
       },
       { id: 'word-families', subject: 'words', title: 'Word Families', icon: '🏠',
         tagline: 'Change one letter, make a new word!',
@@ -4740,7 +4985,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'If you know one family word, you can read the rest!',
           'Changing the first letter makes a brand-new word.'
         ],
-        play: { type: 'word', words: [
+        play: { mix: ['trace', 'drag', 'fillblank'], type: 'word', words: [
           { word: 'CAT', emoji: '🐱', clue: 'A furry pet that says meow.' },
           { word: 'HAT', emoji: '🧢', clue: 'You wear it on your head.' },
           { word: 'BAT', emoji: '🦇', clue: 'It flies at night.' },
@@ -4755,7 +5000,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Which word is in the -at family?', a: ['Pig', 'Top', 'Mat', 'Run'], c: 2 },
           { q: 'Change the C in CAT to H. What word do you get?', a: ['Cot', 'Hat', 'Cut', 'Can'], c: 1 },
           { q: 'Knowing word families helps you...', a: ['Read more words', 'Draw pictures', 'Count stars', 'Build towers'], c: 0 }
-        ]
+        ,
+          { q: 'Which word is in the "-at" family?', a: ['cat', 'dog', 'sun', 'pig'], c: 0 }]
       },
       /* ---------------- MATH ---------------- */
       { id: 'counting', subject: 'math', title: 'Counting Fun', icon: '🔢',
@@ -4767,13 +5013,14 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'The last number you say is how many there are in all.',
           'Numbers go on and on — they never stop!'
         ],
-        play: { type: 'choice', gen: 'count', icon: '🍎', countLabel: 'apples' },
+        play: { mix: ['drag', 'fillblank'], type: 'choice', gen: 'count', icon: '🍎', countLabel: 'apples' },
         quiz: [
           { q: 'What number comes after 7?', a: ['6', '8', '9', '5'], c: 1 },
           { q: 'What number comes before 5?', a: ['6', '3', '4', '7'], c: 2 },
           { q: 'Which is bigger, 9 or 6?', a: ['6', '9', 'They are the same', 'Zero'], c: 1 },
           { q: 'When we count, the last number tells us...', a: ['The color', 'How many in all', 'The first one', 'Nothing'], c: 1 }
-        ]
+        ,
+          { q: 'What number comes after 9?', a: ['10', '8', '11', '7'], c: 0 }]
       },
       { id: 'adding', subject: 'math', title: 'Adding Up', icon: '➕',
         tagline: 'Put groups together and count them all!',
@@ -4784,13 +5031,14 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           '3 + 2 = 5. You can count on your fingers to check!',
           'Adding zero keeps a number the same: 4 + 0 = 4.'
         ],
-        play: { type: 'math', icon: '🧁' },
+        play: { type: 'math', icon: '🧁', ops: ['add', 'sub'] },
         quiz: [
           { q: 'What is 2 + 3?', a: ['4', '5', '6', '3'], c: 1 },
           { q: 'What is 4 + 1?', a: ['3', '4', '5', '6'], c: 2 },
           { q: 'What is 5 + 5?', a: ['8', '9', '10', '11'], c: 2 },
           { q: 'You have 3 apples and get 2 more. How many now?', a: ['4', '5', '6', '3'], c: 1 }
-        ]
+        ,
+          { q: 'What is 6 - 2?', a: ['4', '8', '3', '5'], c: 0 }]
       },
       { id: 'shapes', subject: 'math', title: 'Shapes All Around', icon: '🔷',
         tagline: 'Circles, squares and triangles are everywhere!',
@@ -4801,7 +5049,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'A triangle has 3 sides and 3 corners.',
           'Shapes are all around us — wheels, windows and signs!'
         ],
-        play: { type: 'choice', tasks: [
+        play: { mix: ['memory', 'sort'], type: 'choice', tasks: [
           { q: 'Tap the triangle!', options: [ { t: '🔺 Triangle', ok: true }, { t: '🟦 Square' }, { t: '🟢 Circle' }, { t: '⭐ Star' } ] },
           { q: 'Tap the circle!', options: [ { t: '🟦 Square' }, { t: '🔺 Triangle' }, { t: '🟢 Circle', ok: true }, { t: '⭐ Star' } ] },
           { q: 'Tap the square!', options: [ { t: '⭐ Star' }, { t: '🟢 Circle' }, { t: '🔺 Triangle' }, { t: '🟦 Square', ok: true } ] },
@@ -4813,7 +5061,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Which shape is round with no corners?', a: ['Square', 'Triangle', 'Circle', 'Star'], c: 2 },
           { q: 'How many sides does a square have?', a: ['3', '4', '5', '6'], c: 1 },
           { q: 'A wheel is shaped like a...', a: ['Square', 'Triangle', 'Circle', 'Rectangle'], c: 2 }
-        ]
+        ,
+          { q: 'How many sides does a triangle have?', a: ['3', '4', '5', '0'], c: 0 }]
       },
       { id: 'patterns', subject: 'math', title: 'Pattern Play', icon: '🎨',
         tagline: 'What comes next? Find the pattern!',
@@ -4824,7 +5073,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'Patterns hide in music, clothes and nature!',
           'Patterns can use colors, shapes and sounds — even claps!'
         ],
-        play: { type: 'choice', tasks: [
+        play: { mix: ['drag'], type: 'choice', tasks: [
           { q: 'What comes next in the pattern?', display: '<div class="seq-row"><span>🔴</span><span>🔵</span><span>🔴</span><span>🔵</span><span class="seq-q">?</span></div>', options: [ { t: '🔴', ok: true }, { t: '🔵' }, { t: '🟢' }, { t: '⭐' } ] },
           { q: 'What comes next in the pattern?', display: '<div class="seq-row"><span>⭐</span><span>⭐</span><span>🌙</span><span>⭐</span><span>⭐</span><span class="seq-q">?</span></div>', options: [ { t: '⭐' }, { t: '🌙', ok: true }, { t: '☀️' }, { t: '🔴' } ] },
           { q: 'What comes next in the pattern?', display: '<div class="seq-row"><span>🍎</span><span>🍌</span><span>🍎</span><span>🍌</span><span class="seq-q">?</span></div>', options: [ { t: '🍌' }, { t: '🍇' }, { t: '🍎', ok: true }, { t: '🍓' } ] },
@@ -4836,7 +5085,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'A pattern is something that...', a: ['Happens once', 'Repeats', 'Is invisible', 'Is very loud'], c: 1 },
           { q: 'What comes next: ⭐ 🌙 ⭐ 🌙 ?', a: ['🌙', '⭐', '☀️', '🚀'], c: 1 },
           { q: 'Which of these is a pattern?', a: ['One clap', 'Clap, clap, stomp — again and again', 'A quiet room', 'A single star'], c: 1 }
-        ]
+        ,
+          { q: 'What comes next: 🔴 🔵 🔴 🔵 ?', a: ['🔴', '🔵', '🟢', '🟡'], c: 0 }]
       },
       /* ---------------- SCIENCE ---------------- */
       { id: 'water-cycle', subject: 'science', title: 'The Water Cycle', icon: '💧',
@@ -4859,7 +5109,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Rain falls from...', a: ['Trees', 'Clouds', 'Mountains', 'Rocks'], c: 1 },
           { q: 'After rain falls, it...', a: ['Disappears forever', 'Collects in lakes and oceans', 'Turns into rocks', 'Flies to the moon'], c: 1 },
           { q: 'Does the water cycle ever stop?', a: ['Yes, at night', 'No, it goes round and round', 'Yes, in winter', 'Only on Fridays'], c: 1 }
-        ]
+        ,
+          { q: 'What falls from clouds when it rains?', a: ['Water drops', 'Snow only', 'Leaves', 'Sand'], c: 0 }]
       },
       { id: 'growing-plants', subject: 'science', title: 'Growing Plants', icon: '🌱',
         tagline: 'A tiny seed can grow into a tall tree!',
@@ -4883,7 +5134,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Which part of the plant drinks water?', a: ['Leaves', 'Flowers', 'Roots', 'Stem'], c: 2 },
           { q: 'Leaves catch sunlight to make...', a: ['Rain', 'Food for the plant', 'Seeds', 'Soil'], c: 1 },
           { q: 'The stem grows...', a: ['Down into the soil', 'Toward the sunlight', 'Into a river', 'Around in circles'], c: 1 }
-        ]
+        ,
+          { q: 'What do plants need to grow?', a: ['Sunlight and water', 'Candy', 'Darkness', 'Snow'], c: 0 }]
       },
       { id: 'weather-watch', subject: 'science', title: 'Weather Watch', icon: '🌦️',
         tagline: 'Sunny, rainy, snowy — what will today bring?',
@@ -4905,7 +5157,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Wind is...', a: ['Moving air', 'Falling rain', 'A kind of cloud', 'Hot sunlight'], c: 0 },
           { q: 'Rain falls from...', a: ['The ground', 'Clouds', 'The ocean', 'Trees'], c: 1 },
           { q: 'Weather tells us...', a: ['What time it is', 'What the air outside is like', 'How old we are', 'Where the moon is'], c: 1 }
-        ]
+        ,
+          { q: 'What do we use to see how hot it is?', a: ['A thermometer', 'A clock', 'A ruler', 'A scale'], c: 0 }]
       },
       { id: 'sink-or-float', subject: 'science', title: 'Sink or Float', icon: '🛁',
         tagline: 'Will it sink or float? Let’s find out!',
@@ -4916,7 +5169,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'A rock sinks because it is heavy for its size.',
           'Big ships float because of their shape and the air inside them!'
         ],
-        play: { type: 'choice', tasks: [
+        play: { mix: ['sort'], type: 'choice', tasks: [
           { q: 'Will it sink or float?', display: '<div style="font-size:3.4rem;">🪨</div><div style="font-weight:900;font-size:1.2rem;">A rock</div>', options: [ { t: '⬇️ Sink', ok: true }, { t: '⬆️ Float' } ] },
           { q: 'Will it sink or float?', display: '<div style="font-size:3.4rem;">🏀</div><div style="font-weight:900;font-size:1.2rem;">A beach ball</div>', options: [ { t: '⬇️ Sink' }, { t: '⬆️ Float', ok: true } ] },
           { q: 'Will it sink or float?', display: '<div style="font-size:3.4rem;">🍃</div><div style="font-weight:900;font-size:1.2rem;">A leaf</div>', options: [ { t: '⬇️ Sink' }, { t: '⬆️ Float', ok: true } ] },
@@ -4929,7 +5182,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'A beach ball floats because it is full of...', a: ['Rocks', 'Water', 'Air', 'Sand'], c: 2 },
           { q: 'Why do big ships float?', a: ['They are magic', 'Their shape and the air inside', 'They are painted blue', 'Fish push them up'], c: 1 },
           { q: 'Which one will sink?', a: ['A leaf', 'A feather', 'A coin', 'A beach ball'], c: 2 }
-        ]
+        ,
+          { q: 'Which one will FLOAT?', a: ['A beach ball', 'A rock', 'A coin', 'A spoon'], c: 0 }]
       },
       /* ---------------- ANIMALS ---------------- */
       { id: 'honeybees', subject: 'animals', title: 'Honeybees', icon: '🐝',
@@ -4947,7 +5201,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Bees help flowers by carrying...', a: ['Water', 'Seeds', 'Pollen', 'Leaves'], c: 2 },
           { q: 'Who is the special leader of the hive?', a: ['The king bee', 'The queen bee', 'The baby bee', 'The guard dog'], c: 1 },
           { q: 'How do bees tell friends where flowers are?', a: ['They sing', 'They shout', 'They do a dance', 'They draw maps'], c: 2 }
-        ]
+        ,
+          { q: 'How many legs does a bee have?', a: ['6', '4', '8', '2'], c: 0 }]
       },
       { id: 'ocean-animals', subject: 'animals', title: 'Ocean Animals', icon: '🌊',
         tagline: 'Dive in and meet the animals of the sea!',
@@ -4969,7 +5224,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'How many arms does an octopus have?', a: ['6', '8', '10', '4'], c: 1 },
           { q: 'Sea turtles breathe...', a: ['Water', 'Only with gills', 'Air', 'Nothing'], c: 2 },
           { q: 'A dolphin is a...', a: ['Fish', 'Mammal', 'Bird', 'Bug'], c: 1 }
-        ]
+        ,
+          { q: 'Which ocean animal has eight arms?', a: ['An octopus', 'A shark', 'A whale', 'A crab'], c: 0 }]
       },
       { id: 'butterflies', subject: 'animals', title: 'Butterflies', icon: '🦋',
         tagline: 'From a tiny caterpillar to flying wings!',
@@ -4986,7 +5242,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'The big change into a butterfly is called...', a: ['Hibernation', 'Metamorphosis', 'Migration', 'Photosynthesis'], c: 1 },
           { q: 'Butterflies taste with their...', a: ['Wings', 'Antennae', 'Feet', 'Eyes'], c: 2 },
           { q: 'What do butterflies drink from flowers?', a: ['Milk', 'Nectar', 'Rain', 'Juice'], c: 1 }
-        ]
+        ,
+          { q: 'What is a baby butterfly called?', a: ['A caterpillar', 'A tadpole', 'A cub', 'A chick'], c: 0 }]
       },
       { id: 'dinosaurs', subject: 'animals', title: 'Dinosaurs', icon: '🦕',
         tagline: 'Giant reptiles that lived long, long ago!',
@@ -4997,7 +5254,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           'Triceratops had three big horns on its face.',
           'Dinosaur bones that turned to stone are called fossils.'
         ],
-        play: { type: 'word', words: [
+        play: { mix: ['trace'], type: 'word', words: [
           { word: 'DINO', emoji: '🦕', clue: 'A giant reptile from long ago.' },
           { word: 'EGG', emoji: '🥚', clue: 'Baby dinosaurs hatched from this.' },
           { word: 'REX', emoji: '🦖', clue: 'The king dinosaur: T. ___!' },
@@ -5009,7 +5266,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'How many horns did Triceratops have?', a: ['One', 'Two', 'Three', 'Ten'], c: 2 },
           { q: 'Dinosaur bones turned to stone are called...', a: ['Rocks', 'Fossils', 'Shells', 'Crystals'], c: 1 },
           { q: 'Did people live at the same time as dinosaurs?', a: ['Yes', 'No — dinosaurs lived long before people', 'Only in zoos', 'Only on Tuesdays'], c: 1 }
-        ]
+        ,
+          { q: 'Dinosaurs lived…?', a: ['Long, long ago', 'Last year', 'Only in zoos', 'On the moon'], c: 0 }]
       },
       /* ---------------- SPACE ---------------- */
       { id: 'the-moon', subject: 'space', title: 'The Moon', icon: '🌙',
@@ -5032,7 +5290,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'The holes on the Moon are called...', a: ['Craters', 'Lakes', 'Mountains', 'Clouds'], c: 0 },
           { q: 'The Moon’s changing shapes are called...', a: ['Seasons', 'Phases', 'Tides', 'Shadows'], c: 1 },
           { q: 'Astronauts first walked on the Moon in...', a: ['2020', '1969', '1900', 'Last week'], c: 1 }
-        ]
+        ,
+          { q: 'The Moon gets its light from…?', a: ['The Sun', 'The stars', 'A flashlight', 'The Earth'], c: 0 }]
       },
       { id: 'planets', subject: 'space', title: 'Planets', icon: '🪐',
         tagline: 'Eight planets dance around the Sun!',
@@ -5055,7 +5314,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Which planet is red?', a: ['Earth', 'Venus', 'Mars', 'Saturn'], c: 2 },
           { q: 'Which planet has rings?', a: ['Mars', 'Earth', 'Saturn', 'Venus'], c: 2 },
           { q: 'Which planet is our home?', a: ['Earth', 'Jupiter', 'Mars', 'Neptune'], c: 0 }
-        ]
+        ,
+          { q: 'Which planet do we live on?', a: ['Earth', 'Mars', 'Jupiter', 'Venus'], c: 0 }]
       },
       { id: 'stars', subject: 'space', title: 'Stars', icon: '⭐',
         tagline: 'Twinkling lights that are really giant suns!',
@@ -5072,7 +5332,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Stars look tiny because they are...', a: ['Very small', 'Very far away', 'Sleeping', 'Hiding'], c: 1 },
           { q: 'Pictures made of stars are called...', a: ['Paintings', 'Constellations', 'Clouds', 'Maps'], c: 1 },
           { q: 'Stars are made of...', a: ['Ice', 'Hot, glowing gas', 'Rocks', 'Water'], c: 1 }
-        ]
+        ,
+          { q: 'Our Sun is a…?', a: ['Star', 'Planet', 'Moon', 'Comet'], c: 0 }]
       },
       { id: 'astronauts', subject: 'space', title: 'Astronauts', icon: '👨‍🚀',
         tagline: 'Blast off! Meet the people who travel to space!',
@@ -5089,14 +5350,149 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           { q: 'Astronauts travel to space in a...', a: ['Plane', 'Car', 'Rocket', 'Boat'], c: 2 },
           { q: 'The space station is a...', a: ['Home in space', 'School bus', 'Zoo', 'Library'], c: 0 },
           { q: 'In space, astronauts...', a: ['Sink', 'Float', 'Run fast', 'Sleep all day'], c: 1 }
-        ]
+        ,
+          { q: 'What do astronauts wear in space?', a: ['A spacesuit', 'A swimsuit', 'A raincoat', 'Pajamas'], c: 0 }]
       }
-    ];
+    ,
+      { id: 'telling-time', subject: 'math', title: 'Telling Time', icon: '🕐',
+        tagline: 'Read the clock — o\'clock and half past!',
+        scene: 'telling-time',
+        facts: [
+          'A clock has two hands. The short hand tells the hour!',
+          'The long hand tells the minutes. When it points up, it is o\'clock!',
+          'When the long hand points down, it is half past the hour!',
+          'We read clocks every day — for school, lunch, and playtime!'
+        ],
+        play: { type: 'choice', gen: 'time' },
+        quiz: [
+          { q: 'Which hand is the SHORT hand?', a: ['The hour hand', 'The minute hand', 'The second hand', 'The clock hand'], c: 0 },
+          { q: 'When the long hand points straight UP, what time is it?', a: ['Half past', 'O\'clock', 'Lunchtime', 'Bedtime'], c: 1 },
+          { q: 'When the long hand points DOWN, it is…?', a: ['Half past', 'O\'clock', 'One minute', 'Midnight'], c: 0 },
+          { q: 'How many numbers are on a clock face?', a: ['10', '12', '6', '24'], c: 1 },
+          { q: 'The short hand points at 5 and the long hand points up. What time is it?', a: ['5 o\'clock', '12 o\'clock', '6 o\'clock', 'Half past 5'], c: 0 }
+        ]
+      },
+      { id: 'money', subject: 'math', title: 'Money Coins', icon: '🪙',
+        tagline: 'Penny, nickel, dime and quarter!',
+        scene: 'money',
+        facts: [
+          'A penny is copper-colored and worth 1 cent!',
+          'A nickel is worth 5 cents. A dime is worth 10 cents!',
+          'A dime is the smallest coin, but it is worth more than a nickel!',
+          'A quarter is the biggest coin here — worth 25 cents!'
+        ],
+        play: { type: 'choice', gen: 'money' },
+        quiz: [
+          { q: 'How much is a penny worth?', a: ['1 cent', '5 cents', '10 cents', '25 cents'], c: 0 },
+          { q: 'How much is a nickel worth?', a: ['1 cent', '5 cents', '10 cents', '25 cents'], c: 1 },
+          { q: 'How much is a dime worth?', a: ['1 cent', '5 cents', '10 cents', '25 cents'], c: 2 },
+          { q: 'How much is a quarter worth?', a: ['1 cent', '5 cents', '10 cents', '25 cents'], c: 3 },
+          { q: 'Which coin is worth the MOST?', a: ['Penny', 'Nickel', 'Dime', 'Quarter'], c: 3 }
+        ]
+      },
+      { id: 'community-helpers', subject: 'social', title: 'Community Helpers', icon: '🚒',
+        tagline: 'People who help our town every day!',
+        scene: 'community-helpers',
+        facts: [
+          'Firefighters put out fires and keep us safe!',
+          'Doctors and nurses help us feel better when we are sick.',
+          'Teachers help us learn new things every day!',
+          'Police officers help keep our neighborhoods safe.'
+        ],
+        play: { type: 'choice', mix: ['memory'], tasks: [
+          { q: 'Who puts out fires?', options: [ { t: '🧑‍🚒 Firefighter', ok: true }, { t: '🧑‍⚕️ Doctor' }, { t: '🧑‍🏫 Teacher' }, { t: '🧑‍🍳 Chef' } ] },
+          { q: 'Who helps you when you are sick?', options: [ { t: '🧑‍⚕️ Doctor', ok: true }, { t: '🧑‍🚒 Firefighter' }, { t: '🧑‍✈️ Pilot' }, { t: '🧑‍🌾 Farmer' } ] },
+          { q: 'Who teaches you at school?', options: [ { t: '🧑‍🏫 Teacher', ok: true }, { t: '👮 Police officer' }, { t: '🧑‍⚕️ Doctor' }, { t: '🧑‍🍳 Chef' } ] },
+          { q: 'Who brings your mail?', options: [ { t: '📬 Mail carrier', ok: true }, { t: '🧑‍🚒 Firefighter' }, { t: '🧑‍🏫 Teacher' }, { t: '🧑‍✈️ Pilot' } ] },
+          { q: 'Who grows food on a farm?', options: [ { t: '🧑‍🌾 Farmer', ok: true }, { t: '🧑‍⚕️ Doctor' }, { t: '🧑‍🍳 Chef' }, { t: '👮 Police officer' } ] }
+        ] },
+        quiz: [
+          { q: 'Where does a doctor work?', a: ['A hospital', 'A fire station', 'A school', 'A farm'], c: 0 },
+          { q: 'What does a firefighter drive?', a: ['A fire truck', 'A school bus', 'A tractor', 'An airplane'], c: 0 },
+          { q: 'Who keeps our neighborhood safe?', a: ['A police officer', 'A chef', 'A farmer', 'A pilot'], c: 0 },
+          { q: 'Who cooks food in a restaurant?', a: ['A chef', 'A teacher', 'A doctor', 'A mail carrier'], c: 0 },
+          { q: 'Who flies an airplane?', a: ['A pilot', 'A farmer', 'A firefighter', 'A nurse'], c: 0 }
+        ]
+      },
+      { id: 'maps-directions', subject: 'social', title: 'Maps & Directions', icon: '🧭',
+        tagline: 'Compass directions and finding your way!',
+        scene: 'maps-directions',
+        facts: [
+          'A map is a picture of a place, seen from above!',
+          'A compass shows directions: north, south, east, and west.',
+          'On a map, north is usually at the top!',
+          'Landmarks are special places that help us find our way.'
+        ],
+        play: { type: 'choice', mix: ['drag'], tasks: [
+          { q: 'Which way is the arrow pointing? ➡️', options: [ { t: 'Right', ok: true }, { t: 'Left' }, { t: 'Up' }, { t: 'Down' } ] },
+          { q: 'Which way is the arrow pointing? ⬆️', options: [ { t: 'Up', ok: true }, { t: 'Down' }, { t: 'Left' }, { t: 'Right' } ] },
+          { q: 'Which way is the arrow pointing? ⬅️', options: [ { t: 'Left', ok: true }, { t: 'Right' }, { t: 'Down' }, { t: 'Up' } ] },
+          { q: 'What tool shows us north, south, east, and west?', options: [ { t: 'A compass', ok: true }, { t: 'A clock' }, { t: 'A ruler' }, { t: 'A scale' } ] },
+          { q: 'On most maps, which direction is at the TOP?', options: [ { t: 'North', ok: true }, { t: 'South' }, { t: 'East' }, { t: 'West' } ] }
+        ] },
+        quiz: [
+          { q: 'What is a map?', a: ['A picture of a place from above', 'A kind of book', 'A weather report', 'A song'], c: 0 },
+          { q: 'Which direction is the opposite of north?', a: ['South', 'East', 'West', 'Up'], c: 0 },
+          { q: 'A special place that helps you find your way is called a…?', a: ['Landmark', 'Bookmark', 'Sidewalk', 'Playground'], c: 0 },
+          { q: 'If the sun rises in the east, where does it set?', a: ['In the west', 'In the north', 'In the south', 'In the sky'], c: 0 },
+          { q: 'Which way is the arrow pointing? ⬇️', a: ['Down', 'Up', 'Left', 'Right'], c: 0 }
+        ]
+      },
+      { id: 'land-water', subject: 'social', title: 'Land & Water', icon: '🏝️',
+        tagline: 'Islands, oceans, lakes and mountains!',
+        scene: 'land-water',
+        facts: [
+          'An island is land with water all around it!',
+          'Oceans are the biggest water on Earth. They are salty!',
+          'Lakes and ponds are water with land all around them.',
+          'Mountains are the tallest land. Valleys are low land between hills!'
+        ],
+        play: { type: 'choice', mix: ['sort'], tasks: [
+          { q: 'What is land with water ALL around it called?', options: [ { t: 'An island', ok: true }, { t: 'A lake' }, { t: 'A mountain' }, { t: 'A desert' } ] },
+          { q: 'Which one is WATER?', options: [ { t: 'An ocean', ok: true }, { t: 'A hill' }, { t: 'A forest' }, { t: 'A road' } ] },
+          { q: 'Which one is LAND?', options: [ { t: 'A mountain', ok: true }, { t: 'A river' }, { t: 'A pond' }, { t: 'A wave' } ] },
+          { q: 'What is the biggest water on Earth?', options: [ { t: 'The ocean', ok: true }, { t: 'A puddle' }, { t: 'A pond' }, { t: 'A cup' } ] },
+          { q: 'What is water with land all around it?', options: [ { t: 'A lake', ok: true }, { t: 'An island' }, { t: 'A beach' }, { t: 'A cliff' } ] }
+        ] },
+        quiz: [
+          { q: 'Fish live in…?', a: ['Water', 'Deserts', 'Mountains', 'Trees'], c: 0 },
+          { q: 'Houses are built on…?', a: ['Land', 'Water', 'Clouds', 'Waves'], c: 0 },
+          { q: 'A beach is where…?', a: ['Land meets water', 'Mountains meet', 'Roads end', 'Trees grow'], c: 0 },
+          { q: 'Which is the tallest land?', a: ['A mountain', 'A valley', 'A beach', 'A field'], c: 0 },
+          { q: 'Boats travel on…?', a: ['Water', 'Land', 'Roads', 'Rails'], c: 0 }
+        ]
+      },
+      { id: 'american-symbols', subject: 'social', title: 'American Symbols', icon: '🦅',
+        tagline: 'The flag, the eagle and the Liberty Bell!',
+        scene: 'american-symbols',
+        facts: [
+          'The American flag has 50 stars — one for each state!',
+          'The flag has 13 stripes for the first 13 states.',
+          'The bald eagle is a symbol of America. It stands for freedom and strength!',
+          'The Liberty Bell is in Philadelphia. It has a famous crack!'
+        ],
+        play: { type: 'choice', tasks: [
+          { q: 'How many stars are on the American flag?', options: [ { t: '50', ok: true }, { t: '13' }, { t: '25' }, { t: '100' } ] },
+          { q: 'What colors are on the American flag?', options: [ { t: 'Red, white, and blue', ok: true }, { t: 'Green and gold' }, { t: 'Purple and pink' }, { t: 'Black and orange' } ] },
+          { q: 'Which bird is a symbol of America?', options: [ { t: 'Bald eagle', ok: true }, { t: 'Penguin' }, { t: 'Owl' }, { t: 'Duck' } ] },
+          { q: 'The Liberty Bell has a famous…?', options: [ { t: 'Crack', ok: true }, { t: 'Song' }, { t: 'Light' }, { t: 'Star' } ] },
+          { q: 'How many stripes are on the American flag?', options: [ { t: '13', ok: true }, { t: '50' }, { t: '7' }, { t: '20' } ] }
+        ] },
+        quiz: [
+          { q: 'The 50 stars on the flag stand for…?', a: ['The 50 states', '50 presidents', '50 oceans', '50 years'], c: 0 },
+          { q: 'Where is the Liberty Bell?', a: ['Philadelphia', 'New York City', 'Washington, D.C.', 'Florida'], c: 0 },
+          { q: 'The Statue of Liberty holds a…?', a: ['Torch', 'Flag', 'Book', 'Bell'], c: 0 },
+          { q: 'What does the bald eagle stand for?', a: ['Freedom and strength', 'Sleep and rest', 'Rain and snow', 'Speed and racing'], c: 0 },
+          { q: 'The American flag is sometimes called…?', a: ['Old Glory', 'Big Banner', 'Star Cloth', 'The Stripes'], c: 0 }
+        ]
+      }];
 
     /* ================= TOPIC PROGRESS / NEW SHELL LOGIC ================= */
     var session = null;          // {kind:'play'|'quiz', topicId, playType, correct, needed, mistakes, candyOpts, questions, idx}
     var engineWordItems = null;  // topic word list override for the word engine
     var engineMathIcon = null;   // topic icon override for the math engine
+    var engineMathForced = null;  // a specific math question to serve (spaced review)
+    var engineMathOps = null;     // operation set override for add/subtract topics
     var playReturn = { view: 'topics' };
     var currentView = 'home';
     var story = null;
@@ -5217,6 +5613,10 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     const MAP_POINTS = [
       { x: 50, y: 88 }, { x: 66, y: 66 }, { x: 35, y: 47 }, { x: 58, y: 27 }
     ];
+    const MAP_POINTS6 = [
+      { x: 50, y: 88 }, { x: 68, y: 76 }, { x: 34, y: 64 },
+      { x: 62, y: 52 }, { x: 36, y: 39 }, { x: 58, y: 27 }
+    ];
 
     function renderMap() {
       const wrap = document.getElementById('mapWrap');
@@ -5233,7 +5633,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       if (banner) {
         banner.style.background = 'linear-gradient(180deg,' + subj.color + ',' + subj.dark + ')';
         banner.innerHTML = subjectIconSVG(subj.id) + ' ' + subj.name +
-          '<span class="banner-stars">' + ICONS.star + ' ' + subjectStars(subj.id) + '/12</span>';
+          '<span class="banner-stars">' + ICONS.star + ' ' + subjectStars(subj.id) + '/' + (list.length * 3) + '</span>';
       }
 
       nodesEl.innerHTML = '';
@@ -5242,7 +5642,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       list.forEach((topic, i) => {
         const p = getProg(topic.id);
         const unlocked = isUnlocked(topic);
-        const pt = MAP_POINTS[i] || { x: 50, y: 88 - i * 20 };
+        const pt = (list.length > 4 ? MAP_POINTS6 : MAP_POINTS)[i] || { x: 50, y: 88 - i * 20 };
         const w = document.createElement('div');
         w.className = 'map-node-wrap' + (!unlocked ? ' is-locked' : '');
         w.style.left = pt.x + '%';
@@ -5374,8 +5774,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
        (storyTaskDone, +5 first time, as topic play did), and the quiz
        score in finishQuiz's story branch (same accounting as before). */
     function storyTaskCount(topic) {
-      if (topic.play.type === 'candy') return 2;
-      return neededFor(topic);
+      return 4;
     }
 
     var STORY_SYMBOL_NAMES = { '🐝': 'bee', '🌼': 'flower', '🍯': 'honey pot', '🐞': 'ladybug', '🌻': 'sunflower', '🦋': 'butterfly', '🌸': 'blossom', '🍃': 'leaf', '🐛': 'caterpillar', '🌷': 'tulip', '🚀': 'rocket', '⭐': 'star', '🌙': 'moon', '🛰️': 'satellite', '🧑‍🚀': 'astronaut' };
@@ -5414,7 +5813,29 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         display: '<div class="count-box">' + disp + '</div>',
         options: shuffleArr(Array.from(vals).map(v => ({ t: String(v), ok: v === n })))
       };
-      return [findTask, countTask];
+      const otherSym = others[0] || target;
+      const findOtherTask = {
+        q: 'Now tap the ' + otherSym + '!',
+        speak: 'Now tap the ' + storySymbolName(otherSym) + '!',
+        hearOptions: [],
+        display: '<div class="count-box">' + jumble + '</div>',
+        options: shuffleArr([{ t: otherSym, ok: true }].concat(others.slice(1, 3).map(s => ({ t: s }))))
+      };
+      const n2 = 2 + Math.floor(Math.random() * 4);
+      const row2 = [];
+      for (let i = 0; i < n2; i++) row2.push(target);
+      others.forEach(s => { row2.push(s); });
+      let disp2 = '';
+      shuffleArr(row2).forEach(s => { disp2 += '<span class="count-item">' + s + '</span>'; });
+      const vals2 = new Set([n2]);
+      while (vals2.size < 3) { const d = n2 + (Math.floor(Math.random() * 5) - 2); if (d > 0) vals2.add(d); }
+      const countTask2 = {
+        q: 'Count again! How many ' + target + '?',
+        speak: 'Count again! How many ' + name + 's do you see?',
+        display: '<div class="count-box">' + disp2 + '</div>',
+        options: shuffleArr(Array.from(vals2).map(v => ({ t: String(v), ok: v === n2 })))
+      };
+      return [findTask, countTask, findOtherTask, countTask2];
     }
 
     function pickStoryTasks(topic) {
@@ -5446,6 +5867,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
 
     function startStory(topic) {
       if (!topic) return;
+      bumpRunSeq();
       cleanupStory();
       restingPose = 'happy';
       setMascotPose('happy');
@@ -5459,6 +5881,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         autoTimer: null, narrToken: 0,
         tasksNeeded: storyTaskCount(topic), tasksDone: 0,
         storyTasks: pickStoryTasks(topic),
+        reviewTasks: reviewTaskDescriptors(topic),
         questions: questions, quizSegStart: quizSegStart,
         quizCorrect: 0, quizTotal: questions.length, ended: false
       };
@@ -5582,9 +6005,35 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         stageEl: document.getElementById('storyStage'),
         onComplete: function () { storyTaskDone(); }
       };
-      engineWordItems = topic.play.type === 'word' ? topic.play.words : null;
+      engineWordItems = topic.play.type === 'word' ? wordItemsFor(topic) : null;
+      engineMathForced = null;
+      engineMathOps = topic.play.type === 'math' ? (topic.play.ops || null) : null;
       engineMathIcon = topic.play.type === 'math' ? (topic.play.icon || null) : null;
       state.mode = effType === 'choice' ? 'word' : effType;
+      const mix = (topic.play && topic.play.mix) || [];
+      const rotation = [null].concat(mix);
+      const eng = rotation[story.tasksDone % rotation.length];
+      const rd = (story.reviewTasks || [])[story.tasksDone];
+      if (rd) {
+        session.reviewKey = rd.reviewKey;
+        if (rd.engine === 'choice') {
+          session.storyTasks = [rd.task];
+          session.storyTaskIdx = 0;
+          session.playType = 'choice';
+        } else if (rd.engine === 'math') {
+          engineMathForced = rd.mq;
+          session.playType = 'math';
+        } else if (rd.engine === 'word') {
+          engineWordItems = [rd.item];
+          session.playType = 'word';
+        } else {
+          session.newTask = rd.task;
+          session.playType = 'new';
+        }
+      } else if (eng) {
+        session.newTask = genNewTask(eng, topic);
+        session.playType = 'new';
+      }
       loadNextQuestion();
     }
 
@@ -5592,6 +6041,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       session = null;
       engineWordItems = null;
       engineMathIcon = null;
+      engineMathForced = null;
+      engineMathOps = null;
       if (!story) return;
       story.tasksDone++;
       if (story.tasksDone >= story.tasksNeeded) {
@@ -5716,8 +6167,11 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           ? { symbols: topic.play.symbols, target: topic.play.target, onWin: function () { finishTopicPlay(); } }
           : null
       };
-      engineWordItems = topic.play.type === 'word' ? topic.play.words : null;
+      engineWordItems = topic.play.type === 'word' ? wordItemsFor(topic) : null;
+      engineMathForced = null;
+      engineMathOps = topic.play.type === 'math' ? (topic.play.ops || null) : null;
       engineMathIcon = topic.play.type === 'math' ? (topic.play.icon || null) : null;
+      bumpRunSeq();
       state.mode = topic.play.type === 'choice' ? 'word' : topic.play.type;
       playReturn = { view: 'topic', id: topic.id };
       document.getElementById('freeTabs').style.display = 'none';
@@ -5730,6 +6184,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       session = null;
       engineWordItems = null;
       engineMathIcon = null;
+      engineMathForced = null;
+      engineMathOps = null;
       state.mode = mode;
       state.roundCount = 0;
       playReturn = { view: 'topics' };
@@ -5746,6 +6202,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       session = null;
       engineWordItems = null;
       engineMathIcon = null;
+      engineMathForced = null;
+      engineMathOps = null;
       if (!topic) { showView('home'); return; }
       const p = getProg(topic.id);
       const first = !p.play;
@@ -5769,6 +6227,1208 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
     }
 
     /* ---------------- Choice-task engine (Funexpected-style tap tasks) ---------------- */
+    function mathExprFor(q) {
+      if (q.type === 'missing') return '? + ' + q.b + ' = ' + q.total;
+      const sym = q.type === 'add' ? '+' : q.type === 'sub' ? '−' : q.type === 'mul' ? '×' : '÷';
+      return q.a + ' ' + sym + ' ' + q.b + ' = ?';
+    }
+
+
+    /* ================================================================
+       PHASE 4 — REAL LEARNING
+       Curriculum depth (Dolch sight words, telling time, money),
+       new game engines, adaptive difficulty, spaced review and a
+       friendly placement adventure. All Phase 4 storage is ADDITIVE:
+       new keys lw_adaptive / lw_review / lw_placement / lw_placement_offered;
+       every pre-Phase-4 key keeps its exact meaning.
+       ================================================================ */
+
+    /* ---------------- Dolch sight-word lists (the real lists) ----------------
+       Pre-primer (40) and Primer (52), Edward William Dolch's published
+       lists. Sight Words lessons draw from pre-primer at the easy end of
+       the range and primer at the harder end. */
+    const DOLCH_PRE = ['a','and','away','big','blue','can','come','down','find','for','funny','go','help','here','i','in','is','it','jump','little','look','make','me','my','not','one','play','red','run','said','see','the','three','to','two','up','we','where','yellow','you'];
+    const DOLCH_PRIMER = ['all','am','are','at','ate','be','black','brown','but','came','did','do','eat','four','get','good','have','he','into','like','must','new','no','now','on','our','out','please','pretty','ran','ride','saw','say','she','so','soon','that','there','they','this','too','under','want','was','well','went','what','white','who','will','with','yes'];
+    const DOLCH_EMOJI = { a: '🅰️', and: '➕', away: '✈️', big: '🐘', blue: '🔵', can: '💪', come: '👋', down: '⬇️', find: '🔎', funny: '😄', go: '🚶', help: '🆘', here: '📍', in: '📦', is: '✨', it: '🎈', jump: '🤸', little: '🐜', look: '🔍', make: '🛠️', not: '🚫', one: '1️⃣', play: '▶️', red: '🔴', run: '🏃', said: '💬', see: '👀', three: '3️⃣', two: '2️⃣', up: '⬆️', we: '👥', where: '🗺️', yellow: '🟡', you: '👉',
+      all: '🌍', are: '✨', at: '📍', ate: '🍽️', black: '⚫', brown: '🟤', came: '👋', did: '✅', do: '⭐', eat: '🍎', four: '4️⃣', get: '🤲', good: '👍', have: '🎒', into: '🚪', like: '❤️', new: '🆕', now: '⏰', on: '🔛', out: '🚪', please: '🙏', pretty: '🌸', ran: '🏃', ride: '🚲', saw: '👀', say: '💬', soon: '🔜', that: '👉', there: '📍', they: '👥', this: '👈', too: '➕', under: '⬇️', want: '🤲', was: '⏳', well: '💧', went: '🚶', what: '❓', white: '⚪', who: '🧒', will: '🌟', with: '🤝', yes: '👍' };
+
+    function dolchItemsForLevel(lvl) {
+      const list = lvl >= 3 ? DOLCH_PRIMER : DOLCH_PRE;
+      return list.map(w => ({
+        word: w.toUpperCase(),
+        emoji: DOLCH_EMOJI[w] || '👀',
+        clue: 'A sight word! It has ' + w.length + (w.length === 1 ? ' letter' : ' letters') + '. Listen: ' + w + '!'
+      }));
+    }
+
+    /* The word list a word-engine topic plays with right now. Sight Words
+       draws live from the Dolch lists (tiered by effective level); other
+       topics keep their authored word lists. */
+    function wordItemsFor(topic) {
+      if (!topic || !topic.play) return null;
+      if (topic.play.gen === 'dolch') return dolchItemsForLevel(effNow());
+      return topic.play.words || null;
+    }
+
+    /* ---------------- Adaptive difficulty ----------------
+       lw_adaptive = { topics: { [topicId]: { out: [0|1, ...] } },
+                       skillBias: { reading, math, world } }
+       The manual Level (state.level, the Level tabs) is the anchor.
+       Effective level = clamp(level + clamp(bias + perfShift, -1, 1), 1, 4):
+       the placement bias and recent performance can each nudge a topic
+       at most one level easier or harder — never a wild swing. */
+    let adaptive = loadJSON('lw_adaptive', null);
+    if (!adaptive || typeof adaptive !== 'object' || !adaptive.topics) {
+      adaptive = { topics: {}, skillBias: { reading: 0, math: 0, world: 0 } };
+    }
+    if (!adaptive.skillBias) adaptive.skillBias = { reading: 0, math: 0, world: 0 };
+
+    function saveAdaptive() {
+      try { localStorage.setItem('lw_adaptive', JSON.stringify(adaptive)); } catch (e) {}
+    }
+    function recordOutcome(topicId, ok) {
+      if (!topicId) return;
+      if (!adaptive.topics[topicId]) adaptive.topics[topicId] = { out: [] };
+      const arr = adaptive.topics[topicId].out;
+      arr.push(ok ? 1 : 0);
+      while (arr.length > 24) arr.shift();
+      saveAdaptive();
+    }
+    function perfShift(topicId) {
+      const rec = adaptive.topics[topicId];
+      if (!rec || !rec.out || rec.out.length < 6) return 0;
+      const recent = rec.out.slice(-8);
+      const acc = recent.reduce((s, v) => s + v, 0) / recent.length;
+      if (acc >= 0.9) return 1;
+      if (acc < 0.5) return -1;
+      return 0;
+    }
+    function skillGroupOf(topic) {
+      if (!topic) return 'world';
+      if (topic.subject === 'words') return 'reading';
+      if (topic.subject === 'math') return 'math';
+      return 'world';
+    }
+    function effLevelFor(topic) {
+      if (!topic) return state.level;
+      const bias = adaptive.skillBias[skillGroupOf(topic)] || 0;
+      const shift = Math.max(-1, Math.min(1, bias + perfShift(topic.id)));
+      return Math.max(1, Math.min(4, state.level + shift));
+    }
+    /* Effective level for whatever question is on screen right now. */
+    function effNow() {
+      return (session && session.effLevel) || state.level;
+    }
+
+    /* ---------------- Spaced review (lw_review) ----------------
+       lw_review = { runSeq: n, items: { [key]: item } }
+       item = { key, topicId, skill, spec, misses, correctRuns: [], lastMissed }
+       A missed question is recorded with a spec that can rebuild it.
+       Missed items resurface inside later stories (as tasks) and quizzes
+       (as quiz questions), at most 2 per run. An item retires after it is
+       answered correctly in TWO separate runs; missing it again resets
+       that progress. runSeq increments at every story / quiz / play start,
+       which is what makes two correct answers "separate occasions". */
+    function loadReview() {
+      const r = loadJSON('lw_review', null);
+      if (!r || typeof r !== 'object' || !r.items) return { runSeq: 0, items: {} };
+      return r;
+    }
+    function saveReview(r) {
+      try { localStorage.setItem('lw_review', JSON.stringify(r)); } catch (e) {}
+    }
+    function bumpRunSeq() {
+      const r = loadReview();
+      r.runSeq = (r.runSeq || 0) + 1;
+      saveReview(r);
+      return r.runSeq;
+    }
+    function todayStr() {
+      const d = new Date();
+      return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    }
+    function p4hash(s) {
+      let h = 5381;
+      s = String(s || '');
+      for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+      return h.toString(36);
+    }
+    function reviewKeyFor(spec) {
+      if (!spec || !spec.kind) return null;
+      switch (spec.kind) {
+        case 'quiz': return 'qz:' + spec.topicId + ':' + p4hash(spec.q);
+        case 'choice': return 'ch:' + spec.topicId + ':' + p4hash(spec.task && spec.task.q);
+        case 'count': return 'ct:' + spec.icon + ':' + spec.n;
+        case 'math': { const m = spec.mq || {}; return 'ma:' + m.type + ':' + m.a + ':' + m.b + ':' + (m.total || ''); }
+        case 'word': return 'wd:' + ((spec.item && spec.item.word) || '');
+        case 'time': return 'tm:' + spec.h + ':' + spec.m;
+        case 'money': return 'mn:' + spec.mode + ':' + (spec.coins ? spec.coins.join('.') : (spec.coin || ''));
+        case 'fillblank': return 'fb:' + p4hash(spec.task && (spec.task.prompt + '|' + spec.task.answer));
+        case 'drag': return 'dg:' + p4hash(spec.task && spec.task.prompt);
+        case 'sort': return 'st:' + p4hash(spec.task && spec.task.prompt);
+        case 'memory': return 'mm:' + spec.topicId + ':' + p4hash(spec.task && spec.task.pairs ? spec.task.pairs.map(p => p[0]).join(',') : '');
+        case 'trace': return 'tr:' + spec.letter;
+      }
+      return null;
+    }
+    /* Build a review spec for the classic engines (choice / counting /
+       word builder / math) from whatever question is on screen. The new
+       engines and the quiz set state.currentReviewSpec directly. */
+    function deriveReviewSpec() {
+      const q = state.currentQuestion;
+      const tid = (session && session.topicId) || '';
+      if (!q || !tid) return null;
+      const topic = getTopic(tid);
+      if (q.type === 'add' || q.type === 'sub' || q.type === 'mul' || q.type === 'div' || q.type === 'missing') {
+        return { kind: 'math', topicId: tid, mq: { type: q.type, a: q.a, b: q.b, ans: q.ans, total: q.total } };
+      }
+      if (q.word && q.emoji) return { kind: 'word', topicId: tid, item: { word: q.word, emoji: q.emoji, clue: q.clue || '' } };
+      if (q.options && q.q) {
+        if (q.display && q.display.indexOf('count-box') >= 0) {
+          const ok = q.options.find(o => o.ok);
+          const n = ok ? parseInt(ok.t, 10) : NaN;
+          if (!isNaN(n)) return { kind: 'count', topicId: tid, icon: (topic && topic.play && topic.play.icon) || '⭐', n: n, countLabel: (topic && topic.play && topic.play.countLabel) || 'things' };
+        }
+        return { kind: 'choice', topicId: tid, task: q };
+      }
+      return null;
+    }
+    /* Called on every wrong answer (via handleWrongAnswer + quiz). */
+    function noteQuestionMissed() {
+      try {
+        const tid = (session && session.topicId) || null;
+        if (tid) recordOutcome(tid, false);
+        const spec = state.currentReviewSpec || deriveReviewSpec();
+        if (!spec) return;
+        const store = loadReview();
+        const keys = [];
+        if (state.currentReviewKey) keys.push(state.currentReviewKey);
+        const sk = reviewKeyFor(spec);
+        if (sk && keys.indexOf(sk) < 0) keys.push(sk);
+        if (!keys.length) return;
+        let key = null;
+        for (let i = 0; i < keys.length; i++) if (store.items[keys[i]]) { key = keys[i]; break; }
+        if (!key) key = keys[0];
+        const ex = store.items[key];
+        if (ex) {
+          ex.misses = (ex.misses || 0) + 1;
+          ex.correctRuns = [];
+          ex.lastMissed = todayStr();
+          if (!ex.spec && spec) ex.spec = spec;
+        } else {
+          store.items[key] = {
+            key: key, topicId: spec.topicId || tid || '', skill: spec.skill || '',
+            spec: spec, misses: 1, correctRuns: [], lastMissed: todayStr()
+          };
+        }
+        saveReview(store);
+      } catch (e) {}
+    }
+    /* Called on every correct answer (via handleCorrectAnswer + quiz). */
+    function noteQuestionCorrect() {
+      try {
+        const tid = (session && session.topicId) || null;
+        if (tid && !state.reviewMissRecorded) recordOutcome(tid, true);
+        const store = loadReview();
+        const keys = [];
+        if (state.currentReviewKey) keys.push(state.currentReviewKey);
+        if (state.currentReviewSpec) {
+          const sk = reviewKeyFor(state.currentReviewSpec);
+          if (sk && keys.indexOf(sk) < 0) keys.push(sk);
+        }
+        let changed = false;
+        keys.forEach(k => {
+          const it = store.items[k];
+          if (!it) return;
+          const run = store.runSeq || 0;
+          if (it.correctRuns.indexOf(run) < 0) it.correctRuns.push(run);
+          if (it.correctRuns.length >= 2) delete store.items[k];
+          changed = true;
+        });
+        if (changed) saveReview(store);
+      } catch (e) {}
+    }
+    /* Due items: this topic's misses first, then the oldest misses. */
+    function dueReviewItems(topic, max) {
+      const store = loadReview();
+      const items = Object.keys(store.items).map(k => store.items[k]);
+      items.sort((a, b) => {
+        const at = topic && a.topicId === topic.id ? 0 : 1;
+        const bt = topic && b.topicId === topic.id ? 0 : 1;
+        if (at !== bt) return at - bt;
+        return String(a.lastMissed).localeCompare(String(b.lastMissed));
+      });
+      return items.slice(0, max || 2);
+    }
+    function buildCountTask(spec) {
+      const n = spec.n;
+      let disp = '';
+      for (let i = 0; i < n; i++) disp += '<span class="count-item">' + spec.icon + '</span>';
+      const vals = new Set([n]);
+      [n - 1, n + 1, n + 2, n - 2].forEach(v => { if (v > 0) vals.add(v); });
+      const arr = Array.from(vals).slice(0, 3);
+      const label = spec.countLabel || 'things';
+      return {
+        q: 'How many ' + label + ' do you see?',
+        speak: 'How many ' + label + ' do you see?',
+        display: '<div class="count-box">' + disp + '</div>',
+        options: shuffleArr(arr.map(v => ({ t: String(v), ok: v === n })))
+      };
+    }
+    function quizFormFor(spec) {
+      if (!spec) return null;
+      try {
+        switch (spec.kind) {
+          case 'quiz': return { q: spec.q, options: spec.options.slice(), correct: spec.correct };
+          case 'choice': {
+            const ok = spec.task.options.find(o => o.ok);
+            if (!ok) return null;
+            return { q: spec.task.q, options: spec.task.options.map(o => o.t), correct: ok.t };
+          }
+          case 'count': {
+            const t = buildCountTask(spec);
+            const ok = t.options.find(o => o.ok);
+            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '' };
+          }
+          case 'math': {
+            const mq = spec.mq;
+            const prompt = mq.type === 'missing'
+              ? 'What number plus ' + mq.b + ' makes ' + mq.total + '?'
+              : mq.type === 'add' ? 'What is ' + mq.a + ' plus ' + mq.b + '?'
+              : mq.type === 'sub' ? 'What is ' + mq.a + ' minus ' + mq.b + '?'
+              : mq.type === 'mul' ? 'What is ' + mq.a + ' times ' + mq.b + '?'
+              : 'What is ' + mq.a + ' divided by ' + mq.b + '?';
+            const opts = new Set([mq.ans]);
+            let guard = 0;
+            while (opts.size < 4 && guard++ < 40) {
+              const f = mq.ans + (Math.floor(Math.random() * 7) - 3);
+              if (f >= 0) opts.add(f);
+            }
+            return { q: prompt, options: shuffleArr(Array.from(opts).map(String)), correct: String(mq.ans) };
+          }
+          case 'time': {
+            const t = genTimeTaskFixed(spec.h, spec.m, 4);
+            const ok = t.options.find(o => o.ok);
+            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '' };
+          }
+          case 'money': {
+            const t = genMoneyTaskFixed(spec);
+            const ok = t.options.find(o => o.ok);
+            return { q: t.q, options: t.options.map(o => o.t), correct: ok ? ok.t : '' };
+          }
+          case 'fillblank': {
+            const t = spec.task;
+            const ok = t.options.find(o => o.ok);
+            if (!ok) return null;
+            return { q: t.prompt, options: t.options.map(o => o.t), correct: ok.t };
+          }
+        }
+      } catch (e) {}
+      return null;
+    }
+    function reviewQuizForms(topic, max) {
+      const out = [];
+      dueReviewItems(topic, 99).forEach(it => {
+        if (out.length >= (max || 2)) return;
+        const f = quizFormFor(it.spec);
+        if (f) out.push({ q: f.q, options: f.options, correct: f.correct, reviewKey: it.key });
+      });
+      return out;
+    }
+    function reviewTaskDescriptor(item) {
+      const spec = item.spec;
+      if (!spec) return null;
+      const d = { reviewKey: item.key, topicId: item.topicId };
+      switch (spec.kind) {
+        case 'choice': d.engine = 'choice'; d.task = spec.task; return d;
+        case 'count': d.engine = 'choice'; d.task = buildCountTask(spec); return d;
+        case 'math': d.engine = 'math'; d.mq = spec.mq; return d;
+        case 'word': d.engine = 'word'; d.item = spec.item; return d;
+        case 'time': d.engine = 'choice'; d.task = genTimeTaskFixed(spec.h, spec.m, 4); return d;
+        case 'money': d.engine = 'choice'; d.task = genMoneyTaskFixed(spec); return d;
+        case 'fillblank': d.engine = 'fillblank'; d.task = spec.task; return d;
+        case 'drag': d.engine = 'drag'; d.task = spec.task; return d;
+        case 'sort': d.engine = 'sort'; d.task = spec.task; return d;
+        case 'memory': d.engine = 'memory'; d.task = spec.task; return d;
+        case 'trace': d.engine = 'trace'; d.task = { engine: 'trace', letter: spec.letter, word: spec.word }; return d;
+      }
+      return null;
+    }
+    function reviewTaskDescriptors(topic, max) {
+      const out = [];
+      dueReviewItems(topic, 99).forEach(it => {
+        if (out.length >= (max || 2)) return;
+        const d = reviewTaskDescriptor(it);
+        if (d) out.push(d);
+      });
+      return out;
+    }
+
+
+    /* ---------------- Telling time ---------------- */
+    const TIME_HOUR_WORDS = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+    const NUM_SMALL = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+    const NUM_TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty'];
+    function numWord2(n) {
+      if (n < 20) return NUM_SMALL[n];
+      const t = Math.floor(n / 10), r = n % 10;
+      return NUM_TENS[t] + (r ? ' ' + NUM_SMALL[r] : '');
+    }
+    function timeLabel(h, m) { return h + ':' + (m < 10 ? '0' + m : '' + m); }
+    function timeSpeak(h, m) {
+      if (m === 0) return TIME_HOUR_WORDS[h] + " o'clock";
+      if (m === 30) return 'half past ' + TIME_HOUR_WORDS[h];
+      if (m === 15) return 'quarter past ' + TIME_HOUR_WORDS[h];
+      if (m === 45) return 'quarter to ' + TIME_HOUR_WORDS[h === 12 ? 1 : h + 1];
+      if (m < 10) return TIME_HOUR_WORDS[h] + ' oh ' + NUM_SMALL[m];
+      return TIME_HOUR_WORDS[h] + ' ' + numWord2(m);
+    }
+    function clockSVG(h, m) {
+      const cx = 100, cy = 100;
+      let ticks = '';
+      for (let i = 0; i < 12; i++) {
+        const a = i * Math.PI / 6;
+        const x1 = cx + 78 * Math.sin(a), y1 = cy - 78 * Math.cos(a);
+        const x2 = cx + 86 * Math.sin(a), y2 = cy - 86 * Math.cos(a);
+        ticks += '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" stroke="' + INK + '" stroke-width="3.5" stroke-linecap="round"/>';
+      }
+      const ha = ((h % 12) + m / 60) * Math.PI / 6;
+      const ma = m * Math.PI / 30;
+      const hx = cx + 48 * Math.sin(ha), hy = cy - 48 * Math.cos(ha);
+      const mx = cx + 70 * Math.sin(ma), my = cy - 70 * Math.cos(ma);
+      return '<svg class="clock-svg" viewBox="0 0 200 200" aria-hidden="true">' +
+        '<circle cx="100" cy="100" r="94" fill="#FFFFFF" ' + SW + '/>' +
+        '<circle cx="100" cy="100" r="84" fill="#FFF7E0" stroke="none"/>' + ticks +
+        TX(100, 40, 24, INK, '12') + TX(162, 108, 24, INK, '3') + TX(100, 176, 24, INK, '6') + TX(38, 108, 24, INK, '9') +
+        '<line x1="100" y1="100" x2="' + hx.toFixed(1) + '" y2="' + hy.toFixed(1) + '" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>' +
+        '<line x1="100" y1="100" x2="' + mx.toFixed(1) + '" y2="' + my.toFixed(1) + '" stroke="#FF5D5D" stroke-width="6" stroke-linecap="round"/>' +
+        '<circle cx="100" cy="100" r="8" fill="#FFC93C" ' + SW2 + '/></svg>';
+    }
+    function genTimeTaskFixed(h, m, optCount) {
+      const correct = timeLabel(h, m);
+      const seen = new Set([correct]);
+      const opts = [{ t: correct, s: timeSpeak(h, m), ok: true }];
+      const cand = [];
+      [0, 15, 30, 45].forEach(mm => { if (mm !== m) cand.push([h, mm]); });
+      cand.push([h === 12 ? 1 : h + 1, m]);
+      cand.push([h === 1 ? 12 : h - 1, m]);
+      cand.push([h === 12 ? 1 : h + 1, (m + 30) % 60]);
+      for (let i = 0; i < cand.length && opts.length < (optCount || 4); i++) {
+        const lbl = timeLabel(cand[i][0], cand[i][1]);
+        if (seen.has(lbl)) continue;
+        seen.add(lbl);
+        opts.push({ t: lbl, s: timeSpeak(cand[i][0], cand[i][1]), ok: false });
+      }
+      const shuffled = shuffleArr(opts);
+      return {
+        engine: 'time', q: 'What time is it?', speak: 'What time is it?',
+        display: '<div class="clock-wrap">' + clockSVG(h, m) + '</div>',
+        options: shuffled, hearOptions: shuffled.map(o => o.s),
+        reviewSpec: { kind: 'time', h: h, m: m }
+      };
+    }
+    function genTimeTask(topic) {
+      const lvl = effNow();
+      const pools = { 1: [0], 2: [0, 30], 3: [0, 15, 30, 45], 4: [0, 10, 15, 20, 30, 40, 45, 50] };
+      const pool = pools[lvl] || pools[1];
+      const h = 1 + Math.floor(Math.random() * 12);
+      const m = pool[Math.floor(Math.random() * pool.length)];
+      const t = genTimeTaskFixed(h, m, lvl === 1 ? 3 : 4);
+      t.reviewSpec.topicId = topic ? topic.id : '';
+      return t;
+    }
+
+    /* ---------------- Money ---------------- */
+    const COINS = {
+      penny:   { name: 'Penny',   cents: 1,  color: '#E8A06A', r: 30, label: '1¢' },
+      nickel:  { name: 'Nickel',  cents: 5,  color: '#C9D1DB', r: 34, label: '5¢' },
+      dime:    { name: 'Dime',    cents: 10, color: '#C9D1DB', r: 25, label: '10¢' },
+      quarter: { name: 'Quarter', cents: 25, color: '#C9D1DB', r: 38, label: '25¢' }
+    };
+    const COIN_KEYS = ['penny', 'nickel', 'dime', 'quarter'];
+    function coinSVG(key) {
+      const c = COINS[key];
+      const cxy = c.r + 5;
+      return '<svg class="coin-svg" viewBox="0 0 ' + (cxy * 2) + ' ' + (cxy * 2) + '" aria-hidden="true">' +
+        '<circle cx="' + cxy + '" cy="' + cxy + '" r="' + c.r + '" fill="' + c.color + '" ' + SW + '/>' +
+        '<circle cx="' + cxy + '" cy="' + cxy + '" r="' + (c.r - 7) + '" fill="none" stroke="' + INK + '" stroke-width="2" stroke-dasharray="3 4" opacity="0.5"/>' +
+        '<text x="' + cxy + '" y="' + (cxy + c.r * 0.24) + '" font-family="Fredoka, sans-serif" font-weight="700" font-size="' + (c.r * 0.66) + '" fill="' + INK + '" text-anchor="middle">' + c.label + '</text></svg>';
+    }
+    function coinRowSVG(keys) {
+      return '<div class="coin-row">' + keys.map(coinSVG).join('') + '</div>';
+    }
+    function genMoneyTaskFixed(spec) {
+      let q, display, options;
+      if (spec.mode === 'id') {
+        const c = COINS[spec.coin];
+        q = 'Which coin is this?';
+        display = coinRowSVG([spec.coin]);
+        options = COIN_KEYS.map(k => ({ t: COINS[k].name, s: COINS[k].name, ok: k === spec.coin }));
+      } else if (spec.mode === 'value') {
+        const c = COINS[spec.coin];
+        q = 'How much is a ' + c.name.toLowerCase() + ' worth?';
+        display = coinRowSVG([spec.coin]);
+        options = COIN_KEYS.map(k => ({ t: COINS[k].label, s: COINS[k].cents + (COINS[k].cents === 1 ? ' cent' : ' cents'), ok: k === spec.coin }));
+      } else {
+        const total = spec.coins.reduce((s, k) => s + COINS[k].cents, 0);
+        q = 'How many cents in all?';
+        display = coinRowSVG(spec.coins);
+        const vals = new Set([total]);
+        [total + 5, total - 5, total + 10, total + 1, total - 1].forEach(v => { if (v > 0) vals.add(v); });
+        options = shuffleArr(Array.from(vals).slice(0, 4).map(v => ({ t: v + '¢', s: v + (v === 1 ? ' cent' : ' cents'), ok: v === total })));
+        const t = { engine: 'money', q: q, speak: q, display: display, options: options, hearOptions: options.map(o => o.s), reviewSpec: { kind: 'money', mode: 'sum', coins: spec.coins.slice() } };
+        return t;
+      }
+      const shuffled = shuffleArr(options);
+      return { engine: 'money', q: q, speak: q, display: display, options: shuffled, hearOptions: shuffled.map(o => o.s), reviewSpec: { kind: 'money', mode: spec.mode, coin: spec.coin } };
+    }
+    function genMoneyTask(topic) {
+      const lvl = effNow();
+      let spec;
+      if (lvl === 1) spec = { mode: 'id', coin: COIN_KEYS[Math.floor(Math.random() * 4)] };
+      else if (lvl === 2) spec = { mode: Math.random() < 0.5 ? 'id' : 'value', coin: COIN_KEYS[Math.floor(Math.random() * 4)] };
+      else if (lvl === 3) spec = { mode: 'sum', coins: [COIN_KEYS[Math.floor(Math.random() * 4)], COIN_KEYS[Math.floor(Math.random() * 4)]] };
+      else spec = { mode: 'sum', coins: [COIN_KEYS[Math.floor(Math.random() * 4)], COIN_KEYS[Math.floor(Math.random() * 4)], COIN_KEYS[Math.floor(Math.random() * 4)]] };
+      const t = genMoneyTaskFixed(spec);
+      t.reviewSpec.topicId = topic ? topic.id : '';
+      return t;
+    }
+
+    /* ---------------- Math with a forced operation set (add/subtract topics) ---------------- */
+    function genMathWithOps(ops, lvl) {
+      const op = ops[Math.floor(Math.random() * ops.length)];
+      let a, b, ans;
+      if (op === 'add') {
+        if (lvl === 1) { a = Math.floor(Math.random() * 6) + 1; b = Math.floor(Math.random() * 5) + 1; }
+        else if (lvl === 2) { a = Math.floor(Math.random() * 30) + 10; b = Math.floor(Math.random() * 20) + 5; }
+        else if (lvl === 3) { a = Math.floor(Math.random() * 60) + 15; b = Math.floor(Math.random() * 40) + 10; }
+        else { a = Math.floor(Math.random() * 90) + 25; b = Math.floor(Math.random() * 60) + 15; }
+        ans = a + b;
+      } else {
+        if (lvl === 1) { a = Math.floor(Math.random() * 5) + 5; b = Math.floor(Math.random() * a) + 1; }
+        else if (lvl === 2) { a = Math.floor(Math.random() * 30) + 20; b = Math.floor(Math.random() * 15) + 5; }
+        else if (lvl === 3) { a = Math.floor(Math.random() * 70) + 30; b = Math.floor(Math.random() * (a - 15)) + 10; }
+        else { a = Math.floor(Math.random() * 90) + 40; b = Math.floor(Math.random() * (a - 25)) + 15; }
+        ans = a - b;
+      }
+      return { type: op, a: a, b: b, ans: ans };
+    }
+
+    /* ================================================================
+       NEW GAME ENGINES — drag & drop, trace, memory, sort, fill-blank.
+       Each renders into the play/story stage, narrates its question,
+       works with the mascot (thinking on show, cheering on success,
+       encouragement + hint at 2 mistakes) and completes through
+       handleCorrectAnswer / handleWrongAnswer like every other engine.
+       ================================================================ */
+    const NEW_ENGINE_NAMES = ['fillblank', 'drag', 'sort', 'memory', 'trace'];
+
+    function engineWrong(el) { handleWrongAnswer(el || document.getElementById('gameStage') || document.body); }
+    function engineDone() { handleCorrectAnswer(); }
+
+    function stripReview(task) {
+      const c = {};
+      Object.keys(task).forEach(k => { if (k !== 'reviewSpec') c[k] = task[k]; });
+      return c;
+    }
+    function finishNewTask(task, topic) {
+      task.reviewSpec = { kind: task.engine, topicId: topic ? topic.id : '', task: stripReview(task) };
+      if (task.engine === 'trace') task.reviewSpec = { kind: 'trace', topicId: topic ? topic.id : '', letter: task.letter, word: task.word };
+      return task;
+    }
+
+    /* ---------- Fill in the blank ---------- */
+    const FILL_EMOJI = { CAT: '🐱', DOG: '🐶', SUN: '☀️', PIG: '🐷', HEN: '🐔', BUS: '🚌', CUP: '🥤', FOX: '🦊', BEE: '🐝', EGG: '🥚', HAT: '🧢', BAT: '🦇', MAT: '🟫', WIG: '💇', FROG: '🐸', RUN: '🏃', TOP: '🌀', MOP: '🧹', NET: '🥅', TEN: '🔟' };
+    function fillblankWordTask(word, topic) {
+      const lvl = effNow();
+      let idx;
+      if (lvl === 1) idx = word.length - 1;
+      else if (lvl === 2) idx = Math.floor(word.length / 2);
+      else idx = Math.floor(Math.random() * word.length);
+      const answer = word[idx];
+      const shown = word.split('').map((ch, i) => i === idx ? '_' : ch).join(' ');
+      const letters = new Set([answer]);
+      const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let guard = 0;
+      while (letters.size < 3 && guard++ < 60) letters.add(alpha[Math.floor(Math.random() * 26)]);
+      const emoji = FILL_EMOJI[word] || (topic && topic.icon) || '🔤';
+      const task = {
+        engine: 'fillblank',
+        prompt: 'Which letter is missing?',
+        speak: 'Which letter is missing? The word is for the picture!',
+        display: '<div class="fill-display"><span class="fill-emoji">' + emoji + '</span><span class="fill-word">' + shown + '</span></div>',
+        options: shuffleArr(Array.from(letters).map(L => ({ t: L, ok: L === answer }))),
+        answer: answer
+      };
+      task.hearOptions = task.options.map(o => o.t);
+      return finishNewTask(task, topic);
+    }
+    function fillblankSeqTask(topic) {
+      const lvl = effNow();
+      const steps = { 1: [1], 2: [1, 2], 3: [2, 5], 4: [5, 10] };
+      const pool = steps[lvl] || steps[1];
+      const step = pool[Math.floor(Math.random() * pool.length)];
+      const start = 1 + Math.floor(Math.random() * 8);
+      const seq = [0, 1, 2, 3].map(i => start + i * step);
+      const answer = seq[2];
+      const shown = seq.map((v, i) => i === 2 ? '?' : String(v)).join('  •  ');
+      const vals = new Set([answer]);
+      [answer + step, answer - step, answer + 1].forEach(v => { if (v > 0) vals.add(v); });
+      const task = {
+        engine: 'fillblank',
+        prompt: 'Which number is missing?',
+        speak: 'Which number is missing in the counting pattern?',
+        display: '<div class="fill-display"><span class="fill-word">' + shown + '</span></div>',
+        options: shuffleArr(Array.from(vals).slice(0, 3).map(v => ({ t: String(v), ok: v === answer }))),
+        answer: String(answer)
+      };
+      task.hearOptions = task.options.map(o => o.t);
+      return finishNewTask(task, topic);
+    }
+    function genFillblankTask(topic) {
+      if (!topic) return fillblankSeqTask(topic);
+      if (topic.id === 'counting' || topic.id === 'stars') return fillblankSeqTask(topic);
+      if (topic.play.gen === 'dolch') {
+        const items = dolchItemsForLevel(effNow());
+        return fillblankWordTask(items[Math.floor(Math.random() * items.length)].word, topic);
+      }
+      if (topic.id === 'letter-sounds') return fillblankWordTask(['CAT', 'DOG', 'SUN', 'PIG', 'HEN', 'BUS', 'CUP', 'FOX', 'BEE', 'EGG'][Math.floor(Math.random() * 10)], topic);
+      if (topic.id === 'word-families') return fillblankWordTask(['CAT', 'HAT', 'BAT', 'MAT', 'PIG', 'WIG', 'DOG', 'TOP', 'MOP', 'NET'][Math.floor(Math.random() * 10)], topic);
+      if (topic.play.words && topic.play.words.length) return fillblankWordTask(topic.play.words[Math.floor(Math.random() * topic.play.words.length)].word, topic);
+      return fillblankSeqTask(topic);
+    }
+
+    /* ---------- Drag and drop ---------- */
+    function genDragTask(topic) {
+      const lvl = effNow();
+      let task;
+      if (topic && topic.id === 'patterns') {
+        const pats = [
+          { seq: ['🔴', '🔵', '🔴', '🔵'], ans: '🔴', opts: ['🔴', '🔵', '🟢'] },
+          { seq: ['⭐', '⭐', '🌙', '⭐', '⭐'], ans: '🌙', opts: ['⭐', '🌙', '☀️'] },
+          { seq: ['🍎', '🍌', '🍎', '🍌'], ans: '🍎', opts: ['🍌', '🍇', '🍎'] },
+          { seq: ['🐶', '🐱', '🐶', '🐱'], ans: '🐶', opts: ['🐶', '🐭', '🐱'] }
+        ];
+        const p = pats[Math.floor(Math.random() * pats.length)];
+        task = {
+          engine: 'drag', prompt: 'Drag the missing piece into the pattern!',
+          speak: 'Drag the missing piece into the pattern!',
+          display: '<div class="seq-row">' + p.seq.map(s => '<span>' + s + '</span>').join('') + '<span class="seq-q">?</span></div>',
+          items: shuffleArr(p.opts.map(o => ({ id: 'i' + o, label: o }))),
+          slots: [{ accept: 'i' + p.ans, hint: '' }]
+        };
+      } else if (topic && topic.id === 'maps-directions') {
+        task = {
+          engine: 'drag', prompt: 'Drag each arrow to its direction!',
+          speak: 'Drag each arrow to the direction it points!',
+          items: shuffleArr([{ id: 'right', label: '➡️' }, { id: 'up', label: '⬆️' }, { id: 'left', label: '⬅️' }]),
+          slots: [{ accept: 'right', hint: 'Right' }, { accept: 'up', hint: 'Up' }, { accept: 'left', hint: 'Left' }]
+        };
+      } else if (topic && topic.id === 'word-families') {
+        const words = { CAT: '🐱', HAT: '🧢', BAT: '🦇', MAT: '🟫', PIG: '🐷' };
+        const keys = Object.keys(words);
+        const w = keys[Math.floor(Math.random() * keys.length)];
+        task = {
+          engine: 'drag', prompt: 'Drag the letters to make the word!',
+          speak: 'Drag the letters to make the word: ' + w + '!',
+          display: '<div class="fill-display"><span class="fill-emoji">' + words[w] + '</span></div>',
+          items: shuffleArr(w.split('').map((ch, i) => ({ id: 'L' + i, label: ch }))),
+          slots: w.split('').map((ch, i) => ({ accept: 'L' + i, hint: '' }))
+        };
+      } else {
+        const count = lvl === 1 ? 3 : 4;
+        const start = 1 + Math.floor(Math.random() * 4);
+        const vals = [];
+        for (let i = 0; i < count; i++) vals.push(start + i);
+        task = {
+          engine: 'drag', prompt: 'Drag the numbers into order!',
+          speak: 'Drag the numbers into order, smallest first!',
+          items: shuffleArr(vals.map(v => ({ id: 'n' + v, label: String(v) }))),
+          slots: vals.map(v => ({ accept: 'n' + v, hint: String(v) }))
+        };
+      }
+      return finishNewTask(task, topic);
+    }
+
+    /* ---------- Sort into buckets ---------- */
+    function genSortTask(topic) {
+      let task;
+      if (topic && topic.id === 'land-water') {
+        task = {
+          engine: 'sort', prompt: 'Sort them! Land or water?',
+          speak: 'Sort them! Does it belong on land, or in the water?',
+          buckets: [{ id: 'land', label: '🌳 Land' }, { id: 'water', label: '🌊 Water' }],
+          items: shuffleArr([
+            { id: 'i1', label: '🐘', bucket: 'land' }, { id: 'i2', label: '🦁', bucket: 'land' }, { id: 'i3', label: '🚗', bucket: 'land' },
+            { id: 'i4', label: '🐟', bucket: 'water' }, { id: 'i5', label: '🐙', bucket: 'water' }, { id: 'i6', label: '⛵', bucket: 'water' }
+          ])
+        };
+      } else if (topic && topic.id === 'shapes') {
+        const kindOf = { '🔴': 'circle', '🔵': 'circle', '🟢': 'circle', '🟦': 'square', '🟩': 'square', '⬜': 'square', '🔺': 'triangle', '⭐': 'star', '🌟': 'star' };
+        const pairSets = [['circle', 'square'], ['triangle', 'star'], ['circle', 'triangle']];
+        const pair = pairSets[Math.floor(Math.random() * pairSets.length)];
+        const names = { circle: '🟢 Circles', square: '🟦 Squares', triangle: '🔺 Triangles', star: '⭐ Stars' };
+        const pool = Object.keys(kindOf).filter(k => pair.indexOf(kindOf[k]) >= 0);
+        const items = shuffleArr(pool).slice(0, 6).map((e, i) => ({ id: 'i' + i, label: e, bucket: kindOf[e] }));
+        task = {
+          engine: 'sort', prompt: 'Sort the shapes into the right buckets!',
+          speak: 'Sort the shapes into the right buckets!',
+          buckets: pair.map(b => ({ id: b, label: names[b] })),
+          items: items
+        };
+      } else {
+        task = {
+          engine: 'sort', prompt: 'Sort them! Sink or float?',
+          speak: 'Sort them! Does it sink, or does it float?',
+          buckets: [{ id: 'sink', label: '⬇️ Sink' }, { id: 'float', label: '⬆️ Float' }],
+          items: shuffleArr([
+            { id: 'i1', label: '🪨', bucket: 'sink' }, { id: 'i2', label: '🪙', bucket: 'sink' }, { id: 'i3', label: '🥄', bucket: 'sink' },
+            { id: 'i4', label: '🏀', bucket: 'float' }, { id: 'i5', label: '🍃', bucket: 'float' }, { id: 'i6', label: '🪶', bucket: 'float' }
+          ])
+        };
+      }
+      return finishNewTask(task, topic);
+    }
+
+    /* ---------- Memory cards ---------- */
+    function genMemoryTask(topic) {
+      const lvl = effNow();
+      let pairs;
+      if (topic && topic.id === 'sight-words') pairs = [['SEE', '👀'], ['RUN', '🏃'], ['JUMP', '🤸'], ['PLAY', '▶️']];
+      else if (topic && topic.id === 'shapes') pairs = [['🔺', 'Triangle'], ['🟦', 'Square'], ['🟢', 'Circle'], ['⭐', 'Star']];
+      else if (topic && topic.id === 'community-helpers') pairs = [['👩‍🚒', '🚒'], ['👩‍⚕️', '🏥'], ['👮', '🚓'], ['👩‍🏫', '🏫']];
+      else if (topic && topic.play && topic.play.symbols) pairs = topic.play.symbols.slice(0, 4).map(s => [s, s]);
+      else pairs = [['🍎', '🍎'], ['⭐', '⭐'], ['🐶', '🐶'], ['🌙', '🌙']];
+      const n = lvl === 1 ? 3 : 4;
+      const task = {
+        engine: 'memory', prompt: 'Find the matching pairs!',
+        speak: 'Find the matching pairs! Tap two cards!',
+        pairs: shuffleArr(pairs.slice()).slice(0, n)
+      };
+      return finishNewTask(task, topic);
+    }
+
+    /* ---------- Trace the letter ----------
+       Simplified stroke skeletons per letter in a 100x160 box. Tracing
+       checks coverage of sampled checkpoints along the strokes — a
+       tolerant match made for little fingers. */
+    const TRACE_SKELETONS = {
+      A: [[[10, 150], [50, 10], [90, 150]], [[28, 95], [72, 95]]],
+      B: [[[25, 10], [25, 150]], [[25, 12], [60, 12], [70, 28], [60, 44], [25, 44]], [[25, 44], [64, 44], [76, 64], [76, 128], [64, 148], [25, 148]]],
+      C: [[[78, 35], [55, 12], [30, 22], [18, 55], [18, 105], [30, 138], [55, 148], [78, 125]]],
+      D: [[[25, 10], [25, 150]], [[25, 10], [58, 10], [80, 40], [80, 120], [58, 150], [25, 150]]],
+      E: [[[78, 10], [25, 10], [25, 150], [80, 150]], [[25, 80], [62, 80]]],
+      F: [[[78, 10], [25, 10], [25, 150]], [[25, 78], [60, 78]]],
+      G: [[[80, 38], [56, 14], [30, 24], [16, 58], [16, 104], [30, 140], [58, 150], [82, 132], [82, 92], [58, 92]]],
+      H: [[[22, 10], [22, 150]], [[78, 10], [78, 150]], [[22, 80], [78, 80]]],
+      I: [[[50, 10], [50, 150]], [[28, 10], [72, 10]], [[28, 150], [72, 150]]],
+      J: [[[72, 10], [72, 118], [58, 144], [34, 148], [20, 128]]],
+      K: [[[25, 10], [25, 150]], [[74, 12], [27, 78]], [[32, 70], [76, 148]]],
+      L: [[[25, 10], [25, 150], [78, 150]]],
+      M: [[[15, 150], [15, 10], [50, 70], [85, 10], [85, 150]]],
+      N: [[[20, 150], [20, 10], [80, 150], [80, 10]]],
+      O: [[[50, 8], [76, 20], [90, 55], [90, 105], [76, 140], [50, 152], [24, 140], [10, 105], [10, 55], [24, 20], [50, 8]]],
+      P: [[[25, 150], [25, 10], [62, 10], [76, 30], [62, 52], [25, 52]]],
+      Q: [[[50, 8], [76, 20], [90, 55], [90, 105], [76, 140], [50, 152], [24, 140], [10, 105], [10, 55], [24, 20], [50, 8]], [[62, 118], [88, 150]]],
+      R: [[[25, 150], [25, 10], [62, 10], [76, 30], [62, 52], [25, 52]], [[54, 52], [80, 150]]],
+      S: [[[76, 32], [54, 12], [28, 22], [22, 44], [32, 66], [68, 88], [78, 112], [66, 140], [40, 148], [20, 128]]],
+      T: [[[14, 10], [86, 10]], [[50, 10], [50, 150]]],
+      U: [[[22, 10], [22, 108], [36, 142], [64, 142], [78, 108], [78, 10]]],
+      V: [[[16, 10], [50, 150], [84, 10]]],
+      W: [[[12, 10], [26, 150], [50, 60], [74, 150], [88, 10]]],
+      X: [[[20, 10], [80, 150]], [[80, 10], [20, 150]]],
+      Y: [[[18, 10], [50, 72], [82, 10]], [[50, 72], [50, 150]]],
+      Z: [[[18, 10], [82, 10], [18, 150], [82, 150]]]
+    };
+    function traceCheckpoints(letter) {
+      const strokes = TRACE_SKELETONS[letter] || TRACE_SKELETONS.A;
+      const pts = [];
+      strokes.forEach(line => {
+        for (let i = 0; i < line.length - 1; i++) {
+          const a = line[i], b = line[i + 1];
+          const dist = Math.hypot(b[0] - a[0], b[1] - a[1]);
+          const steps = Math.max(1, Math.round(dist / 7));
+          for (let s = 0; s <= steps; s++) {
+            pts.push({ x: a[0] + (b[0] - a[0]) * s / steps, y: a[1] + (b[1] - a[1]) * s / steps, hit: false });
+          }
+        }
+      });
+      return pts;
+    }
+    function genTraceTask(topic) {
+      let letter = 'B', word = 'Bee';
+      if (topic && topic.id === 'word-families') {
+        const pool = [['C', 'Cat'], ['H', 'Hat'], ['B', 'Bat'], ['M', 'Mat']];
+        const p = pool[Math.floor(Math.random() * pool.length)]; letter = p[0]; word = p[1];
+      } else if (topic && topic.play && topic.play.words && topic.play.words.length) {
+        const w = topic.play.words[Math.floor(Math.random() * topic.play.words.length)].word;
+        letter = w[0]; word = w.charAt(0) + w.slice(1).toLowerCase();
+      } else if (topic && topic.id === 'letter-sounds') {
+        const pool = [['B', 'Bee'], ['C', 'Cat'], ['S', 'Sun'], ['D', 'Dog'], ['M', 'Moon'], ['F', 'Fish']];
+        const p = pool[Math.floor(Math.random() * pool.length)]; letter = p[0]; word = p[1];
+      }
+      const task = {
+        engine: 'trace', letter: letter, word: word,
+        prompt: 'Trace the letter ' + letter + '!',
+        speak: 'Trace the letter ' + letter + '! ' + letter + ' is for ' + word + '!'
+      };
+      return finishNewTask(task, topic);
+    }
+
+    function genNewTask(engine, topic) {
+      switch (engine) {
+        case 'fillblank': return genFillblankTask(topic);
+        case 'drag': return genDragTask(topic);
+        case 'sort': return genSortTask(topic);
+        case 'memory': return genMemoryTask(topic);
+        case 'trace': return genTraceTask(topic);
+      }
+      return genFillblankTask(topic);
+    }
+
+    /* ---------- new-engine rendering ---------- */
+    function newEngineHead(task) {
+      return topicArtStrip() +
+        '<div class="task-prompt">' + task.prompt + '</div>' + hearItBtnHTML() +
+        (task.display ? '<div class="task-display">' + task.display + '</div>' : '');
+    }
+    function loadNewEngineQuestion(stage) {
+      const task = session.newTask;
+      if (!task) return;
+      if (task.engine === 'trace' && !task.prompt) {
+        task.prompt = 'Trace the letter ' + task.letter + '!';
+        task.speak = task.prompt + ' ' + task.letter + ' is for ' + (task.word || 'you') + '!';
+      }
+      state.currentQuestion = task;
+      state.currentReviewSpec = task.reviewSpec || null;
+      if (session.reviewKey) state.currentReviewKey = session.reviewKey;
+      setMascotMessage(task.prompt, 'thinking');
+      setNarration(task.speak || task.prompt, task.hearOptions || []);
+      speakText(task.speak || task.prompt);
+      if (task.engine === 'fillblank') renderFillblank(stage, task);
+      else if (task.engine === 'drag') renderDrag(stage, task);
+      else if (task.engine === 'sort') renderSort(stage, task);
+      else if (task.engine === 'memory') renderMemory(stage, task);
+      else if (task.engine === 'trace') renderTrace(stage, task);
+    }
+
+    function renderFillblank(stage, task) {
+      stage.innerHTML = newEngineHead(task) + '<div class="choice-grid" id="choiceGrid"></div>';
+      const grid = document.getElementById('choiceGrid');
+      task.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn fill-opt';
+        btn.innerText = opt.t;
+        btn.onclick = () => {
+          speakText(opt.t);
+          if (opt.ok) {
+            btn.classList.add('correct');
+            grid.querySelectorAll('.choice-btn').forEach(b => { b.disabled = true; });
+            setTimeout(() => engineDone(), 700);
+          } else {
+            if (session) session.mistakes++;
+            btn.classList.add('wrong');
+            btn.disabled = true;
+            setTimeout(() => engineWrong(btn), 700);
+          }
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function renderDrag(stage, task) {
+      stage.innerHTML = newEngineHead(task) +
+        '<div class="drag-slots" id="dragSlots"></div>' +
+        '<div class="drag-tray" id="dragTray"></div>';
+      const slotsEl = document.getElementById('dragSlots');
+      const trayEl = document.getElementById('dragTray');
+      const ne = { type: 'drag', task: task, placed: 0, selected: null, hintText: 'Drag it to the spot with the matching mark!' };
+      state.newEngine = ne;
+      const slotEls = task.slots.map((s, i) => {
+        const d = document.createElement('div');
+        d.className = 'drag-slot';
+        d.dataset.accept = s.accept;
+        d.innerHTML = '<span class="slot-hint">' + (s.hint || '') + '</span>';
+        d.onclick = () => { if (ne.selected) tryPlace(ne.selected, d, s); };
+        slotsEl.appendChild(d);
+        return d;
+      });
+      ne.hintSlot = slotEls[0];
+      task.items.forEach(it => {
+        const b = document.createElement('button');
+        b.className = 'drag-chip';
+        b.innerText = it.label;
+        b.dataset.id = it.id;
+        b.onclick = () => {
+          if (b.classList.contains('placed')) return;
+          sounds.pop();
+          trayEl.querySelectorAll('.drag-chip').forEach(c => c.classList.remove('sel'));
+          ne.selected = b;
+          b.classList.add('sel');
+        };
+        trayEl.appendChild(b);
+      });
+      function tryPlace(chip, slotEl, slot) {
+        if (slotEl.classList.contains('filled')) return;
+        if (chip.dataset.id === slot.accept) {
+          slotEl.classList.add('filled');
+          slotEl.innerHTML = '';
+          slotEl.appendChild(chip);
+          chip.classList.add('placed');
+          chip.classList.remove('sel');
+          ne.selected = null;
+          ne.placed++;
+          sounds.pop();
+          const nextEmpty = slotEls.find(el => !el.classList.contains('filled'));
+          ne.hintSlot = nextEmpty || null;
+          if (ne.placed >= task.slots.length) setTimeout(() => engineDone(), 600);
+        } else {
+          if (session) session.mistakes++;
+          engineWrong(chip);
+        }
+      }
+      /* Pointer drag with the tap-to-place fallback above for small hands. */
+      let dragCtx = null;
+      trayEl.addEventListener('pointerdown', e => {
+        const chip = e.target && e.target.classList && e.target.classList.contains('drag-chip') ? e.target : null;
+        if (!chip || chip.classList.contains('placed')) return;
+        dragCtx = { chip: chip, x: e.clientX, y: e.clientY, moved: false };
+      });
+      trayEl.addEventListener('pointermove', e => {
+        if (!dragCtx) return;
+        const dx = e.clientX - dragCtx.x, dy = e.clientY - dragCtx.y;
+        if (Math.abs(dx) + Math.abs(dy) > 10) dragCtx.moved = true;
+        if (dragCtx.moved) dragCtx.chip.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(1.08)';
+      });
+      trayEl.addEventListener('pointerup', e => {
+        if (!dragCtx) return;
+        const ctx = dragCtx; dragCtx = null;
+        ctx.chip.style.transform = '';
+        if (!ctx.moved) return; /* plain tap: the click handler selects */
+        let best = null, bestD = 1e9;
+        slotEls.forEach((el, i) => {
+          if (el.classList.contains('filled')) return;
+          const r = el.getBoundingClientRect();
+          const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+          const d = Math.hypot(e.clientX - cx, e.clientY - cy);
+          if (d < bestD) { bestD = d; best = { el: el, slot: task.slots[i] }; }
+        });
+        if (best && bestD < 130) tryPlace(ctx.chip, best.el, best.slot);
+      });
+    }
+
+    function renderSort(stage, task) {
+      stage.innerHTML = newEngineHead(task) +
+        '<div class="sort-buckets" id="sortBuckets"></div>' +
+        '<div class="drag-tray" id="sortTray"></div>';
+      const bucketsEl = document.getElementById('sortBuckets');
+      const trayEl = document.getElementById('sortTray');
+      const ne = { type: 'sort', task: task, remaining: task.items.length, selected: null, hintText: '' };
+      state.newEngine = ne;
+      const bucketEls = {};
+      task.buckets.forEach(b => {
+        const d = document.createElement('div');
+        d.className = 'sort-bucket';
+        d.dataset.id = b.id;
+        d.innerHTML = '<div class="bucket-label">' + b.label + '</div><div class="bucket-items"></div>';
+        d.onclick = () => { if (ne.selected) trySort(ne.selected, d, b); };
+        bucketsEl.appendChild(d);
+        bucketEls[b.id] = d;
+      });
+      function refreshHint() {
+        const first = trayEl.querySelector('.sort-item:not(.placed)');
+        if (first) {
+          const it = task.items.find(x => x.id === first.dataset.id);
+          if (it) {
+            ne.hintBucket = bucketEls[it.bucket];
+            const bl = task.buckets.find(x => x.id === it.bucket);
+            ne.hintText = 'That one goes in the ' + (bl ? bl.label.replace(/^\S+\s/, '') : '') + ' bucket!';
+          }
+        }
+      }
+      task.items.forEach(it => {
+        const b = document.createElement('button');
+        b.className = 'sort-item';
+        b.innerText = it.label;
+        b.dataset.id = it.id;
+        b.onclick = () => {
+          if (b.classList.contains('placed')) return;
+          sounds.pop();
+          trayEl.querySelectorAll('.sort-item').forEach(c => c.classList.remove('sel'));
+          ne.selected = b;
+          b.classList.add('sel');
+        };
+        trayEl.appendChild(b);
+      });
+      refreshHint();
+      function trySort(chip, bucketEl, bucket) {
+        const it = task.items.find(x => x.id === chip.dataset.id);
+        if (it && it.bucket === bucket.id) {
+          chip.classList.add('placed');
+          chip.classList.remove('sel');
+          bucketEl.querySelector('.bucket-items').appendChild(chip);
+          ne.selected = null;
+          ne.remaining--;
+          sounds.pop();
+          refreshHint();
+          if (ne.remaining <= 0) setTimeout(() => engineDone(), 600);
+        } else {
+          if (session) session.mistakes++;
+          engineWrong(chip);
+        }
+      }
+    }
+
+    function renderMemory(stage, task) {
+      const cards = [];
+      task.pairs.forEach((p, i) => {
+        cards.push({ pair: i, face: p[0] });
+        cards.push({ pair: i, face: p[1] });
+      });
+      const deck = shuffleArr(cards);
+      stage.innerHTML = newEngineHead(task) + '<div class="mem-grid" id="memGrid"></div>';
+      const grid = document.getElementById('memGrid');
+      const ne = { type: 'memory', task: task, first: null, matched: 0, lock: false };
+      state.newEngine = ne;
+      ne.peek = function () {
+        const els = grid.querySelectorAll('.mem-card:not(.matched)');
+        els.forEach(el => el.classList.add('flipped'));
+        setTimeout(() => els.forEach(el => { if (!el.classList.contains('matched')) el.classList.remove('flipped'); }), 1300);
+      };
+      deck.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'mem-card';
+        b.dataset.pair = c.pair;
+        b.innerHTML = '<span class="mem-back">⭐</span><span class="mem-face">' + c.face + '</span>';
+        b.onclick = () => {
+          if (ne.lock || b.classList.contains('flipped') || b.classList.contains('matched')) return;
+          sounds.pop();
+          b.classList.add('flipped');
+          speakText(c.face);
+          if (!ne.first) { ne.first = b; return; }
+          const first = ne.first;
+          ne.first = null;
+          if (first.dataset.pair === b.dataset.pair) {
+            first.classList.add('matched');
+            b.classList.add('matched');
+            ne.matched++;
+            sounds.success();
+            if (ne.matched >= task.pairs.length) setTimeout(() => engineDone(), 700);
+          } else {
+            ne.lock = true;
+            if (session) session.mistakes++;
+            setTimeout(() => {
+              first.classList.remove('flipped');
+              b.classList.remove('flipped');
+              ne.lock = false;
+              engineWrong(b);
+            }, 850);
+          }
+        };
+        grid.appendChild(b);
+      });
+    }
+
+    function renderTrace(stage, task) {
+      const pts = traceCheckpoints(task.letter);
+      const strokes = TRACE_SKELETONS[task.letter] || TRACE_SKELETONS.A;
+      let guide = '';
+      strokes.forEach(line => {
+        guide += '<polyline points="' + line.map(p => p[0] + ',' + p[1]).join(' ') + '" fill="none" stroke="#8FA3C7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 10" opacity="0.85"/>';
+        guide += '<circle cx="' + line[0][0] + '" cy="' + line[0][1] + '" r="6" fill="#2FCB9B" stroke="' + INK + '" stroke-width="2.5"/>';
+      });
+      const dots = pts.map(p => '<circle class="trace-dot" cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="3" fill="#C9D4E8" stroke="none"/>').join('');
+      stage.innerHTML = newEngineHead(task) +
+        '<div class="trace-wrap" id="tracePad">' +
+        '<svg class="trace-svg" viewBox="0 0 100 160" aria-hidden="true">' + guide + dots +
+        '<path id="tracePath" fill="none" stroke="#FF5D5D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</div><div class="trace-word">' + task.letter + ' is for ' + task.word + '!</div>';
+      const pad = document.getElementById('tracePad');
+      const pathEl = document.getElementById('tracePath');
+      const dotEls = pad.querySelectorAll('.trace-dot');
+      const ne = {
+        type: 'trace', task: task, pts: pts, drawn: [], down: false, done: false, lastMistakeAt: 0,
+        coverage: function () {
+          if (!pts.length) return 0;
+          return pts.filter(p => p.hit).length / pts.length;
+        }
+      };
+      state.newEngine = ne;
+      ne.showGuide = function () {
+        let i = 0;
+        const iv = setInterval(() => {
+          if (i > 0 && dotEls[i - 1] && !pts[i - 1].hit) dotEls[i - 1].setAttribute('fill', '#C9D4E8');
+          if (i >= pts.length) { clearInterval(iv); return; }
+          if (dotEls[i] && !pts[i].hit) dotEls[i].setAttribute('fill', '#FFC93C');
+          i++;
+        }, 24);
+      };
+      function toSvg(e) {
+        const r = pad.getBoundingClientRect();
+        const w = r.width || 100, h = r.height || 160;
+        return { x: (e.clientX - (r.left || 0)) / w * 100, y: (e.clientY - (r.top || 0)) / h * 160 };
+      }
+      function addPoint(p) {
+        ne.drawn.push(p);
+        let hitChanged = false;
+        pts.forEach((cp, i) => {
+          if (!cp.hit && Math.hypot(cp.x - p.x, cp.y - p.y) <= 15) {
+            cp.hit = true; hitChanged = true;
+            if (dotEls[i]) dotEls[i].setAttribute('fill', '#2FCB9B');
+          }
+        });
+        if (pathEl) {
+          pathEl.setAttribute('d', 'M' + ne.drawn.map(q => q.x.toFixed(1) + ' ' + q.y.toFixed(1)).join(' L'));
+        }
+        if (hitChanged && !ne.done && ne.coverage() >= 0.85) {
+          ne.done = true;
+          setTimeout(() => engineDone(), 400);
+        }
+      }
+      pad.addEventListener('pointerdown', e => {
+        ne.down = true;
+        ne.drawn = [];
+        if (e.preventDefault) e.preventDefault();
+        addPoint(toSvg(e));
+      });
+      pad.addEventListener('pointermove', e => {
+        if (!ne.down) return;
+        addPoint(toSvg(e));
+      });
+      pad.addEventListener('pointerup', () => {
+        if (!ne.down) return;
+        ne.down = false;
+        if (ne.done) return;
+        const cov = ne.coverage();
+        if (cov >= 0.7) {
+          ne.done = true;
+          setTimeout(() => engineDone(), 400);
+        } else if (cov >= 0.2 && Date.now() - ne.lastMistakeAt > 2500) {
+          ne.lastMistakeAt = Date.now();
+          if (session) session.mistakes++;
+          engineWrong(pad);
+        }
+      });
+    }
+
+
+    /* ---------------- Placement adventure ----------------
+       A friendly first-run set of ~8 mini games (never called a test)
+       that suggests a starting Level and per-skill starting difficulty.
+       Skippable, re-runnable from Topics, never blocks the app. */
+    const PLACEMENT_ITEMS = [
+      { skill: 'reading', prompt: 'Which picture starts with the B sound?', options: [{ t: '🐝 Bee', ok: true }, { t: '🍎 Apple', ok: false }, { t: '🐟 Fish', ok: false }] },
+      { skill: 'reading', prompt: 'Tap the word "the"!', options: [{ t: 'the', ok: true }, { t: 'cat', ok: false }, { t: 'sun', ok: false }] },
+      { skill: 'reading', prompt: 'Which word rhymes with CAT?', options: [{ t: 'Hat', ok: true }, { t: 'Dog', ok: false }, { t: 'Sun', ok: false }] },
+      { skill: 'math', prompt: 'How many apples are there? 🍎🍎🍎🍎', options: [{ t: '4', ok: true }, { t: '3', ok: false }, { t: '5', ok: false }] },
+      { skill: 'math', prompt: 'What is 2 + 1?', options: [{ t: '3', ok: true }, { t: '2', ok: false }, { t: '4', ok: false }] },
+      { skill: 'math', prompt: 'Tap the triangle!', options: [{ t: '🔺', ok: true }, { t: '🟦', ok: false }, { t: '🟢', ok: false }] },
+      { skill: 'world', prompt: 'What comes next? 🔴🔵🔴🔵…', options: [{ t: '🔴', ok: true }, { t: '🔵', ok: false }, { t: '🟢', ok: false }] },
+      { skill: 'world', prompt: 'What time is it?', display: 'CLOCK30', options: [{ t: "3 o'clock", ok: true }, { t: "6 o'clock", ok: false }, { t: "12 o'clock", ok: false }] }
+    ];
+    let placementRun = null;
+
+    function loadPlacement() {
+      try { return JSON.parse(localStorage.getItem('lw_placement') || 'null'); } catch (e) { return null; }
+    }
+    function savePlacement(p) {
+      try { localStorage.setItem('lw_placement', JSON.stringify(p)); } catch (e) { /* private mode */ }
+    }
+    function maybeOfferPlacement() {
+      try {
+        if (loadPlacement()) return;
+        if (localStorage.getItem('lw_placement_offered') === '1') return;
+        localStorage.setItem('lw_placement_offered', '1');
+        startPlacement(true);
+      } catch (e) { /* never block the app */ }
+    }
+    function startPlacement(isOffer) {
+      placementRun = { idx: 0, answers: [], isOffer: !!isOffer };
+      const modal = document.getElementById('placementModal');
+      const stage = document.getElementById('placeStage');
+      if (!modal || !stage) return;
+      modal.classList.add('open');
+      stage.innerHTML =
+        '<div class="place-pip">' + mascotSVG('happy', 'place-mascot') + '</div>' +
+        '<div class="place-title">Let\'s play a few games!</div>' +
+        '<div class="place-sub">' + MASCOT_NAME + ' wants to find the perfect adventures for you. Just for fun — no wrong answers here!</div>' +
+        '<button class="big-play-btn" id="placeStart">Let\'s Play!</button>' +
+        '<button class="text-link-btn" id="placeSkip">Later</button>';
+      document.getElementById('placeStart').onclick = () => { sounds.pop(); renderPlacementItem(); };
+      document.getElementById('placeSkip').onclick = () => closePlacement();
+      speakText("Let's play a few games together!");
+    }
+    function closePlacement() {
+      const modal = document.getElementById('placementModal');
+      if (modal) modal.classList.remove('open');
+      placementRun = null;
+      if ('speechSynthesis' in window) { try { window.speechSynthesis.cancel(); } catch (e) {} }
+    }
+    function renderPlacementItem() {
+      const stage = document.getElementById('placeStage');
+      if (!placementRun || !stage) return;
+      const item = PLACEMENT_ITEMS[placementRun.idx];
+      if (!item) { finishPlacement(); return; }
+      const display = item.display === 'CLOCK30' ? '<div class="clock-wrap small">' + clockSVG(3, 0) + '</div>' : '';
+      stage.innerHTML =
+        '<div class="place-progress">Game ' + (placementRun.idx + 1) + ' of ' + PLACEMENT_ITEMS.length + '</div>' +
+        '<div class="task-prompt">' + item.prompt + '</div>' + display +
+        '<div class="choice-grid" id="placeGrid"></div>' +
+        '<button class="text-link-btn" id="placeSkip2">Skip for now</button>';
+      const grid = document.getElementById('placeGrid');
+      shuffleArr(item.options.slice()).forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'choice-btn';
+        b.innerText = opt.t;
+        b.onclick = () => {
+          placementRun.answers.push({ skill: item.skill, correct: !!opt.ok });
+          sounds.pop();
+          placementRun.idx++;
+          renderPlacementItem();
+        };
+        grid.appendChild(b);
+      });
+      const sk = document.getElementById('placeSkip2');
+      if (sk) sk.onclick = () => closePlacement();
+      speakText(item.prompt);
+    }
+    function finishPlacement() {
+      if (!placementRun) return;
+      const skills = { reading: { c: 0, t: 0 }, math: { c: 0, t: 0 }, world: { c: 0, t: 0 } };
+      let totalCorrect = 0;
+      placementRun.answers.forEach(a => {
+        if (skills[a.skill]) { skills[a.skill].t++; if (a.correct) { skills[a.skill].c++; totalCorrect++; } }
+      });
+      const total = placementRun.answers.length || PLACEMENT_ITEMS.length;
+      const level = totalCorrect >= 6 ? 2 : 1;
+      const bias = {};
+      Object.keys(skills).forEach(k => {
+        const s = skills[k];
+        if (!s.t) bias[k] = 0;
+        else if (s.c === s.t) bias[k] = 1;
+        else if (s.c * 2 < s.t) bias[k] = -1;
+        else bias[k] = 0;
+      });
+      savePlacement({ done: true, day: todayStr(), level: level, skills: { reading: bias.reading, math: bias.math, world: bias.world }, correct: totalCorrect, total: total });
+      Object.keys(bias).forEach(k => { adaptive.skillBias[k] = bias[k]; });
+      saveAdaptive();
+      state.level = level;
+      try { localStorage.setItem('lw_level', String(level)); } catch (e) { /* ignore */ }
+      document.querySelectorAll('.level-btn').forEach(t => t.classList.toggle('active', parseInt(t.dataset.level, 10) === level));
+      const stage = document.getElementById('placeStage');
+      if (stage) {
+        stage.innerHTML =
+          '<div class="place-pip">' + mascotSVG('cheering', 'place-mascot') + '</div>' +
+          '<div class="place-title">Great playing!</div>' +
+          '<div class="place-sub">Your adventures are ready at Level ' + level + '. You can change the level any time with the tabs at the top!</div>' +
+          '<button class="big-play-btn" id="placeDone">Start Exploring!</button>';
+        const d = document.getElementById('placeDone');
+        if (d) d.onclick = () => { sounds.pop(); closePlacement(); };
+      }
+      speakText('Great playing! Your adventures are ready!');
+      placementRun = null;
+    }
+
     function genCountTask(topic) {
       const max = state.level === 1 ? 5 : state.level === 2 ? 10 : state.level === 3 ? 15 : 20;
       const n = 2 + Math.floor(Math.random() * (max - 1));
@@ -5794,6 +7454,10 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       if (session && session.storyTasks && session.storyTasks.length) {
         task = session.storyTasks[session.storyTaskIdx % session.storyTasks.length];
         session.storyTaskIdx++;
+      } else if (topic.play.gen === 'time') {
+        task = genTimeTask(topic);
+      } else if (topic.play.gen === 'money') {
+        task = genMoneyTask(topic);
       } else if (topic.play.gen === 'count') {
         task = genCountTask(topic);
       } else {
@@ -5804,6 +7468,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         task = arr[idx];
       }
       state.currentQuestion = task;
+      state.currentReviewSpec = task.reviewSpec || null;
+      if (session && session.reviewKey) { state.currentReviewKey = session.reviewKey; session.reviewKey = null; }
       const promptText = task.speak || task.q;
       stage.innerHTML =
         topicArtStrip() +
@@ -5819,7 +7485,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         btn.className = 'choice-btn';
         btn.innerText = opt.t;
         btn.onclick = () => {
-          speakText(opt.t);
+          speakText(opt.s || opt.t);
           if (opt.ok) {
             btn.classList.add('correct');
             grid.querySelectorAll('.choice-btn').forEach(b => { b.disabled = true; });
@@ -5837,19 +7503,24 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
 
     /* ---------------- Quiz engine ---------------- */
     function buildQuiz(topic) {
-      let qs = topic.quiz.map(q => ({ q: q.q, options: q.a.slice(), correct: q.a[q.c] }));
-      if (state.level === 1) {
-        qs = qs.slice(0, 3).map(q => {
+      let qs = topic.quiz.map(q => ({ q: q.q, options: q.a.slice(), correct: q.a[q.c], reviewSpec: { kind: 'quiz', topicId: topic.id, q: q.q } }));
+      if (effLevelFor(topic) === 1) {
+        qs = qs.slice(0, 4).map(q => {
           const wrong = shuffleArr(q.options.filter(o => o !== q.correct)).slice(0, 2);
-          return { q: q.q, options: shuffleArr([q.correct].concat(wrong)), correct: q.correct };
+          return { q: q.q, options: shuffleArr([q.correct].concat(wrong)), correct: q.correct, reviewSpec: q.reviewSpec };
         });
       } else {
-        qs = qs.map(q => ({ q: q.q, options: shuffleArr(q.options), correct: q.correct }));
+        qs = qs.map(q => ({ q: q.q, options: shuffleArr(q.options), correct: q.correct, reviewSpec: q.reviewSpec }));
+      }
+      const reviewForms = reviewQuizForms(topic, 2);
+      for (let i = 0; i < reviewForms.length && qs.length > 2; i++) {
+        qs[qs.length - 1 - i] = reviewForms[i];
       }
       return qs;
     }
 
     function startTopicQuiz(topic) {
+      bumpRunSeq();
       session = { kind: 'quiz', topicId: topic.id, idx: 0, correct: 0, questions: buildQuiz(topic) };
       playReturn = { view: 'topic', id: topic.id };
       document.getElementById('freeTabs').style.display = 'none';
@@ -5864,6 +7535,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       const topic = getTopic(session.topicId);
       const q = session.questions[session.idx];
       state.currentQuestion = q;
+      state.currentReviewSpec = q.reviewSpec || null;
+      state.currentReviewKey = q.reviewKey || null;
       stage.innerHTML =
         topicArtStrip() +
         '<div class="quiz-progress">Question ' + (session.idx + 1) + ' of ' + session.questions.length + '</div>' +
@@ -5886,6 +7559,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
           });
           if (optText === q.correct) {
             session.correct++;
+            noteQuestionCorrect();
             state.stars += 2;
             saveState();
             sounds.success();
@@ -5893,6 +7567,7 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
             setTimeout(() => setMascotMessage(pickLine(PRAISE_LINES), 'cheering'), 700);
           } else {
             btn.classList.add('wrong');
+            if (!state.reviewMissRecorded) { state.reviewMissRecorded = true; noteQuestionMissed(); }
             sounds.error();
             setTimeout(() => setMascotMessage('Good try! The right answer is: ' + q.correct, 'thinking'), 700);
           }
@@ -6010,8 +7685,8 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         card.innerHTML =
           '<div class="progress-head"><span class="p-thumb">' + worldThumbSVG(s.id) + '</span><span class="p-icon">' + subjectIconSVG(s.id) + '</span><span class="p-name">' + s.name + '</span>' +
           '<span class="p-level">' + skillLabel(stars) + '</span></div>' +
-          '<div style="font-weight:800;color:#718096;font-size:0.85rem;margin-bottom:6px;">' + doneCount + '/' + list.length + ' topics mastered • ' + stars + '/12 stars</div>' +
-          '<div class="progress-bar"><div style="width:' + Math.round(stars / 12 * 100) + '%;background:' + s.color + ';"></div></div>' +
+          '<div style="font-weight:800;color:#718096;font-size:0.85rem;margin-bottom:6px;">' + doneCount + '/' + list.length + ' topics mastered • ' + stars + '/' + (list.length * 3) + ' stars</div>' +
+          '<div class="progress-bar"><div style="width:' + Math.round(stars / (list.length * 3) * 100) + '%;background:' + s.color + ';"></div></div>' +
           rows;
         wrap.appendChild(card);
       });
@@ -6108,6 +7783,10 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
         void wasSession;
       };
 
+      const placeClose = document.getElementById('placeClose');
+      if (placeClose) placeClose.onclick = () => closePlacement();
+      const placeBtn = document.getElementById('placementBtn');
+      if (placeBtn) placeBtn.onclick = () => { sounds.pop(); startPlacement(false); };
       document.getElementById('topicSearch').addEventListener('input', renderTopics);
       document.getElementById('surpriseBtn').onclick = () => {
         const pool = TOPICS.filter(t => isUnlocked(t));
@@ -6134,7 +7813,15 @@ header { background: #FFFFFF; border: 3px solid var(--ink); box-shadow: 0 4px 0 
       if (nameSaveEl) nameSaveEl.onclick = () => { sounds.pop(); closeNameCard(true); };
       const nameSkipEl = document.getElementById('nameSkipBtn');
       if (nameSkipEl) nameSkipEl.onclick = () => { sounds.pop(); closeNameCard(false); };
-      if (!childName && !nameAsked) setTimeout(openNameCard, 1000);
+      if (!childName && !nameAsked) {
+        setTimeout(openNameCard, 1000);
+        const namePoll = setInterval(() => {
+          if (!nameCardOpen) { clearInterval(namePoll); maybeOfferPlacement(); }
+        }, 700);
+        setTimeout(() => clearInterval(namePoll), 30000);
+      } else {
+        setTimeout(maybeOfferPlacement, 1600);
+      }
 
       renderShelf(null);
       updateStatsDisplay();
