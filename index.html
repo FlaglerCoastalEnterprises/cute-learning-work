@@ -954,6 +954,26 @@ header {
   line-height: 1.3;
   max-width: 94%;
 }
+.hear-btn {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 7px;
+  margin: 0 auto var(--sp-4);
+  padding: 13px 24px;
+  min-height: 52px;
+  font-family: inherit;
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(180deg, #5BB0E8, #2F7FC4);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 5px 0 #1F5C94, 0 8px 16px rgba(47, 127, 196, 0.35);
+  cursor: pointer;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.hear-btn:active { transform: scale(0.96); box-shadow: 0 2px 0 #1F5C94; }
 .task-display { margin-bottom: var(--sp-4); }
 .count-box {
   display: flex;
@@ -1750,15 +1770,119 @@ header {
       fanfare: () => playChime([392, 523, 659, 784, 1046, 1318, 1568], 'triangle', 0.7)
     };
 
-    function speakText(text) {
-      if (isMuted || !('speechSynthesis' in window)) return;
+    /* ---------------- Narration: warm en-US female voice ---------------- */
+    let narratorVoice = null;
+    let lastSpeakAt = 0;
+
+    function pickNarratorVoice(voices) {
+      if (!voices || !voices.length) return null;
+      const nm = v => (v.name || '').toLowerCase();
+      const isUS = v => /^en[-_]us/i.test(v.lang || '');
+      const isEn = v => /^en([-_]|$)/i.test(v.lang || '');
+      const find = (list, frag) => list.find(v => nm(v).includes(frag)) || null;
+      const femaleFrag = ['samantha', 'zira', 'aria', 'jenny', 'female'];
+      const us = voices.filter(isUS);
+      const en = voices.filter(isEn);
+      return find(us, 'samantha')
+        || find(voices, 'google us english')
+        || find(us, 'microsoft zira')
+        || find(us, 'microsoft aria')
+        || find(us, 'microsoft jenny')
+        || find(voices, 'microsoft zira')
+        || find(voices, 'microsoft aria')
+        || find(voices, 'microsoft jenny')
+        || us.find(v => femaleFrag.some(f => nm(v).includes(f))) || null
+        || us[0]
+        || en.find(v => femaleFrag.some(f => nm(v).includes(f))) || null
+        || en[0]
+        || null;
+    }
+
+    function refreshNarratorVoice() {
+      if (!('speechSynthesis' in window)) return;
       try {
+        const vs = window.speechSynthesis.getVoices();
+        if (vs && vs.length) narratorVoice = pickNarratorVoice(vs);
+      } catch (e) {}
+    }
+
+    if ('speechSynthesis' in window) {
+      try {
+        refreshNarratorVoice();
+        if (typeof window.speechSynthesis.addEventListener === 'function') {
+          window.speechSynthesis.addEventListener('voiceschanged', refreshNarratorVoice);
+        } else {
+          window.speechSynthesis.onvoiceschanged = refreshNarratorVoice;
+        }
+      } catch (e) {}
+    }
+
+    function speakClean(text) {
+      return String(text || '')
+        .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function speakText(text) {
+      if (isMuted || !text || !('speechSynthesis' in window)) return;
+      try {
+        if (!narratorVoice) refreshNarratorVoice();
         window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.rate = 1.0;
-        utter.pitch = 1.2;
+        const utter = new SpeechSynthesisUtterance(speakClean(text));
+        utter.lang = 'en-US';
+        utter.rate = 0.95;
+        utter.pitch = 1.1;
+        if (narratorVoice) utter.voice = narratorVoice;
+        lastSpeakAt = Date.now();
         window.speechSynthesis.speak(utter);
-      } catch(e) {}
+      } catch (e) {}
+    }
+
+    /* -------- "Hear it": re-read the current question + its options -------- */
+    let currentNarration = null;
+
+    function setNarration(prompt, options) {
+      currentNarration = { prompt: prompt || '', options: (options || []).slice() };
+    }
+
+    function speakCurrentQuestion() {
+      if (!currentNarration) return;
+      let text = currentNarration.prompt || '';
+      const opts = currentNarration.options || [];
+      if (opts.length) {
+        const parts = opts.map((o, i) => (i === opts.length - 1 && opts.length > 1) ? 'or ' + o : o);
+        text += (text ? ' ' : '') + 'Tap: ' + parts.join('… ') + '!';
+      }
+      speakText(text);
+    }
+
+    function hearItBtnHTML() {
+      return '<button class="hear-btn" onclick="speakCurrentQuestion()">🔊 Hear it</button>';
+    }
+
+    /* -------- Audio unlock + one-time greeting on the first tap -------- */
+    let audioPrimed = false;
+    let greetingDone = false;
+
+    function primeAudioOnce() {
+      if (audioPrimed) return;
+      audioPrimed = true;
+      initAudio();
+      refreshNarratorVoice();
+      if (!greetingDone) {
+        greetingDone = true;
+        setTimeout(() => {
+          if (Date.now() - lastSpeakAt > 900) {
+            speakText("Hi! I'm Pip! Tap a subject to start learning!");
+          }
+        }, 500);
+      }
+    }
+
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+      window.addEventListener('pointerdown', primeAudioOnce);
+      window.addEventListener('touchstart', primeAudioOnce);
     }
 
     function loadJSON(key, fallback) {
@@ -1974,7 +2098,7 @@ header {
           <div style="font-size: 1.2rem; font-weight: 800; color: #e53e3e; margin-bottom: 10px;">30s Streak Challenge!</div>
           <div class="word-prompt-card">${item.word}</div>
           <div style="font-size: 1.1rem; font-weight: 700; color: #4a5568; margin-bottom: 16px;">Unscramble: ${scramble}</div>
-          <div class="drop-zone" id="dropZone"></div>
+          ${hearItBtnHTML()}<div class="drop-zone" id="dropZone"></div>
           <div class="tiles-pool" id="tilesPool"></div>
         `;
         startTimer();
@@ -1982,18 +2106,24 @@ header {
         stage.innerHTML = `${topicArtStrip()}
           <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 8px;">${item.word.replace(/./g, '_ ')}</div>
           <div class="word-definition">Clue: ${item.clue || 'Spell the mystery word!'}</div>
-          <div class="drop-zone" id="dropZone"></div>
+          ${hearItBtnHTML()}<div class="drop-zone" id="dropZone"></div>
           <div class="tiles-pool" id="tilesPool"></div>
         `;
       } else {
         stage.innerHTML = `${topicArtStrip()}
           <div class="word-prompt-card">${item.emoji || '🔤'}</div>
-          <div class="drop-zone" id="dropZone"></div>
+          ${hearItBtnHTML()}<div class="drop-zone" id="dropZone"></div>
           <div class="tiles-pool" id="tilesPool"></div>
         `;
       }
 
       setMascotMessage("Spell the word! Tap the letters in order!", 'idle');
+      let wordPrompt;
+      if (state.level === 4) wordPrompt = 'Unscramble the mystery word! Tap the letters in order!';
+      else if (state.level === 3) wordPrompt = item.clue || 'Spell the mystery word!';
+      else wordPrompt = 'Spell the word: ' + item.word + '! Tap the letters in order!';
+      setNarration(wordPrompt, []);
+      speakText(wordPrompt);
       setupWordInteraction(item.word);
     }
 
@@ -2055,6 +2185,14 @@ header {
       });
     }
 
+    function mathPromptFor(q) {
+      if (state.level === 4) return 'What number plus ' + q.b + ' makes ' + q.total + '?';
+      if (q.type === 'add') return 'What is ' + q.a + ' plus ' + q.b + '?';
+      if (q.type === 'sub') return 'What is ' + q.a + ' minus ' + q.b + '?';
+      if (q.type === 'mul') return 'What is ' + q.a + ' times ' + q.b + '?';
+      return 'What is ' + q.a + ' divided by ' + q.b + '?';
+    }
+
     function loadMathQuestion(stage) {
       const generator = mathData[state.level] || mathData[1];
       const q = generator();
@@ -2076,31 +2214,32 @@ header {
         stage.innerHTML = `${topicArtStrip()}
           <div class="math-visual-container" id="mathVisual">${visualHTML}</div>
           <div class="math-expression">${q.type === 'add' ? q.a + ' + ' + q.b + ' = ?' : q.a + ' - ' + q.b + ' = ?'}</div>
-          <div class="math-answers-grid" id="mathAnswers"></div>
+          ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
       } else if (state.level === 2) {
         stage.innerHTML = `${topicArtStrip()}
           <button class="btn-3d btn-accent" id="numberLineBtn" style="margin-bottom: 12px;">Show Number Line Hint</button>
           <div id="numberLineContainer"></div>
           <div class="math-expression">${q.a} ${q.type === 'add' ? '+' : '-'} ${q.b} = ?</div>
-          <div class="math-answers-grid" id="mathAnswers"></div>
+          ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
         document.getElementById('numberLineBtn').onclick = () => showNumberLineHint(q);
       } else if (state.level === 3) {
         const symbol = q.type === 'mul' ? '×' : '÷';
         stage.innerHTML = `${topicArtStrip()}
           <div class="math-expression">${q.a} ${symbol} ${q.b} = ?</div>
-          <div class="math-answers-grid" id="mathAnswers"></div>
+          ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
       } else {
         stage.innerHTML = `${topicArtStrip()}
           <div class="math-expression">? + ${q.b} = ${q.total}</div>
-          <div class="math-answers-grid" id="mathAnswers"></div>
+          ${hearItBtnHTML()}<div class="math-answers-grid" id="mathAnswers"></div>
         `;
       }
 
       setMascotMessage("Solve the math puzzle! Tap the right answer!", 'idle');
       setupMathAnswers(q);
+      speakText(mathPromptFor(q));
     }
 
     function showNumberLineHint(q) {
@@ -2134,6 +2273,7 @@ header {
       }
 
       choices.sort(() => Math.random() - 0.5);
+      setNarration(mathPromptFor(q), choices.map(v => String(v)));
 
       choices.forEach(val => {
         const btn = document.createElement('button');
@@ -2167,6 +2307,8 @@ header {
       saveState();
 
       setMascotMessage("Fantastic! You got it right! +" + earned + " Stars!", 'starry');
+      const praises = ["That's right! Great job!", 'Yes! You did it!', 'Hooray! Super work!', 'Fantastic! You got it right!'];
+      speakText(praises[Math.floor(Math.random() * praises.length)]);
       triggerConfetti();
 
       if (session && session.kind === 'play') {
@@ -2196,6 +2338,8 @@ header {
       setTimeout(() => element.classList.remove('wiggle'), 400);
 
       setMascotMessage("Almost! Let's try again with a gentle hint!", 'idle');
+      const cheers = ['Good try! Let\'s try again!', 'Almost! You can do it!', 'Nice try! Keep going!'];
+      speakText(cheers[Math.floor(Math.random() * cheers.length)]);
     }
 
     function startTimer() {
@@ -2391,7 +2535,7 @@ header {
             <span class="hud-chip">🍬 Score: <span id="cqScore"></span></span>
           </div>
           <div class="candy-goalbar"><div class="candy-goalfill" id="cqGoalFill"></div></div>
-          <div class="combo-banner" id="cqCombo"></div>
+          <div class="combo-banner" id="cqCombo"></div>${hearItBtnHTML()}
           <div class="candy-board" id="cqBoard"></div>
           <div id="cqEnd"></div>
           <button class="btn-3d btn-secondary" id="cqRestart">🔀 New Board</button>
@@ -2432,6 +2576,7 @@ header {
           ? 'Find the ' + kind + ' ' + cq.targetSymbol + '! Match ' + cq.goalCount + ' of them to win a prize!'
           : 'Score ' + cq.goalScore + ' points to win a prize! Match the candies!');
       setMascotMessage(goalMsg + ' Tap two candies side by side to swap!', 'idle');
+      setNarration(goalMsg + ' Tap two candies side by side to swap!', []);
     }
 
     function renderCandyBoard(withFall) {
@@ -3398,6 +3543,7 @@ header {
           sounds.pop();
           renderSubjectChips();
           renderMap();
+          speakText(s.name + '! Tap a picture to explore!');
         };
         wrap.appendChild(b);
       });
@@ -3479,6 +3625,7 @@ header {
           saveState();
           sounds.pop();
           renderTopics();
+          speakText(s.name + '! Tap a picture to explore!');
         };
         tiles.appendChild(b);
       });
@@ -3547,6 +3694,7 @@ header {
         sounds.pop(); startTopicQuiz(topic);
       };
       showView('topic');
+      speakText(topic.title + '! ' + topic.tagline + ' Tap Watch to learn, Play to practice, or Quiz to earn your star!');
     }
 
     function lockedBuzz() {
@@ -3709,25 +3857,28 @@ header {
       state.currentQuestion = task;
       stage.innerHTML =
         topicArtStrip() +
-        '<div class="task-prompt">' + task.q + '</div>' +
+        '<div class="task-prompt">' + task.q + '</div>' + hearItBtnHTML() +
         (task.display ? '<div class="task-display">' + task.display + '</div>' : '') +
         '<div class="choice-grid" id="choiceGrid"></div>';
       setMascotMessage(task.q, 'idle');
       const grid = document.getElementById('choiceGrid');
-      shuffleArr(task.options).forEach(opt => {
+      const opts = shuffleArr(task.options);
+      setNarration(task.q, opts.map(o => o.t));
+      opts.forEach(opt => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
         btn.innerText = opt.t;
         btn.onclick = () => {
+          speakText(opt.t);
           if (opt.ok) {
             btn.classList.add('correct');
             grid.querySelectorAll('.choice-btn').forEach(b => { b.disabled = true; });
-            handleCorrectAnswer();
+            setTimeout(() => handleCorrectAnswer(), 700);
           } else {
             if (session) session.mistakes++;
             btn.classList.add('wrong');
             btn.disabled = true;
-            handleWrongAnswer(btn);
+            setTimeout(() => handleWrongAnswer(btn), 700);
           }
         };
         grid.appendChild(btn);
@@ -3765,9 +3916,10 @@ header {
       stage.innerHTML =
         topicArtStrip() +
         '<div class="quiz-progress">Question ' + (session.idx + 1) + ' of ' + session.questions.length + '</div>' +
-        '<div class="task-prompt">' + q.q + '</div>' +
+        '<div class="task-prompt">' + q.q + '</div>' + hearItBtnHTML() +
         '<div class="choice-grid" id="choiceGrid"></div>';
       setMascotMessage(q.q, 'idle');
+      setNarration(q.q, q.options.slice());
       updateStatsDisplay();
       const grid = document.getElementById('choiceGrid');
       q.options.forEach(optText => {
@@ -3775,6 +3927,7 @@ header {
         btn.className = 'choice-btn';
         btn.innerText = optText;
         btn.onclick = () => {
+          speakText(optText);
           grid.querySelectorAll('.choice-btn').forEach(b => {
             b.disabled = true;
             if (b.innerText === q.correct) b.classList.add('correct');
@@ -3784,12 +3937,12 @@ header {
             state.stars += 2;
             saveState();
             sounds.success();
-            setMascotMessage('That’s right! 🌟', 'starry');
             triggerConfetti();
+            setTimeout(() => setMascotMessage('That’s right! 🌟', 'starry'), 700);
           } else {
             btn.classList.add('wrong');
             sounds.error();
-            setMascotMessage('Good try! The right answer is: ' + q.correct, 'idle');
+            setTimeout(() => setMascotMessage('Good try! The right answer is: ' + q.correct, 'idle'), 700);
           }
           updateStatsDisplay();
           session.idx++;
@@ -3797,7 +3950,7 @@ header {
             if (!session || session.kind !== 'quiz') return;
             if (session.idx >= session.questions.length) finishQuiz();
             else renderQuizQuestion();
-          }, 1400);
+          }, 2100);
         };
         grid.appendChild(btn);
       });
@@ -3862,7 +4015,7 @@ header {
       document.getElementById('celebrateModal').classList.add('open');
       sounds.fanfare();
       triggerConfetti();
-      speakText('Woohoo! You mastered ' + topic.title + '!');
+      speakText('Woohoo! You mastered ' + topic.title + '! You earned a trophy!');
       document.getElementById('celebBtn').onclick = () => {
         document.getElementById('celebrateModal').classList.remove('open');
         sounds.pop();
